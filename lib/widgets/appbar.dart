@@ -43,6 +43,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         print(item);
         if (item == PopupMenuButtonItems.settings) {
           print("it is setting");
+          Navigator.pushNamed(context, '/settings');
         } else if (item == PopupMenuButtonItems.about) {
           print("it is about");
         }
@@ -67,6 +68,9 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
+      iconTheme: IconThemeData(
+        color: Colors.black, //change your color here
+      ),
       actions: showAppIcons(context),
       backgroundColor: Colors.white,
       title: Text(

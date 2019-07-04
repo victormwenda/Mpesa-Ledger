@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
 import 'package:mpesa_ledger_flutter/screens/category/index.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
+import 'package:mpesa_ledger_flutter/screens/settings/index.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 
 class RouteGenerator {
@@ -19,6 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Summary());
       case '/category':
         return MaterialPageRoute(builder: (_) => Category());
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => Settings());
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return MaterialPageRoute(builder: (_) => Home());
