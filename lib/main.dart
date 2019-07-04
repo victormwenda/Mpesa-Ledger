@@ -12,6 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
+      theme: ThemeData(fontFamily: 'Montserrat'),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Navigator(

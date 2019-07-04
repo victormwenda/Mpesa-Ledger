@@ -13,11 +13,6 @@ class AppbarWidget extends StatefulWidget {
 }
 
 class _AppbarWidgetState extends State<AppbarWidget> {
-  @override
-  void initState() {
-    print(widget.showAddCategory.toString());
-    super.initState();
-  }
 
   List<Widget> showAppIcons(BuildContext context) {
     List<Widget> appbarIcons = [];
