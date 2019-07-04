@@ -18,7 +18,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     setState(() {
       _selectedIndex = index;
       widget.navigatorKey.currentState.pushNamedAndRemoveUntil("/" + routes[index], (Route<dynamic> route) => false);
-      print(_selectedIndex);
     });
   }
 

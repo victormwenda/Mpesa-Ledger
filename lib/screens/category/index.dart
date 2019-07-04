@@ -11,7 +11,7 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppbarWidget("Category"),
+        AppbarWidget("Category", showAddCategory: true, showSearch: false,),
         Expanded(
             child: Container(
         )),

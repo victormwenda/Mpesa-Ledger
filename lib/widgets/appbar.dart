@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppbarWidget extends StatefulWidget {
   String title;
+  bool showSearch;
+  bool showAddCategory;
 
-  AppbarWidget(this.title);
+  AppbarWidget(this.title,
+      {this.showSearch: true, this.showAddCategory: false});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -11,18 +14,52 @@ class AppbarWidget extends StatefulWidget {
 
 class _AppbarWidgetState extends State<AppbarWidget> {
   @override
+  void initState() {
+    print(widget.showAddCategory.toString());
+    super.initState();
+  }
+
+  List<Widget> showAppIcons(BuildContext context) {
+    List<Widget> appbarIcons = [];
+    if (widget.showSearch) {
+      appbarIcons.add(IconButton(
+        icon: Icon(Icons.search),
+        color: Colors.black,
+        onPressed: () {
+          showSearch(context: context, delegate: DataSearch());
+        },
+      ));
+    }
+    if (widget.showAddCategory) {
+      appbarIcons.add(IconButton(
+        icon: Icon(Icons.add),
+        color: Colors.black,
+        onPressed: () {},
+      ));
+    }
+
+    appbarIcons.add(PopupMenuButton(
+      icon: Icon(
+        Icons.more_vert,
+        color: Colors.black,
+      ),
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            value: 1,
+            child: Text("Settings"),
+          )
+        ];
+      },
+    ));
+    return appbarIcons;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.search),
-          color: Colors.black,
-          onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
-          },
-        )
-      ],
+      actions: showAppIcons(context),
       backgroundColor: Colors.white,
       title: Text(
         widget.title,
@@ -34,7 +71,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
 }
 
 class DataSearch extends SearchDelegate<String> {
-
   List<int> test = [1, 2, 3, 4, 5, 6, 7];
 
   @override
