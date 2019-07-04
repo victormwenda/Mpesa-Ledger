@@ -10,11 +10,14 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        AppBar(
+          centerTitle: true,
+          title: Text("Category"),
+        ),
         Expanded(
-          child: Container(
-            color: Colors.green,
-          )
-        )
+            child: Container(
+          color: Colors.pink,
+        )),
       ],
     );
   }

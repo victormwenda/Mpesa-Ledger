@@ -11,11 +11,14 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        AppBar(
+          centerTitle: true,
+          title: Text("Calculator"),
+        ),
         Expanded(
-          child: Container(
-            color: Colors.black,
-          )
-        )
+            child: Container(
+          color: Colors.black,
+        )),
       ],
     );
   }

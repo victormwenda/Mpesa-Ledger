@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
-import 'package:mpesa_ledger_flutter/screens/category/index.dart';
-import 'package:mpesa_ledger_flutter/screens/home/index.dart';
-import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -16,18 +12,14 @@ class BottomNavigationBarWidget extends StatefulWidget {
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int _selectedIndex = 0;
-  List routes = [Home(), Calculator(), Summary(), Category()];
+  final routes = ["home", "calculator", "summary", "category"];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      push(MaterialPageRoute(builder: (context) => routes[index]));
+      widget.navigatorKey.currentState.pushNamedAndRemoveUntil("/" + routes[index], (Route<dynamic> route) => false);
       print(_selectedIndex);
     });
-  }
-
-  Future<void> push(Route route) {
-    return widget.navigatorKey.currentState.push(route);
   }
 
   @override

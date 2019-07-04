@@ -12,11 +12,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        AppBar(
+          centerTitle: true,
+          title: Text("Home"),
+        ),
         Expanded(
-          child: Container(
-            color: Colors.amber,
-          )
-        )
+            child: Container(
+          color: Colors.amber,
+        )),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/routes/routes.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
 import 'package:mpesa_ledger_flutter/widgets/bottom_navigation.dart';
 
@@ -12,15 +13,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
         body: Navigator(
           key: navigatorKey,
-          onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => Home(),
-              ),
+          onGenerateRoute: RouteGenerator.generateRoute
         ),
         bottomNavigationBar: BottomNavigationBarWidget(navigatorKey),
       ),

@@ -10,11 +10,14 @@ class _SummaryState extends State<Summary> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        AppBar(
+          centerTitle: true,
+          title: Text("Summary"),
+        ),
         Expanded(
-          child: Container(
-            color: Colors.pink,
-          )
-        )
+            child: Container(
+          color: Colors.green,
+        )),
       ],
     );
   }
