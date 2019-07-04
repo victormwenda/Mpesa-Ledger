@@ -4,9 +4,12 @@ class AppbarWidget extends StatefulWidget {
   String title;
   bool showSearch;
   bool showAddCategory;
+  bool showPopupMenuButton;
 
   AppbarWidget(this.title,
-      {this.showSearch: true, this.showAddCategory: false});
+      {this.showSearch: true,
+      this.showPopupMenuButton: true,
+      this.showAddCategory: false});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -33,34 +36,34 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         onPressed: () {},
       ));
     }
-
-    appbarIcons.add(PopupMenuButton(
-      icon: Icon(
-        Icons.more_vert,
-        color: Colors.black,
-      ),
-      onSelected: (PopupMenuButtonItems item) {
-        print(item);
-        if (item == PopupMenuButtonItems.settings) {
-          print("it is setting");
-          Navigator.pushNamed(context, '/settings');
-        } else if (item == PopupMenuButtonItems.about) {
-          print("it is about");
-        }
-      },
-      itemBuilder: (context) {
-        return [
-          PopupMenuItem(
-            value: PopupMenuButtonItems.settings,
-            child: Text("Settings"),
-          ),
-          PopupMenuItem(
-            value: PopupMenuButtonItems.about,
-            child: Text("About"),
-          )
-        ];
-      },
-    ));
+    if (widget.showPopupMenuButton) {
+      appbarIcons.add(PopupMenuButton(
+        icon: Icon(
+          Icons.more_vert,
+          color: Colors.black,
+        ),
+        onSelected: (PopupMenuButtonItems item) {
+          print(item);
+          if (item == PopupMenuButtonItems.settings) {
+            Navigator.pushNamed(context, '/settings');
+          } else if (item == PopupMenuButtonItems.about) {
+            Navigator.pushNamed(context, '/about');
+          }
+        },
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+              value: PopupMenuButtonItems.settings,
+              child: Text("Settings"),
+            ),
+            PopupMenuItem(
+              value: PopupMenuButtonItems.about,
+              child: Text("About"),
+            )
+          ];
+        },
+      ));
+    }
     return appbarIcons;
   }
 
