@@ -12,8 +12,9 @@ class AppbarWidget extends StatefulWidget {
   _AppbarWidgetState createState() => _AppbarWidgetState();
 }
 
-class _AppbarWidgetState extends State<AppbarWidget> {
+enum PopupMenuButtonItems { settings, about }
 
+class _AppbarWidgetState extends State<AppbarWidget> {
   List<Widget> showAppIcons(BuildContext context) {
     List<Widget> appbarIcons = [];
     if (widget.showSearch) {
@@ -38,11 +39,23 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         Icons.more_vert,
         color: Colors.black,
       ),
+      onSelected: (PopupMenuButtonItems item) {
+        print(item);
+        if (item == PopupMenuButtonItems.settings) {
+          print("it is setting");
+        } else if (item == PopupMenuButtonItems.about) {
+          print("it is about");
+        }
+      },
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-            value: 1,
+            value: PopupMenuButtonItems.settings,
             child: Text("Settings"),
+          ),
+          PopupMenuItem(
+            value: PopupMenuButtonItems.about,
+            child: Text("About"),
           )
         ];
       },
