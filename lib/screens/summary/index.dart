@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
+
 class Summary extends StatefulWidget {
   @override
   _SummaryState createState() => _SummaryState();
@@ -10,13 +12,9 @@ class _SummaryState extends State<Summary> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          centerTitle: true,
-          title: Text("Summary"),
-        ),
+        AppbarWidget("Summary"),
         Expanded(
             child: Container(
-          color: Colors.green,
         )),
       ],
     );

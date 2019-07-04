@@ -35,11 +35,11 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           title: Text('Calucator'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.school),
+          icon: Icon(Icons.history),
           title: Text('Summary'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.ac_unit),
+          icon: Icon(Icons.category),
           title: Text('Category'),
         ),
       ],

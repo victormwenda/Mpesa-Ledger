@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
 
 class Category extends StatefulWidget {
   @override
@@ -10,13 +11,9 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          centerTitle: true,
-          title: Text("Category"),
-        ),
+        AppbarWidget("Category"),
         Expanded(
             child: Container(
-          color: Colors.pink,
         )),
       ],
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
-import 'package:mpesa_ledger_flutter/widgets/bottom_navigation.dart';
+import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,13 +11,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          centerTitle: true,
-          title: Text("Home"),
-        ),
+        AppbarWidget("Home"),
         Expanded(
             child: Container(
-          color: Colors.amber,
         )),
       ],
     );

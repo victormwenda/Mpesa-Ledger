@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/widgets/bottom_navigation.dart';
+
+import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -11,13 +12,9 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          centerTitle: true,
-          title: Text("Calculator"),
-        ),
+        AppbarWidget("Calculator"),
         Expanded(
             child: Container(
-          color: Colors.black,
         )),
       ],
     );
