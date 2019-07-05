@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/screens/about/about.dart';
 
 import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
 import 'package:mpesa_ledger_flutter/screens/category/index.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/splash_screen.dart';
 import 'package:mpesa_ledger_flutter/screens/settings/index.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 
@@ -13,7 +15,8 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/home':
+      case '/':
+        print(settings);
         return MaterialPageRoute(builder: (_) => Home());
       case '/calculator':
         return MaterialPageRoute(builder: (_) => Calculator());
@@ -27,20 +30,21 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => About());
       default:
         // If there is no such named route in the switch statement, e.g. /third
-        return MaterialPageRoute(builder: (_) => Home());
+        print("error here "+settings.toString());
+        return _errorRoute(settings.name);
     }
   }
 
-  // static Route<dynamic> _errorRoute() {
-  //   return MaterialPageRoute(builder: (_) {
-  //     return Scaffold(
-  //       appBar: AppBar(
-  //         title: Text('Error'),
-  //       ),
-  //       body: Center(
-  //         child: Text('ERROR'),
-  //       ),
-  //     );
-  //   });
-  // }
+  static Route<dynamic> _errorRoute(String name) {
+    return MaterialPageRoute(builder: (_) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Error'),
+        ),
+        body: Center(
+          child: Text('ERROR UNKWOWN ROUTE ' + name),
+        ),
+      );
+    });
+  }
 }

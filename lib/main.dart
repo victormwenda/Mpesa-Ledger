@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/app.dart';
 
-import 'package:mpesa_ledger_flutter/routes/routes.dart';
-import 'package:mpesa_ledger_flutter/widgets/bottom_navigation.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/splash_screen.dart';
 
-void main() => runApp(App());
+void main() => runApp(MainApp());
 
-class App extends StatelessWidget {
+class MainApp extends StatelessWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -14,13 +14,7 @@ class App extends StatelessWidget {
       title: 'Material App',
       theme: ThemeData(fontFamily: 'Montserrat'),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Navigator(
-          key: navigatorKey,
-          onGenerateRoute: RouteGenerator.generateRoute
-        ),
-        bottomNavigationBar: BottomNavigationBarWidget(navigatorKey),
-      ),
+      home: SplashScreen()
     );
   }
 }

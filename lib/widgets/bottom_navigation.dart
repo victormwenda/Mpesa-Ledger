@@ -12,7 +12,7 @@ class BottomNavigationBarWidget extends StatefulWidget {
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int _selectedIndex = 0;
-  final routes = ["home", "calculator", "summary", "category"];
+  final routes = ["", "calculator", "summary", "category"];
 
   void _onItemTapped(int index) {
     setState(() {

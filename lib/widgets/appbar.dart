@@ -33,7 +33,16 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       appbarIcons.add(IconButton(
         icon: Icon(Icons.add),
         color: Colors.black,
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Jama Mohamed"),
+              );
+            }
+          );
+        },
       ));
     }
     if (widget.showPopupMenuButton) {
@@ -78,7 +87,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       backgroundColor: Colors.white,
       title: Text(
         widget.title,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       ),
       centerTitle: true,
     );
@@ -95,7 +104,9 @@ class DataSearch extends SearchDelegate<String> {
       IconButton(
         icon: Icon(Icons.clear),
         color: Colors.black,
-        onPressed: () {},
+        onPressed: () {
+          query = "";
+        },
       )
     ];
   }
