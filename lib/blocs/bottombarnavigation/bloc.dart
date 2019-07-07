@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
+import 'package:mpesa_ledger_flutter/screens/calculator/main_calculator.dart';
 import 'package:mpesa_ledger_flutter/screens/category/index.dart';
+import 'package:mpesa_ledger_flutter/screens/category/main_category.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
+import 'package:mpesa_ledger_flutter/screens/home/main_home.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
+import 'package:mpesa_ledger_flutter/screens/summary/main_summary.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class BottombarNavigationBloc {
@@ -17,16 +21,16 @@ class BottombarNavigationBloc {
     Widget choosenScreen;
     switch (screen) {
       case Screens.home:
-        choosenScreen = Home();
+        choosenScreen = MainHome();
         break;
       case Screens.calculator:
-        choosenScreen = Calculator();
+        choosenScreen = MainCalculator();
         break;
       case Screens.summary:
-        choosenScreen = Summary();
+        choosenScreen = MainSummary();
         break;
       case Screens.category:
-        choosenScreen = Category();
+        choosenScreen = MainCategory();
         break;
       default:
         choosenScreen = Home();
