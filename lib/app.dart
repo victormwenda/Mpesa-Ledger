@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-import 'package:mpesa_ledger_flutter/routes/routes.dart';
+import 'package:mpesa_ledger_flutter/blocs/bottombarnavigation/bloc.dart';
+import 'package:mpesa_ledger_flutter/screens/home/index.dart';
 import 'package:mpesa_ledger_flutter/widgets/bottom_navigation.dart';
 
 class App extends StatelessWidget {
-  final navigatorKey = GlobalKey<NavigatorState>();
-
+  final bloc = BottombarNavigationBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Navigator(
-          key: navigatorKey,
-          onGenerateRoute: RouteGenerator.generateRoute
-        ),
-        bottomNavigationBar: BottomNavigationBarWidget(navigatorKey),
-      );
+      body: StreamBuilder(
+        initialData: Home(),
+        stream: bloc.screensControllerStream,
+        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+          return snapshot.data;
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBarWidget(bloc),
+    );
   }
 }

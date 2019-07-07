@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/app.dart';
 
 import 'package:mpesa_ledger_flutter/screens/intro/splash_screen.dart';
 

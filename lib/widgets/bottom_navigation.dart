@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/bottombarnavigation/bloc.dart';
+import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
+  var bloc = BottombarNavigationBloc();
 
-  BottomNavigationBarWidget(this.navigatorKey);
+  BottomNavigationBarWidget(this.bloc);
 
   @override
   _BottomNavigationBarWidgetState createState() =>
@@ -12,14 +14,6 @@ class BottomNavigationBarWidget extends StatefulWidget {
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int _selectedIndex = 0;
-  final routes = ["", "calculator", "summary", "category"];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      widget.navigatorKey.currentState.pushNamedAndRemoveUntil("/" + routes[index], (Route<dynamic> route) => false);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +40,18 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       showUnselectedLabels: true,
       selectedItemColor: Colors.amber[800],
       unselectedItemColor: Colors.black,
-      onTap: _onItemTapped,
+      onTap: (int index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+        widget.bloc.showScreen(Screens.values[index]);
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    widget.bloc.dispose();
+    super.dispose();
   }
 }
