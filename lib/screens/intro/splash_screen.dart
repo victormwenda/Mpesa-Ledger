@@ -1,91 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:mpesa_ledger_flutter/blocs/splashscreen/bloc.dart';
+import 'package:mpesa_ledger_flutter/widgets/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
+  var bloc = SplashScreenBloc();
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  static const platform =
-      const MethodChannel("com.example.mpesaLedgerFlutter/methodChannel");
+  _SplashScreenState({Key key}) {}
 
-  _SplashScreenState({Key key}) {
-    platform.setMethodCallHandler(_handleCallsFromNative);
+  // void continueToApp() {
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(builder: (route) => App()),
+  //   );
+  // }
+
+  @override
+  void initState() {
+    widget.bloc.checkAndRequestPermissionSink.add(null);
+    super.initState();
   }
 
-  Future<void> _handleCallsFromNative(MethodCall call) {
-    switch (call.method) {
-      case "showDialogForDenial":
-        showDialogForDenial();
-        break;
-      case "showDialogForGoToSettings":
-        showDialogForGoToSettings();
-        break;
-    }
-  }
+  @override
+  Widget build(BuildContext context) {
+    var widgetBloc = widget.bloc;
 
-  void checkAndRequestPermissions() async {
-    await platform.invokeMethod("isPermissionsAllowed");
-  }
-
-  void continueToApp() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (route) => App()),
-    );
-  }
-
-  void showDialogForDenial() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("SMS Permissions"),
+    widgetBloc.permissionDenialStream.listen((data) {
+      if (data) {
+        return AlertDialogWidget(
+          context,
+          title: "SMS Permission",
           content: Text("To use MPESA LEDGER, allow SMS permissions"),
           actions: <Widget>[
             FlatButton(
-              child: Text("Cancel"),
+              child: Text("CANCEL"),
               onPressed: () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
               },
             ),
             FlatButton(
-              child: Text("Allow Permissions"),
+              child: Text("ALLOW PERMISSIONS"),
               onPressed: () {
-                checkAndRequestPermissions();
+                widget.bloc.checkAndRequestPermissionSink.add(null);
                 Navigator.pop(context);
               },
             )
           ],
-        );
-      },
-    );
-  }
+        ).show();
+      }
+    });
 
-  void showDialogForGoToSettings() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("SMS Permissions"),
+    widgetBloc.openAppSettingsStream.listen((data) {
+      if (data) {
+        return AlertDialogWidget(
+          context,
+          title: "SMS Permission",
           content: Text(
               "To use MPESA LEDGER, allow SMS permissions are needed, please go to settings > Permissions and turn or SMS"),
           actions: <Widget>[
             FlatButton(
-              child: Text("Cancel"),
+              child: Text("CANCEL"),
               onPressed: () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
               },
             ),
             FlatButton(
-              child: Text("Turn On"),
+              child: Text("TURN ON"),
               onPressed: () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
@@ -93,19 +81,10 @@ class _SplashScreenState extends State<SplashScreen> {
               },
             )
           ],
-        );
-      },
-    );
-  }
+        ).show();
+      }
+    });
 
-  @override
-  void initState() {
-    checkAndRequestPermissions();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
