@@ -59,7 +59,7 @@ public class MainActivity extends FlutterActivity {
   }
 
   void continueToApp() {
-    Toast.makeText(this, "Continue to app", Toast.LENGTH_SHORT).show();
+    new MethodChannel(getFlutterView(), CHANNEL).invokeMethod("continueToApp", null);
   }
 
   void showDialogForDenial() {

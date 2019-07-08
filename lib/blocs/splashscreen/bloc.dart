@@ -13,10 +13,10 @@ class SplashScreenBloc {
   StreamSink<void> get checkAndRequestPermissionSink =>
       _checkAndRequestPermissionController.sink;
 
-  StreamController<String> _continueToAppController =
-      StreamController<String>();
-  Stream<String> get continueToAppStream => _continueToAppController.stream;
-  StreamSink<String> get continueToAppSink => _continueToAppController.sink;
+  StreamController<void> _continueToAppController =
+      StreamController<void>();
+  Stream<void> get continueToAppStream => _continueToAppController.stream;
+  StreamSink<void> get continueToAppSink => _continueToAppController.sink;
 
   StreamController<bool> _permissionDenialController = StreamController<bool>();
   Stream<bool> get permissionDenialStream => _permissionDenialController.stream;
@@ -40,6 +40,9 @@ class SplashScreenBloc {
         break;
       case "showDialogForGoToSettings":
         openAppSettingsSink.add(true);
+        break;
+      case "continueToApp":
+        continueToAppSink.add(null);
         break;
     }
   }

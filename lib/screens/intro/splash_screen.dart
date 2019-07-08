@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/splashscreen/bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/alertDialog.dart';
 
@@ -14,17 +15,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   _SplashScreenState({Key key}) {}
 
-  // void continueToApp() {
-  //   Navigator.pushReplacement(
-  //     context,
-  //     MaterialPageRoute(builder: (route) => App()),
-  //   );
-  // }
-
   @override
   void initState() {
     widget.bloc.checkAndRequestPermissionSink.add(null);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,6 +85,12 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
+    widgetBloc.continueToAppStream.listen((void data) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (route) => App()),
+      );
+    });
     return Scaffold(
       body: Center(
         child: Column(
