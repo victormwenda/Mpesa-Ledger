@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/main_calculator.dart';
-import 'package:mpesa_ledger_flutter/screens/category/index.dart';
 import 'package:mpesa_ledger_flutter/screens/category/main_category.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
 import 'package:mpesa_ledger_flutter/screens/home/main_home.dart';
-import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/main_summary.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 

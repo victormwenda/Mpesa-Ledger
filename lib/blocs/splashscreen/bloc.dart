@@ -1,0 +1,8 @@
+class SplashScreenBloc {
+  
+  
+
+  void dispose() { 
+
+  }
+}
