@@ -2,15 +2,17 @@ package com.example.mpesa_ledger_flutter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodChannel;
@@ -31,6 +33,11 @@ public class MainActivity extends FlutterActivity {
       if (methodCall.method.equals("isPermissionsAllowed")) {
         checkAndRequestForPermissions();
         result.success(null);
+      } else if (methodCall.method.equals("getAllSMSMessages")) {
+        Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
+        SMSRetriever smsRetriever = new SMSRetriever(cursor);
+        List<Map<String, Object>> smsResult = smsRetriever.getAllSMSMessages();
+        result.success(smsResult);
       }
     });
   }
@@ -49,7 +56,7 @@ public class MainActivity extends FlutterActivity {
       }
 
       if (!neededPermissions.isEmpty()) {
-        requestForPermissions(neededPermissions.toArray(new String[neededPermissions.size()]));
+        requestForPermissions(neededPermissions.toArray(new String[0]));
       } else {
         continueToApp();
       }

@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 
-class SplashScreenBloc {
-  static const platform =
-      const MethodChannel("com.example.mpesaLedgerFlutter/methodChannel");
+import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
+class RuntimePermissionsBloc {
   StreamController<void> _checkAndRequestPermissionController =
       StreamController<void>();
   Stream<void> get checkAndRequestPermissionStream =>
@@ -13,8 +11,7 @@ class SplashScreenBloc {
   StreamSink<void> get checkAndRequestPermissionSink =>
       _checkAndRequestPermissionController.sink;
 
-  StreamController<void> _continueToAppController =
-      StreamController<void>();
+  StreamController<void> _continueToAppController = StreamController<void>();
   Stream<void> get continueToAppStream => _continueToAppController.stream;
   StreamSink<void> get continueToAppSink => _continueToAppController.sink;
 
@@ -26,10 +23,11 @@ class SplashScreenBloc {
   Stream<bool> get openAppSettingsStream => _openAppSettingsController.stream;
   StreamSink<bool> get openAppSettingsSink => _openAppSettingsController.sink;
 
-  SplashScreenBloc() {
-    platform.setMethodCallHandler(_handleCallsFromNative);
+  RuntimePermissionsBloc() {
+    var methodChannel = MethodChannelClass();
+    methodChannel.setMethodCallHandler(_handleCallsFromNative);
     checkAndRequestPermissionStream.listen((void data) async {
-      await platform.invokeMethod("isPermissionsAllowed");
+      await methodChannel.invokeMethod("isPermissionsAllowed");
     });
   }
 

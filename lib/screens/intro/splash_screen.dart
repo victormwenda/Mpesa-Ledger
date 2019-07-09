@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
-import 'package:mpesa_ledger_flutter/blocs/splashscreen/bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  var bloc = SplashScreenBloc();
+  var bloc = RuntimePermissionsBloc();
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
