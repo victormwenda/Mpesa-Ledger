@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    widget.bloc.getAllSMSMessages();
+    widget.bloc.retrieveSMSMessages();
     super.initState();
   }
 
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
       children: <Widget>[
         AppbarWidget("Home"),
         StreamBuilder<List>(
-          stream: widget.bloc.readSMSStream,
+          stream: widget.bloc.retrieveSMSStream,
           initialData: [],
           builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
             return Expanded(

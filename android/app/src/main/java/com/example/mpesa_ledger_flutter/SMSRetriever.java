@@ -19,11 +19,12 @@ public class SMSRetriever {
     List<Map<String, Object>> mapList = new ArrayList<>();
 
     while (cursor.moveToNext()) {
-      Map<String, Object> map = new HashMap<>();
-      map.put("date", cursor.getString(cursor.getColumnIndexOrThrow("date")));
-      map.put("body", cursor.getString(cursor.getColumnIndexOrThrow("body")));
-      mapList.add(map);
-      Log.e("MPESA", cursor.getString(cursor.getColumnIndexOrThrow("address")));
+      if (cursor.getString(cursor.getColumnIndexOrThrow("address")).equals("MPESA")){
+        Map<String, Object> map = new HashMap<>();
+        map.put("date", cursor.getString(cursor.getColumnIndexOrThrow("date")));
+        map.put("body", cursor.getString(cursor.getColumnIndexOrThrow("body")));
+        mapList.add(map);
+      }
     }
 
     return mapList;

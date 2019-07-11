@@ -23,17 +23,25 @@ public class MainActivity extends FlutterActivity {
   String CHANNEL = "com.example.mpesaLedgerFlutter/methodChannel";
   String[] appPermissions = {Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
   private static final int SMS_PERMISSION_REQUEST_CODE = 1;
+  MethodChannel methodChannel;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
 
-    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler((methodCall, result) -> {
+    methodChannel = new MethodChannel(getFlutterView(), CHANNEL);
+    setMethodCallHandler();
+  }
+
+//  METHOD CHANNEL HANDLERS
+
+  void setMethodCallHandler(){
+    methodChannel.setMethodCallHandler((methodCall, result) -> {
       if (methodCall.method.equals("isPermissionsAllowed")) {
         checkAndRequestForPermissions();
         result.success(null);
-      } else if (methodCall.method.equals("getAllSMSMessages")) {
+      } else if (methodCall.method.equals("retrieveSMSMessages")) {
         Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
         SMSRetriever smsRetriever = new SMSRetriever(cursor);
         List<Map<String, Object>> smsResult = smsRetriever.getAllSMSMessages();
@@ -41,6 +49,13 @@ public class MainActivity extends FlutterActivity {
       }
     });
   }
+
+  void invokeMethod(String s, Object o) {
+    methodChannel.invokeMethod(s, o);
+  }
+
+
+//  REQUEST RUNTIME PERMISSIONS
 
   void requestForPermissions(String[] permissions) {
     ActivityCompat.requestPermissions(this, permissions, SMS_PERMISSION_REQUEST_CODE);
@@ -66,15 +81,15 @@ public class MainActivity extends FlutterActivity {
   }
 
   void continueToApp() {
-    new MethodChannel(getFlutterView(), CHANNEL).invokeMethod("continueToApp", null);
+    invokeMethod("continueToApp", null);
   }
 
   void showDialogForDenial() {
-    new MethodChannel(getFlutterView(), CHANNEL).invokeMethod("showDialogForDenial", null);
+    invokeMethod("showDialogForDenial", null);
   }
 
   void showDialogForGoToSettings() {
-    new MethodChannel(getFlutterView(), CHANNEL).invokeMethod("showDialogForGoToSettings", null);
+    invokeMethod("showDialogForGoToSettings", null);
   }
 
   @Override
