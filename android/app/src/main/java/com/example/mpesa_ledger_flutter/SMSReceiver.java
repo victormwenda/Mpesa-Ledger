@@ -14,18 +14,22 @@ import java.util.Map;
 
 public class SMSReceiver extends BroadcastReceiver {
 
+  DatabaseHelper databaseHelper;
+
   @Override
   public void onReceive(Context context, Intent intent) {
     if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
 
       Toast.makeText(context, "Message received from SMS", Toast.LENGTH_SHORT).show();
-      List<Map<String, Object>> mapList = new ArrayList<>();
+      List<Map<String, String>> mapList = new ArrayList<>();
       for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("from", smsMessage.getOriginatingAddress());
+        Map<String, String> map = new HashMap<>();
+        map.put("address", smsMessage.getOriginatingAddress());
         map.put("body", smsMessage.getMessageBody());
         mapList.add(map);
       }
+
+      databaseHelper = new DatabaseHelper(context).insertToDatabase(mapList);
 
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();
     }
