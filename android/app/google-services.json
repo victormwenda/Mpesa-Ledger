@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "271481393124",
+    "firebase_url": "https://pelagic-bonbon-128509.firebaseio.com",
+    "project_id": "pelagic-bonbon-128509",
+    "storage_bucket": "pelagic-bonbon-128509.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271481393124:android:16c38bd6c2910c3e",
+        "android_client_info": {
+          "package_name": "com.example.mpesa_ledger_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271481393124-nm235andar10qemk713rgro5ie3p4d77.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mpesa_ledger_flutter",
+            "certificate_hash": "4361da8d74a907159af7de4ddb0850941cbc2ddc"
+          }
+        },
+        {
+          "client_id": "271481393124-tdb5takfjjurjk8ll0tdgfbh2oi6rg96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWeEPOJXOAKMaRdt-ZfmkmQEvnJw0bdsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271481393124-tdb5takfjjurjk8ll0tdgfbh2oi6rg96.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
