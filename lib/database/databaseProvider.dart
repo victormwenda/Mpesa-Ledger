@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:mpesa_ledger_flutter/utils/constants/database_constants.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -8,17 +11,40 @@ class DatabaseProvider {
     if (_database != null) {
       return _database;
     }
-
+    _database = await initializedDatabase();
+    return _database;
   }
 
-  Future<Database> initDatabase() async {
+  Future<String> databasePath() async {
     var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'MpesaLedger.db');
+    return join(databasesPath, databaseName);
+  }
 
-    Database db = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-    });
+  Future<Database> initializedDatabase() async {
+    String path = await databasePath();
+    Database database = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        // When creating the db, create the table
+        for (var i = 0; i < schema.length; i++) {
+          await db.execute(schema[i]);
+        }
+      },
+    );
+    return database;
+  }
 
-    return db;
+  void closeDatabase() async {
+    if (_database != null) {
+      _database.close();
+    }
+    _database = null;
+  }
+
+  void deleteDatabaseMeth() async {
+    String path = await databasePath();
+    deleteDatabase(path);
+    _database = null;
   }
 }
