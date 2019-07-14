@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
-class RuntimePermissionsBloc {
+class RuntimePermissionsBloc extends BaseBloc {
   StreamController<void> _checkAndRequestPermissionController =
       StreamController<void>();
   Stream<void> get checkAndRequestPermissionStream =>
@@ -15,7 +16,7 @@ class RuntimePermissionsBloc {
   Stream<void> get continueToAppStream => _continueToAppController.stream;
   StreamSink<void> get continueToAppSink => _continueToAppController.sink;
 
-  StreamController<bool> _permissionDenialController = StreamController<bool>();
+  StreamController<bool> _permissionDenialController = StreamController<bool>.broadcast();
   Stream<bool> get permissionDenialStream => _permissionDenialController.stream;
   StreamSink<bool> get permissionDenialSink => _permissionDenialController.sink;
 
@@ -45,6 +46,7 @@ class RuntimePermissionsBloc {
     }
   }
 
+  @override
   void dispose() {
     _continueToAppController.close();
     _checkAndRequestPermissionController.close();

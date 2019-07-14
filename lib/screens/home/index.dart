@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/bloc.dart';
-import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
+import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
   var bloc = QuerySMS();

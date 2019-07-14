@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -13,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class SMSReceiver extends BroadcastReceiver {
-
-  DatabaseHelper databaseHelper;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -28,9 +27,6 @@ public class SMSReceiver extends BroadcastReceiver {
         map.put("body", smsMessage.getMessageBody());
         mapList.add(map);
       }
-
-      databaseHelper = new DatabaseHelper(context).insertToDatabase(mapList);
-
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();
     }
   }

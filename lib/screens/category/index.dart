@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
+import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Category extends StatefulWidget {
   @override

@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
-class QuerySMS {
+class QuerySMS extends BaseBloc{
 
   var methodChannel = MethodChannelClass();
 
@@ -26,6 +27,7 @@ class QuerySMS {
     return result;
   }
 
+  @override
   void dispose() {
     retrieveSMSController.close();
     receiveSMSController.close();
