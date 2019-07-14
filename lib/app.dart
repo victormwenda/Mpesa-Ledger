@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:mpesa_ledger_flutter/blocs/bottombarnavigation/bloc.dart';
-import 'package:mpesa_ledger_flutter/screens/home/index.dart';
+import 'package:mpesa_ledger_flutter/blocs/bottombar_navigation/bottombar_nav_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/main_home.dart';
 import 'package:mpesa_ledger_flutter/widgets/bottom_navigation_bar/bottom_navigation.dart';
 

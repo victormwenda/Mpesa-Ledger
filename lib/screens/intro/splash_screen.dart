@@ -1,15 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
-import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
+import 'package:mpesa_ledger_flutter/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/screens/auth/index.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
   var runtimePermissionBloc = RuntimePermissionsBloc();
   var firebaseAuthBloc = FirebaseAuthBloc();
+  var onAuthStateChanged = FirebaseAuthProvider();
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -19,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    widget.runtimePermissionBloc.checkAndRequestPermissionSink.add(null);
     super.initState();
   }
 
@@ -32,8 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool signedIn;
-
     widget.runtimePermissionBloc.permissionDenialStream.listen((data) {
       if (data) {
         return AlertDialogWidget(
@@ -90,10 +91,10 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (route) => App()),
-      // );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (route) => App()),
+      );
     });
 
     return Scaffold(
@@ -118,29 +119,23 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 20,
             ),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            ),
-            RaisedButton(
-              child: Text("sign in"),
-              onPressed: () {
-                widget.firebaseAuthBloc.signIn();
+            StreamBuilder(
+              stream: widget.onAuthStateChanged.onAuthStateChanged,
+              builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+                if (snapshot.data == null) {
+                  return GoogleSignInButton(
+                    onPressed: () {
+                      widget.firebaseAuthBloc.signInSink.add(null);
+                    },
+                  );
+                } else {
+                  widget.runtimePermissionBloc.checkAndRequestPermissionSink.add(null);
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  );
+                }
               },
             ),
-            RaisedButton(
-              child: Text("check user"),
-              onPressed: () {
-                widget.firebaseAuthBloc.firebaseUser()
-                .then((data) => print(data))
-                .catchError((error) => print(error));
-              },
-            ),
-            RaisedButton(
-              child: Text("sign out"),
-              onPressed: () {
-                widget.firebaseAuthBloc.signOut();
-              },
-            )
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/blocs/query_sms/bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {

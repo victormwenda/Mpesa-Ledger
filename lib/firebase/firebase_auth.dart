@@ -5,25 +5,32 @@ class FirebaseAuthProvider {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> get firebaseUser async {
-    return _firebaseAuth.currentUser();
+  Stream<FirebaseUser> get onAuthStateChanged {
+    return _firebaseAuth.onAuthStateChanged;
   }
 
   Future<void> signIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-    await _firebaseAuth.signInWithCredential(credential);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _firebaseAuth.signInWithCredential(credential);
+    } catch (e) {
+      print("Error here " + e.toString());
+    }
   }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-    await _googleSignIn.disconnect();
+    if (_googleSignIn.currentUser != null) {
+      await _googleSignIn.disconnect();
+    }
   }
 }

@@ -21,20 +21,15 @@ class FirebaseAuthBloc extends BaseBloc {
   StreamSink<void> get firebaseUserSink => _firebaseUserController.sink;
 
   FirebaseAuthBloc() {
-    firebaseUserSink.add(null);
-    signOutStream.listen((void data) => signOut());
-    signInStream.listen((void data) => signIn());
+    signOutStream.listen((void data) => _signOut());
+    signInStream.listen((void data) => _signIn());
   }
 
-  Future<FirebaseUser> firebaseUser() async{
-    return await _firebaseAuthProvider.firebaseUser;
-  }
-
-  void signIn() {
+  void _signIn() {
     _firebaseAuthProvider.signIn();
   }
 
-  void signOut() {
+  void _signOut() {
     _firebaseAuthProvider.signOut();
   }
 
