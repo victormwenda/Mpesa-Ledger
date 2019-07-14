@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(snapshot.data[index]["body"]),
+                      Text(snapshot.data[index]["date"]),
                       SizedBox(
                         height: 20,
                       )

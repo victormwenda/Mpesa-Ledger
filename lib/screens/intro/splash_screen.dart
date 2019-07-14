@@ -6,21 +6,20 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/firebase/firebase_auth.dart';
-import 'package:mpesa_ledger_flutter/screens/auth/index.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
   var runtimePermissionBloc = RuntimePermissionsBloc();
   var firebaseAuthBloc = FirebaseAuthBloc();
   var onAuthStateChanged = FirebaseAuthProvider();
+  var databaseProvider = DatabaseProvider();
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  _SplashScreenState({Key key}) {}
-
   @override
   void initState() {
     super.initState();
@@ -121,15 +120,21 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             StreamBuilder(
               stream: widget.onAuthStateChanged.onAuthStateChanged,
-              builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
                 if (snapshot.data == null) {
-                  return GoogleSignInButton(
-                    onPressed: () {
-                      widget.firebaseAuthBloc.signInSink.add(null);
-                    },
+                  return Column(
+                    children: <Widget>[
+                      GoogleSignInButton(
+                        onPressed: () {
+                          widget.firebaseAuthBloc.signInSink.add(null);
+                        },
+                      ),
+                    ],
                   );
                 } else {
-                  widget.runtimePermissionBloc.checkAndRequestPermissionSink.add(null);
+                  widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                      .add(null);
                   return CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                   );

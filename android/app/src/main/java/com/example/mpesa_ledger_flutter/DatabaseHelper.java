@@ -32,18 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     sqLiteDatabase.setTransactionSuccessful();
     sqLiteDatabase.endTransaction();
     sqLiteDatabase.close();
-    Log.d("MPESA db", readFromDatabase());
-//    Toast.makeText(context, readFromDatabase(), Toast.LENGTH_SHORT).show();
     return null;
-  }
-
-  String readFromDatabase() {
-    SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-    String [] projections = {"address", "body"};
-    Cursor cursor = sqLiteDatabase.query(tableName, projections, null, null, null, null, null);
-    int result = cursor.getCount();
-    cursor.close();
-    return "Number of rows is " + result;
   }
 
   @Override
@@ -54,14 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    sqLiteDatabase.execSQL(
-      "CREATE TABLE IF NOT EXISTS " + tableName + "(" +
-      "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-      "address TEXT," +
-      "body TEXT" +
-      ");"
-    );
-
     Log.d("MPESA db", "ON CREATE");
   }
 
