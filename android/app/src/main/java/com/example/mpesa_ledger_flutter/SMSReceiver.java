@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,14 +20,13 @@ public class SMSReceiver extends BroadcastReceiver {
     if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
 
       Toast.makeText(context, "Message received from SMS", Toast.LENGTH_SHORT).show();
-      List<Map<String, Object>> mapList = new ArrayList<>();
+      List<Map<String, String>> mapList = new ArrayList<>();
       for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("from", smsMessage.getOriginatingAddress());
+        Map<String, String> map = new HashMap<>();
+        map.put("address", smsMessage.getOriginatingAddress());
         map.put("body", smsMessage.getMessageBody());
         mapList.add(map);
       }
-
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();
     }
   }

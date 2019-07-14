@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/blocs/query_sms/bloc.dart';
-import 'package:mpesa_ledger_flutter/widgets/appbar.dart';
+import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
   var bloc = QuerySMS();
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(snapshot.data[index]["body"]),
+                      Text(snapshot.data[index]["date"]),
                       SizedBox(
                         height: 20,
                       )

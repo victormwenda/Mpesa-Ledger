@@ -1,37 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
-import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/bloc.dart';
-import 'package:mpesa_ledger_flutter/widgets/alertDialog.dart';
+import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
+import 'package:mpesa_ledger_flutter/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  var bloc = RuntimePermissionsBloc();
-
+  var runtimePermissionBloc = RuntimePermissionsBloc();
+  var firebaseAuthBloc = FirebaseAuthBloc();
+  var onAuthStateChanged = FirebaseAuthProvider();
+  var databaseProvider = DatabaseProvider();
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  _SplashScreenState({Key key}) {}
-
   @override
   void initState() {
-    widget.bloc.checkAndRequestPermissionSink.add(null);
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.bloc.dispose();
+    widget.runtimePermissionBloc.dispose();
+    widget.firebaseAuthBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var widgetBloc = widget.bloc;
-
-    widgetBloc.permissionDenialStream.listen((data) {
+    widget.runtimePermissionBloc.permissionDenialStream.listen((data) {
       if (data) {
         return AlertDialogWidget(
           context,
@@ -48,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
             FlatButton(
               child: Text("ALLOW PERMISSIONS"),
               onPressed: () {
-                widget.bloc.checkAndRequestPermissionSink.add(null);
+                widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                    .add(null);
                 Navigator.pop(context);
               },
             )
@@ -57,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widgetBloc.openAppSettingsStream.listen((data) {
+    widget.runtimePermissionBloc.openAppSettingsStream.listen((data) {
       if (data) {
         return AlertDialogWidget(
           context,
@@ -85,12 +89,13 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widgetBloc.continueToAppStream.listen((void data) {
+    widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (route) => App()),
       );
     });
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -113,9 +118,29 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 20,
             ),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            )
+            StreamBuilder(
+              stream: widget.onAuthStateChanged.onAuthStateChanged,
+              builder:
+                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+                if (snapshot.data == null) {
+                  return Column(
+                    children: <Widget>[
+                      GoogleSignInButton(
+                        onPressed: () {
+                          widget.firebaseAuthBloc.signInSink.add(null);
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                      .add(null);
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

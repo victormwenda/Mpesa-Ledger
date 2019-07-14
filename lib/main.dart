@@ -9,11 +9,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Material App',
-      theme: ThemeData(fontFamily: 'Montserrat'),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen()
-    );
+        title: 'Material App',
+        theme: ThemeData(
+            fontFamily: 'Montserrat',
+            primaryColor: Colors.deepPurpleAccent,
+            accentColor: Colors.deepPurpleAccent),
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen());
   }
 }

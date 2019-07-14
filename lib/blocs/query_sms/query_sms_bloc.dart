@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 
+import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
-class QuerySMS {
+class QuerySMS extends BaseBloc{
 
   var methodChannel = MethodChannelClass();
 
@@ -21,24 +21,13 @@ class QuerySMS {
   StreamSink<List<dynamic>> get receiveSMSSink =>
       receiveSMSController.sink;
 
-  QuerySMS() {
-    methodChannel.setMethodCallHandler(_handleCallsFromNative);
-  }
-
   Future<List<dynamic>> retrieveSMSMessages() async {
     var result = await methodChannel.invokeMethod("retrieveSMSMessages");
     retrieveSMSSink.add(result);
     return result;
   }
 
-  Future<void> _handleCallsFromNative(MethodCall call) async {
-    switch (call.method) {
-      case "receiveSMSMessages":
-        print(call.arguments);
-        break;
-    }
-  }
-
+  @override
   void dispose() {
     retrieveSMSController.close();
     receiveSMSController.close();

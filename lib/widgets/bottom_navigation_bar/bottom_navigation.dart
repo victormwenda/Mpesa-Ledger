@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/blocs/bottombarnavigation/bloc.dart';
-import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
+import 'package:mpesa_ledger_flutter/blocs/bottombar_navigation/bottombar_nav_bloc.dart';import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   var bloc = BottombarNavigationBloc();
