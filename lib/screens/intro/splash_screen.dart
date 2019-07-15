@@ -7,7 +7,8 @@ import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
-import 'package:mpesa_ledger_flutter/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -122,19 +123,23 @@ class _SplashScreenState extends State<SplashScreen> {
               stream: widget.onAuthStateChanged.onAuthStateChanged,
               builder:
                   (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-                if (snapshot.data == null) {
+                if (snapshot.data != null) {
                   return Column(
                     children: <Widget>[
                       GoogleSignInButton(
                         onPressed: () {
-                          widget.firebaseAuthBloc.signInSink.add(null);
+                          // widget.firebaseAuthBloc.signInSink.add(null);
+                          SMSFilter sms = SMSFilter();
+                          sms.getRegex();
+                          // DatabaseProvider databaseProvider = DatabaseProvider();
+                          // databaseProvider.select();
                         },
                       ),
                     ],
                   );
                 } else {
-                  widget.runtimePermissionBloc.checkAndRequestPermissionSink
-                      .add(null);
+                  // widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                  //     .add(null);
                   return CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                   );

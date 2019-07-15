@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
-import 'package:mpesa_ledger_flutter/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 
 class FirebaseAuthBloc extends BaseBloc {
   var _firebaseAuthProvider = FirebaseAuthProvider();
