@@ -5,7 +5,7 @@ final List<String> schema = [
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     timestamp INTEGER NOT NULL,
-    mpesa_balance REAL NOT NUll,
+    mpesa_balance REAL,
     amount REAL NOT NULL,
     is_deposit INTEGER NOT NULL CHECK(is_deposit = 0 or is_deposit = 1),
     transaction_cost REAL NOT NULL,

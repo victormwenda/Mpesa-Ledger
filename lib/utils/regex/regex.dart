@@ -1,10 +1,10 @@
 class RegexClass {
-  RegExp expression;
+  String expression;
   String input;
   RegexClass(this.expression, this.input);
 
   List<String> get getAllMatchResults {
-    Iterable<RegExpMatch> matches = expression.allMatches(input);
+    Iterable<RegExpMatch> matches = RegExp(expression).allMatches(input);
     List<RegExpMatch> listMatches = matches.toList();
     List<String> result = List<String>();
     for (var i = 0; i < listMatches.length; i++) {
@@ -14,12 +14,12 @@ class RegexClass {
   }
 
   String get getFirstMatch {
-    RegExpMatch match = expression.firstMatch(input);
+    RegExpMatch match = RegExp(expression).firstMatch(input);
     return match.group(0) != null ? match.group(0) : null;
   }
 
   bool get hasMatch {
-    bool match = expression.hasMatch(input);
+    bool match = RegExp(expression).hasMatch(input);
     if(match) return true;
     return false;
   }

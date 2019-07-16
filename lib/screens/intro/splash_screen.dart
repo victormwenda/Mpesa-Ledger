@@ -130,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         onPressed: () {
                           // widget.firebaseAuthBloc.signInSink.add(null);
                           SMSFilter sms = SMSFilter();
-                          sms.getRegex();
+                          sms.getSMSObject();
                           // DatabaseProvider databaseProvider = DatabaseProvider();
                           // databaseProvider.select();
                         },
