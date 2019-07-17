@@ -1,46 +1,51 @@
-import 'package:mpesa_ledger_flutter/sms_filter/sms_filters.dart';
+import 'package:mpesa_ledger_flutter/sms_filter/check_sms_type.dart';
 import 'package:mpesa_ledger_flutter/utils/constants/regex_constants.dart';
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 
 class SMSFilter {
+  Map<String, dynamic> smsObject = {};
   static String body =
-      "NFQ0UL54AK Confirmed. On 26/6/19 at 5:30 PM Give Ksh150.00 cash to Fontana Services Strathmore University Madaraka Olesangare RD New M-PESA balance is Ksh308.00. Dial *234*1# to manage your bills.";
+      "TERT6566 confirmed. Reversal of transaction DFGFGDF546 has been successfully reversed on 12/12/19 at 12:45 pm and ksh600.00 is debited from your M-PESA account. New M-PESA account balance is ksh5000.00";
 
-  SMSFilters smsFilters = SMSFilters(body);
+  CheckSMSType smsFilters = CheckSMSType(body);
 
   bool isRegexTrue(String expression) {
     return RegexClass(expression, body).hasMatch;
   }
 
-  void getSMSObject() async {
-    smsFilters.getCoreValues();
+  Map<String, dynamic> getSMSObject() {
+    smsObject.addAll(smsFilters.getCoreValues());
+    smsObject["data"].addAll(checkTypeOfSMS());
+    return smsObject;
   }
 
-  void checkTypeOfSMS() {
+  Map<String, dynamic> checkTypeOfSMS() {
+    Map<String, dynamic> result;
     if (isRegexTrue(buyAirtimeForMyself)) {
-      print("AIRTIME FOR MYSELF");
+      result = smsFilters.buyAirtimeForMyself();
     } else if (isRegexTrue(buyAirtimeForSomeone)) {
-      print("AIRTIME FOR SOMEONE");
+      result = smsFilters.buyAirtimeForSomeone();
+    } else if (isRegexTrue(depositToAgent)) {
+      result = smsFilters.depositToAgent();
+    } else if (isRegexTrue(withdrawFromAgent)) {
+      result = smsFilters.withdrawFromAgent();
     } else if (isRegexTrue(sendToPerson)) {
-      print("SEND TO PERSON");
+      result = smsFilters.sendToPerson();
     } else if (isRegexTrue(receiveFromPerson)) {
-      print("RECEIVE FROM PERSON");
+      result = smsFilters.receiveFromPerson();
     } else if (isRegexTrue(sendToPaybill)) {
-      print("SEND TO PAYBILL");
+      result = smsFilters.sendToPaybill();
     } else if (isRegexTrue(receiveFromPaybill)) {
-      print("RECEIVE FROM PAYBILL");
+      result = smsFilters.receiveFromPaybill();
     } else if (isRegexTrue(sendToBuyGoods)) {
-      print("SEND TO BUY GOODS");
-    } else if (isRegexTrue(sendToAgent)) {
-      print("SEND TO AGENT");
-    } else if (isRegexTrue(receiveFromAgent)) {
-      print("RECEIVE FROM AGENT");
+      result = smsFilters.sendToBuyGoods();
     } else if (isRegexTrue(reversalToAccount)) {
-      print("REVERSAL TO ACCOUNT");
-    } else if (isRegexTrue(receiveFromAgent)) {
-      print("REVERSAL FROM ACCOUNT");
+      result = smsFilters.reversalToAccount();
+    } else if (isRegexTrue(reversalFromAccount)) {
+      result = smsFilters.reversalFromAccount();
     } else {
-      print("UNKNOWN SMS MESSAGE");
+      result = {"error": "Unkwnown Transaction"};
     }
+    return result;
   }
 }
