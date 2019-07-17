@@ -1,9 +1,9 @@
 String date = "\\d{1,2}/\\d{1,2}/\\d{2,4}";
 String time = "\\d{1,2}:\\d{1,2}\\s*?([Aa][Mm]|[Pp][Mm])";
-String amount = "\\d+\\.\\d{1,2}";
-String currency = "[Kk][Ss][Hh]\\s*?";
-String mpesaBalance = "(?<=(M-PESA)?\\s*?(account\\s*?)?balance\\s*?(was|is)\\s*?$currency)$amount";
-String tranactionCost = "(?<=[Tt]ransaction\\s*?cost,?\\s*?$currency)$amount";
+String amount = "(\\d{1,3},?)?(\\d{1,3})(\\.\\d{1,2})";
+String currency = "[Kk][Ss][Hh]\\s*?.*?";
+String mpesaBalance = "(?<=M-PESA\\s*?(account\\s*?)?balance\\s*?(was|is)\\s*?$currency)$amount";
+String transactionCost = "(?<=[Tt]ransaction\\s*?cost,?\\s*?$currency)$amount";
 String transactionId = "[A-Z0-9]+(?=\\s*?[Cc]onfirmed)";
 String phoneNumber = "(254\\s*?|0)?7\\d{8}";
 

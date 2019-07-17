@@ -126,6 +126,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (snapshot.data != null) {
                   return Column(
                     children: <Widget>[
+                      CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
                       GoogleSignInButton(
                         onPressed: () {
                           // widget.firebaseAuthBloc.signInSink.add(null);

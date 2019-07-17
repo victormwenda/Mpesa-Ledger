@@ -5,7 +5,7 @@ import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 class SMSFilter {
   Map<String, dynamic> smsObject = {};
   static String body =
-      "TERT6566 confirmed. Reversal of transaction DFGFGDF546 has been successfully reversed on 12/12/19 at 12:45 pm and ksh600.00 is debited from your M-PESA account. New M-PESA account balance is ksh5000.00";
+      "NFR5VCBFR9 Confirmed. On 27/6/19 at 5:21 PM Give Ksh100.00 cash to Camara (ss) Interco shariifs shoes shop six street eastleigh New M-PESA balance is Ksh293.00. Dial *234*1# to manage your bills.";
 
   CheckSMSType smsFilters = CheckSMSType(body);
 
@@ -16,6 +16,7 @@ class SMSFilter {
   Map<String, dynamic> getSMSObject() {
     smsObject.addAll(smsFilters.getCoreValues());
     smsObject["data"].addAll(checkTypeOfSMS());
+    print(smsObject);
     return smsObject;
   }
 
@@ -44,7 +45,7 @@ class SMSFilter {
     } else if (isRegexTrue(reversalFromAccount)) {
       result = smsFilters.reversalFromAccount();
     } else {
-      result = {"error": "Unkwnown Transaction"};
+      result = smsFilters.unknownSMSMessage();
     }
     return result;
   }

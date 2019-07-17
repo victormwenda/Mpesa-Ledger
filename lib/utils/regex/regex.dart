@@ -1,6 +1,7 @@
 class RegexClass {
   String expression;
   String input;
+  String replaceWith;
   RegexClass(this.expression, this.input);
 
   List<String> get getAllMatchResults {
