@@ -21,7 +21,7 @@ public class SMSRetriever {
     while (cursor.moveToNext()) {
       if (cursor.getString(cursor.getColumnIndexOrThrow("address")).equals("MPESA")){
         Map<String, Object> map = new HashMap<>();
-        map.put("date", cursor.getString(cursor.getColumnIndexOrThrow("date")));
+        map.put("timestamp", cursor.getString(cursor.getColumnIndexOrThrow("date")));
         map.put("body", cursor.getString(cursor.getColumnIndexOrThrow("body")));
         mapList.add(map);
       }

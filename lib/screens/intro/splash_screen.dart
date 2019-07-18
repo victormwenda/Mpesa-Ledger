@@ -9,6 +9,7 @@ import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permissio
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
+import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -90,12 +91,12 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (route) => App()),
-      );
-    });
+    // widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (route) => App()),
+    //   );
+    // });
 
     return Scaffold(
       body: Center(
@@ -123,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
               stream: widget.onAuthStateChanged.onAuthStateChanged,
               builder:
                   (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-                if (snapshot.data != null) {
+                if (snapshot.data == null) {
                   return Column(
                     children: <Widget>[
                       CircularProgressIndicator(
@@ -133,16 +134,21 @@ class _SplashScreenState extends State<SplashScreen> {
                         onPressed: () {
                           // widget.firebaseAuthBloc.signInSink.add(null);
                           SMSFilter sms = SMSFilter();
-                          sms.getSMSObject();
+                          sms.test();
+                          // print("STARTED");
                           // DatabaseProvider databaseProvider = DatabaseProvider();
                           // databaseProvider.select();
+
+                          // DateFormatUtil dateTime = DateFormatUtil();
+                          // dateTime.getTimestamp("27/6/19 7:33 PM");
+                          // print(dateTime.getCurrentTimestamp);
                         },
                       ),
                     ],
                   );
                 } else {
-                  // widget.runtimePermissionBloc.checkAndRequestPermissionSink
-                  //     .add(null);
+                  widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                      .add(null);
                   return CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                   );

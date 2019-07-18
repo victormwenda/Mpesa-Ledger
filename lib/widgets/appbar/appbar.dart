@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class AppbarWidget extends StatefulWidget {
   String title;
@@ -14,8 +15,6 @@ class AppbarWidget extends StatefulWidget {
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
 }
-
-enum PopupMenuButtonItems { settings, about }
 
 class _AppbarWidgetState extends State<AppbarWidget> {
   List<Widget> showAppIcons(BuildContext context) {

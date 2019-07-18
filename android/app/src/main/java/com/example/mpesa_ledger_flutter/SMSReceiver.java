@@ -25,6 +25,7 @@ public class SMSReceiver extends BroadcastReceiver {
         Map<String, String> map = new HashMap<>();
         map.put("address", smsMessage.getOriginatingAddress());
         map.put("body", smsMessage.getMessageBody());
+        map.put("timestamp", String.valueOf((smsMessage.getTimestampMillis()/1000)));
         mapList.add(map);
       }
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();

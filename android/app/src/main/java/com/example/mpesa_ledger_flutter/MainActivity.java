@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -46,6 +48,9 @@ public class MainActivity extends FlutterActivity {
         SMSRetriever smsRetriever = new SMSRetriever(cursor);
         List<Map<String, Object>> smsResult = smsRetriever.getAllSMSMessages();
         result.success(smsResult);
+      } else if (methodCall.method.equals("changeStringToTimestamp")) {
+        DateTime dateTime = new DateTime(methodCall);
+        result.success(dateTime.getTimestamp());
       }
     });
   }

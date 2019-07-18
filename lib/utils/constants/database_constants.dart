@@ -1,3 +1,5 @@
+final String databaseName = "MpesaLedger.db";
+
 final List<String> schema = [
   '''
   CREATE TABLE IF NOT EXISTS transactions (
@@ -72,5 +74,3 @@ final List<String> schema = [
     ("Reversals", "Reversals Description", "[]", 0, 0, 0, strftime('%s', 'now'))
   '''
 ];
-
-final String databaseName = "MpesaLedger.db";

@@ -1,14 +1,21 @@
 import 'package:mpesa_ledger_flutter/utils/constants/regex_constants.dart'
     as regexString;
+import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/replace.dart';
 
 class CheckSMSType {
   var replace = ReplaceClass();
+  var dateFormatUtil = DateFormatUtil();
   String body;
+  String timestamp;
 
-  CheckSMSType(this.body);
+  CheckSMSType(this.body, this.timestamp);
+
+  bool isRegexTrue(String expression) {
+    return RegexClass(expression, body).hasMatch;
+  }
 
   bool checkRegexHasMatch(String expression) {
     return RegexClass(expression, body).hasMatch;
@@ -22,12 +29,44 @@ class CheckSMSType {
     return RegexClass(expression, input).getAllMatchResults;
   }
 
-  Map<String, dynamic> getCoreValues() {
+  Map<String, dynamic> checkTypeOfSMS() {
+    Map<String, dynamic> result;
+    if (isRegexTrue(regexString.buyAirtimeForMyself)) {
+      result = buyAirtimeForMyself();
+    } else if (isRegexTrue(regexString.buyAirtimeForSomeone)) {
+      result = buyAirtimeForSomeone();
+    } else if (isRegexTrue(regexString.depositToAgent)) {
+      result = depositToAgent();
+    } else if (isRegexTrue(regexString.withdrawFromAgent)) {
+      result = withdrawFromAgent();
+    } else if (isRegexTrue(regexString.sendToPerson)) {
+      result = sendToPerson();
+    } else if (isRegexTrue(regexString.receiveFromPerson)) {
+      result = receiveFromPerson();
+    } else if (isRegexTrue(regexString.sendToPaybill)) {
+      result = sendToPaybill();
+    } else if (isRegexTrue(regexString.receiveFromPaybill)) {
+      result = receiveFromPaybill();
+    } else if (isRegexTrue(regexString.sendToBuyGoods)) {
+      result = sendToBuyGoods();
+    } else if (isRegexTrue(regexString.reversalToAccount)) {
+      result = reversalToAccount();
+    } else if (isRegexTrue(regexString.reversalFromAccount)) {
+      result = reversalFromAccount();
+    } else {
+      result = unknownSMSMessage();
+    }
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getCoreValues() async {
     // Triggers if SMS message is not of importance
     if (!(checkRegexHasMatch(regexString.mpesaBalance) ||
         checkRegexHasMatch(regexString.transactionCost) ||
         checkRegexHasMatch(regexString.transactionId))) {
-      return {"error": "Not an important SMS message"};
+      return {
+        "error": "Not an important SMS message"
+      };
     }
     double mpesaBalance = checkRegexHasMatch(regexString.mpesaBalance)
         ? double.parse(
@@ -47,19 +86,19 @@ class CheckSMSType {
             ),
           )
         : 0.00;
-    String date = checkRegexHasMatch(regexString.date)
-        ? getRegexFirstMatch(regexString.date)
-        : "7/16/19";
-    String time = checkRegexHasMatch(regexString.time)
-        ? getRegexFirstMatch(regexString.time)
-        : "10:33 AM";
+    int dateTime = checkRegexHasMatch(regexString.date) &&
+            checkRegexHasMatch(regexString.time)
+        ? await dateFormatUtil.getTimestamp(getRegexFirstMatch(regexString.date) +
+            " " +
+            getRegexFirstMatch(regexString.time))
+        : int.parse(timestamp);
     String transactionId = checkRegexHasMatch(regexString.transactionId)
         ? getRegexFirstMatch(regexString.transactionId)
         : null;
     return {
       "data": {
         "mpesaBalance": mpesaBalance,
-        "timestamp": date + time,
+        "timestamp": dateTime,
         "transactionCost": transactionCost,
         "transactionId": transactionId
       },
@@ -161,7 +200,9 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(getRegexFirstMatch(regexString.depositToAgentBusinessName).trim()).title_case;
+    String title = ReCaseClass(
+            getRegexFirstMatch(regexString.depositToAgentBusinessName).trim())
+        .title_case;
     return {"amount": amount, "title": title, "body": body, "isDeposit": 1};
   }
 
@@ -171,7 +212,10 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(getRegexFirstMatch(regexString.withdrawFromAgentBusinessName).trim()).title_case;
+    String title = ReCaseClass(
+            getRegexFirstMatch(regexString.withdrawFromAgentBusinessName)
+                .trim())
+        .title_case;
     return {"amount": amount, "title": title, "body": body, "isDeposit": 0};
   }
 
