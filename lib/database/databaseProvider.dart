@@ -53,4 +53,12 @@ class DatabaseProvider {
     _database = null;
     print("DATABASE DELETED");
   }
+
+  void select() async {
+    var db = await database;
+    List<Map<String, dynamic>> l = await db.query("transactions");
+    for (var i = 0; i < l.length; i++) {
+      print(l[i]);
+    }
+  }
 }

@@ -14,11 +14,11 @@ final List<String> schema = [
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     timestamp INTEGER NOT NULL,
-    mpesa_balance REAL,
+    mpesaBalance REAL,
     amount REAL NOT NULL,
-    is_deposit INTEGER NOT NULL CHECK(is_deposit = 0 or is_deposit = 1),
-    transaction_cost REAL NOT NULL,
-    transaction_id TEXT
+    isDeposit INTEGER NOT NULL CHECK(isDeposit = 0 or isDeposit = 1),
+    transactionCost REAL NOT NULL,
+    transactionId TEXT
   );
   ''',
   '''
@@ -26,10 +26,10 @@ final List<String> schema = [
     id INTEGER PRIMAMRY KEY,
     body TEXT NOT NULL,
     timestamp INTEGER NOT NULL,
-    mpesa_balance REAL NOT NUll,
+    mpesaBalance REAL,
     amounts TEXT,
-    transaction_cost REAL NOT NULL,
-    transaction_id TEXT
+    transactionCost REAL NOT NULL,
+    transactionId TEXT
   );
   ''',
   '''
@@ -45,8 +45,8 @@ final List<String> schema = [
     title TEXT NOT NULL,
     description TEXT,
     keywords TEXT NOT NULL,
-    showKeywords INTEGER NOT NULL CHECK(show_keywords = 0 or show_keywords = 1),
-    canDelete INTEGER NOT NULL CHECK(can_delete = 0 or can_delete = 1),
+    showKeywords INTEGER NOT NULL CHECK(showKeywords = 0 or showKeywords = 1),
+    canDelete INTEGER NOT NULL CHECK(canDelete = 0 or canDelete = 1),
     numberOfTransactions INTEGER NOT NULL,
     createdOn INTEGER NOT NULL
   );
@@ -56,8 +56,8 @@ final List<String> schema = [
     id INTEGER PRIMARY KEY,
     transactionId INTEGER NOT NULL,
     categoryId INTEGER NOT NULL,
-    FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+    FOREIGN KEY (transactionId) REFERENCES transactions(id) ON DELETE CASCADE,
+    FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE
   );
   ''',
   '''
@@ -73,12 +73,12 @@ final List<String> schema = [
   '''
   INSERT INTO $categoriesTable (title, description, keywords, showKeywords, canDelete,  numberOfTransactions, createdOn) 
     VALUES 
-    ("Airtime", "Airtime Description", "["airtime_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("People", "People Transactions Description", "["people_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("Paybill", "Paybill Description", "["paybill_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("Buy Goods", "Buy Goods Description", "["buy_goods_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("Agent Transactions", "Agent Transactions Description", "["agent_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("Reversals", "Reversals Description", "["reversal_transaction"]", 0, 0, 0, strftime('%s', 'now')),
-    ("Other", "These are unknown transactions, that were not identified", "["other_transaction"]", 0, 0, 0, strftime('%s', 'now'))
+    ("Airtime", "Airtime Description", "['airtime_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("People", "People Transactions Description", "['people_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Paybill", "Paybill Description", "['paybill_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Buy Goods", "Buy Goods Description", "['buy_goods_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Agent Transactions", "Agent Transactions Description", "['agent_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Reversals", "Reversals Description", "['reversal_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Other", "These are unknown transactions that were not identified", "['other_transaction']", 0, 0, 0, strftime('%s', 'now'))
   '''
 ];

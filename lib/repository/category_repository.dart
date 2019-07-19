@@ -11,7 +11,7 @@ class CategoryRepository {
     return await _databaseProvider.database;
   }
 
-  Future<List<CategoryModel>> getAllCategories(List<String> columns,
+  Future<List<CategoryModel>> getAll(List<String> columns,
       {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;

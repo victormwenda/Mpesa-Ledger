@@ -11,18 +11,32 @@ class CategoryModel {
   int createdOn;
 
   CategoryModel.fromMap(Map<String, dynamic> map) {
-    title = map["title"];
-    description = map["description"];
-    keywords = RegexUtil("\\w+", map["keywords"]).getAllMatchResults;
-    showKeywords = map["showKeywords"] == 1 ? true : false;
-    canDelete = map["canDelete"] == 1 ? true : false;
-    numberOfTransactions = map["numberOfTransactions"];
-    createdOn = map["createdOn"];
-    id = map["id"] != null ? map["id"] : null;
+    title = map["title"] == null 
+        ? null 
+        : map["title"];
+    description = map["description"] == null 
+        ? null 
+        : map["description"];
+    keywords = map["keywords"] == null
+        ? null
+        : RegexUtil("\\w+", map["keywords"]).getAllMatchResults;
+    showKeywords = map["showKeywords"] == null
+        ? null
+        : map["showKeywords"] == 1 ? true : false;
+    canDelete = map["canDelete"] == null 
+        ? null 
+        : map["canDelete"] == 1 ? true : false;
+    numberOfTransactions = map["numberOfTransactions"] == null 
+        ? null 
+        : map["numberOfTransactions"];
+    createdOn = map["createdOn"] == null 
+        ? null 
+        : map["createdOn"];
+    id = map["id"] == null ? null : map["id"];
   }
 
   Map<String, dynamic> toMap() {
-     Map<String, dynamic> map = {
+    Map<String, dynamic> map = {
       "title": title,
       "description": description,
       "keywords": keywords.toString(),
@@ -36,5 +50,4 @@ class CategoryModel {
     }
     return map;
   }
-
 }

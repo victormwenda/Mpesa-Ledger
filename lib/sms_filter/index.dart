@@ -1,23 +1,27 @@
 import 'dart:core';
 
+import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
+import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/sms_filter/check_sms_type.dart';
 
 class SMSFilter {
   CheckSMSType smsFilters;
 
+  TransactionRepository transactionRepo = TransactionRepository();
+  UnknownTransactionRepository unknownTransactionRepo =
+      UnknownTransactionRepository();
+
   List<Map<String, dynamic>> bodies = [
     {
       "body":
-          "NFM0RAI80W Confirmed.Your M-PESA balance was  Ksh0.00  on 22/6/19 at 10:35 AM. Transaction cost, Ksh0.00.[OTHER]",
+          "NFM6RAIRZO Confirmed.Ksh200.00 transferred from M-Shwari account on 22/6/19 at 10:35 AM. M-Shwari balance is Ksh4,340.43 .M-PESA balance is Ksh200.00 .Transaction cost Ksh.0.00.",
       "timestamp": "1563442495"
     },
     {
       "body":
-          "NFM6RAIRZO Confirmed.Ksh200.00 transferred from M-Shwari account on 22/6/19 at 10:35 AM. M-Shwari balance is Ksh4,340.43 .M-PESA balance is Ksh200.00 .Transaction cost Ksh.0.00.[OTHER]",
-      "timestamp": "1563442495"
-    },
-    {
-      "body": "NFM2RAJZYM confirmed.You bought Ksh5.00 of airtime on 22/6/19 at 10:37 AM.New M-PESA balance is Ksh195.00. Transaction cost, Ksh0.00. To reverse, forward this message to 456.[AIRTIME]",
+          "NFM2RAJZYM confirmed.You bought Ksh5.00 of airtime on 22/6/19 at 10:37 AM.New M-PESA balance is Ksh195.00. Transaction cost, Ksh0.00. To reverse, forward this message to 456.",
       "timestamp": "1563442495"
     },
     {
@@ -54,11 +58,17 @@ class SMSFilter {
         Map<String, dynamic> result = {};
         var obj = await getSMSObject(bodies[i]["body"], bodies[i]["timestamp"]);
         if (obj.isNotEmpty) {
-          result.addAll(obj);
-          listResult.add(result);
+          // result.addAll(obj);
+          // listResult.add(result);
+          if (obj["data"].containsKey("amounts")) {
+            await unknownTransactionRepo.insert(UnknownTransactionsModel.fromMap(obj["data"]));
+            print("UNKNOWN TXN ADDED");
+          } else {
+            int id = await transactionRepo.insert(TransactionModel.fromMap(obj["data"]));
+            
+          }
         }
       }
-      print(listResult);
       return listResult;
     } catch (e) {
       print(e);

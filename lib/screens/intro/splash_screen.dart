@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           sms.test();
                           // print("STARTED");
                           // DatabaseProvider databaseProvider = DatabaseProvider();
-                          // databaseProvider.select();
+                          // databaseProvider.deleteDatabaseMeth();
 
                           // DateFormatUtil dateTime = DateFormatUtil();
                           // dateTime.getTimestamp("27/6/19 7:33 PM");

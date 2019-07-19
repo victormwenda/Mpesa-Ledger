@@ -11,12 +11,12 @@ class TransactionRepository {
     return await _databaseProvider.database;
   }
 
-  Future<int> insertTransaction(TransactionModel transaction) async {
+  Future<int> insert(TransactionModel transaction) async {
     var db = await database;
     return await db.insert(tableName, transaction.toMap());
   }
 
-  Future<List<TransactionModel>> getAllTransactions(
+  Future<List<TransactionModel>> getAll(
       List<String> columns, {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
