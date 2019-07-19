@@ -17,7 +17,7 @@ class TransactionRepository {
   }
 
   Future<List<TransactionModel>> getAllTransactions(
-      {List<String> columns, String query}) async {
+      List<String> columns, {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
     if (query != null && query.isNotEmpty) {
@@ -28,7 +28,7 @@ class TransactionRepository {
         whereArgs: ["%$query%"],
       );
     } else {
-      result = await db.query(tableName);
+      result = await db.query(tableName, columns: columns);
     }
     List<TransactionModel> transactions = result.isNotEmpty
         ? result.map((data) => TransactionModel.fromMap(data)).toList()

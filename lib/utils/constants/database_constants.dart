@@ -45,10 +45,10 @@ final List<String> schema = [
     title TEXT NOT NULL,
     description TEXT,
     keywords TEXT NOT NULL,
-    show_keywords INTEGER NOT NULL CHECK(show_keywords = 0 or show_keywords = 1),
-    can_delete INTEGER NOT NULL CHECK(can_delete = 0 or can_delete = 1),
-    number_of_transactions INTEGER NOT NULL,
-    created_on INTEGER NOT NULL
+    showKeywords INTEGER NOT NULL CHECK(show_keywords = 0 or show_keywords = 1),
+    canDelete INTEGER NOT NULL CHECK(can_delete = 0 or can_delete = 1),
+    numberOfTransactions INTEGER NOT NULL,
+    createdOn INTEGER NOT NULL
   );
   ''',
   '''
@@ -71,7 +71,7 @@ final List<String> schema = [
   );
   ''',
   '''
-  INSERT INTO $categoriesTable (title, description, keywords, show_keywords, can_delete,  number_of_transactions, created_on) 
+  INSERT INTO $categoriesTable (title, description, keywords, showKeywords, canDelete,  numberOfTransactions, createdOn) 
     VALUES 
     ("Airtime", "Airtime Description", "["airtime_transaction"]", 0, 0, 0, strftime('%s', 'now')),
     ("People", "People Transactions Description", "["people_transaction"]", 0, 0, 0, strftime('%s', 'now')),
