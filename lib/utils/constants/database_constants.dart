@@ -54,8 +54,8 @@ final List<String> schema = [
   '''
   CREATE TABLE $transactionCategoryTable (
     id INTEGER PRIMARY KEY,
-    transaction_id INTEGER NOT NULL,
-    category_id INTEGER NOT NULL,
+    transactionId INTEGER NOT NULL,
+    categoryId INTEGER NOT NULL,
     FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
   );
