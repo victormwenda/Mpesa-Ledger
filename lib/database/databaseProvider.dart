@@ -53,11 +53,4 @@ class DatabaseProvider {
     _database = null;
     print("DATABASE DELETED");
   }
-
-  void select() async{
-    var db = await database;
-    print(_database);
-    var j = await db.query("categories");
-    print(j);
-  }
 }

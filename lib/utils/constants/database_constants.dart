@@ -1,8 +1,15 @@
 final String databaseName = "MpesaLedger.db";
 
+final String transactionsTable = "transactions";
+final String unknownTransactionsTable = "unknownTransactions";
+final String unrecordedTransactionsTable = "unrecordedTransactions";
+final String categoriesTable = "categories";
+final String transactionCategoryTable = "transactionCategory";
+final String summaryTable = "summary";
+
 final List<String> schema = [
   '''
-  CREATE TABLE IF NOT EXISTS transactions (
+  CREATE TABLE IF NOT EXISTS $transactionsTable (
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
@@ -15,7 +22,7 @@ final List<String> schema = [
   );
   ''',
   '''
-  CREATE TABLE IF NOT EXISTS unknown_transactions (
+  CREATE TABLE IF NOT EXISTS $unknownTransactionsTable (
     id INTEGER PRIMAMRY KEY,
     body TEXT NOT NULL,
     timestamp INTEGER NOT NULL,
@@ -26,14 +33,14 @@ final List<String> schema = [
   );
   ''',
   '''
-  CREATE TABLE IF NOT EXISTS unrecorded_transactions (
+  CREATE TABLE IF NOT EXISTS $unrecordedTransactionsTable (
     id INTEGER PRIMARY KEY,
     timestamp INTEGER NOT NULL,
     body TEXT NOT NULL
   );
   ''',
   '''
-  CREATE TABLE IF NOT EXISTS categories (
+  CREATE TABLE IF NOT EXISTS $categoriesTable (
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT,
@@ -45,7 +52,7 @@ final List<String> schema = [
   );
   ''',
   '''
-  CREATE TABLE transaction_category (
+  CREATE TABLE $transactionCategoryTable (
     id INTEGER PRIMARY KEY,
     transaction_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
@@ -54,7 +61,7 @@ final List<String> schema = [
   );
   ''',
   '''
-  CREATE TABLE summary (
+  CREATE TABLE $summaryTable (
     id INTEGER PRIMARY KEY,
     month TEXT NOT NULL,
     year INTEGER NOT NULL,
@@ -64,13 +71,14 @@ final List<String> schema = [
   );
   ''',
   '''
-  INSERT INTO categories (title, description, keywords, show_keywords, can_delete,  number_of_transactions, created_on) 
+  INSERT INTO $categoriesTable (title, description, keywords, show_keywords, can_delete,  number_of_transactions, created_on) 
     VALUES 
-    ("Airtime", "Airtime Description", "[]", 0, 0, 0, strftime('%s', 'now')),
-    ("People", "Peeple Transactions Description", "[]", 0, 0, 0, strftime('%s', 'now')),
-    ("Paybill", "Paybill Description", "[]", 0, 0, 0, strftime('%s', 'now')),
-    ("Buy Goods", "Buy Goods Description", "[]", 0, 0, 0, strftime('%s', 'now')),
-    ("Agent Transactions", "Agent Transactions Description", "[]", 0, 0, 0, strftime('%s', 'now')),
-    ("Reversals", "Reversals Description", "[]", 0, 0, 0, strftime('%s', 'now'))
+    ("Airtime", "Airtime Description", "["airtime_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("People", "People Transactions Description", "["people_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("Paybill", "Paybill Description", "["paybill_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("Buy Goods", "Buy Goods Description", "["buy_goods_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("Agent Transactions", "Agent Transactions Description", "["agent_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("Reversals", "Reversals Description", "["reversal_transaction"]", 0, 0, 0, strftime('%s', 'now')),
+    ("Other", "These are unknown transactions, that were not identified", "["other_transaction"]", 0, 0, 0, strftime('%s', 'now'))
   '''
 ];

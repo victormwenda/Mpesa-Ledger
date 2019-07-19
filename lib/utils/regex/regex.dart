@@ -1,8 +1,8 @@
-class RegexClass {
+class RegexUtil {
   String expression;
   String input;
   String replaceWith;
-  RegexClass(this.expression, this.input);
+  RegexUtil(this.expression, this.input);
 
   List<String> get getAllMatchResults {
     Iterable<RegExpMatch> matches = RegExp(expression).allMatches(input);

@@ -1,4 +1,4 @@
-class ReplaceClass {
+class ReplaceUtil {
 
   String replaceString(String input, String replaceWhat, String replaceWith) {
     return input.replaceAllMapped(RegExp(replaceWhat), (Match match) {

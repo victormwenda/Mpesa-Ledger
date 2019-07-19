@@ -1,11 +1,11 @@
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 import 'package:recase/recase.dart';
 
-class ReCaseClass {
+class RecaseUtil {
   String input;
   ReCase recase;
 
-  ReCaseClass(this.input) {
+  RecaseUtil(this.input) {
     recase = ReCase(input);
   }
 

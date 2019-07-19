@@ -6,7 +6,7 @@ import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/replace.dart';
 
 class CheckSMSType {
-  var replace = ReplaceClass();
+  var replace = ReplaceUtil();
   var dateFormatUtil = DateFormatUtil();
   String body;
   String timestamp;
@@ -14,19 +14,19 @@ class CheckSMSType {
   CheckSMSType(this.body, this.timestamp);
 
   bool isRegexTrue(String expression) {
-    return RegexClass(expression, body).hasMatch;
+    return RegexUtil(expression, body).hasMatch;
   }
 
   bool checkRegexHasMatch(String expression) {
-    return RegexClass(expression, body).hasMatch;
+    return RegexUtil(expression, body).hasMatch;
   }
 
   String getRegexFirstMatch(String expression) {
-    return RegexClass(expression, body).getFirstMatch;
+    return RegexUtil(expression, body).getFirstMatch;
   }
 
   List<String> getRegexAllMatches(String expression, String input) {
-    return RegexClass(expression, input).getAllMatchResults;
+    return RegexUtil(expression, input).getAllMatchResults;
   }
 
   Map<String, dynamic> checkTypeOfSMS() {
@@ -64,9 +64,7 @@ class CheckSMSType {
     if (!(checkRegexHasMatch(regexString.mpesaBalance) ||
         checkRegexHasMatch(regexString.transactionCost) ||
         checkRegexHasMatch(regexString.transactionId))) {
-      return {
-        "error": "Not an important SMS message"
-      };
+      return {"error": "Not an important SMS message"};
     }
     double mpesaBalance = checkRegexHasMatch(regexString.mpesaBalance)
         ? double.parse(
@@ -88,9 +86,10 @@ class CheckSMSType {
         : 0.00;
     int dateTime = checkRegexHasMatch(regexString.date) &&
             checkRegexHasMatch(regexString.time)
-        ? await dateFormatUtil.getTimestamp(getRegexFirstMatch(regexString.date) +
-            " " +
-            getRegexFirstMatch(regexString.time))
+        ? await dateFormatUtil.getTimestamp(
+            getRegexFirstMatch(regexString.date) +
+                " " +
+                getRegexFirstMatch(regexString.time))
         : int.parse(timestamp);
     String transactionId = checkRegexHasMatch(regexString.transactionId)
         ? getRegexFirstMatch(regexString.transactionId)
@@ -111,7 +110,12 @@ class CheckSMSType {
       ",",
       "",
     ));
-    return {"amount": amount, "title": "Airtime", "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": "Airtime",
+      "body": body + "{airtime_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> buyAirtimeForSomeone() {
@@ -120,7 +124,12 @@ class CheckSMSType {
       ",",
       "",
     ));
-    return {"amount": amount, "title": "Airtime", "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": "Airtime",
+      "body": body + "{airtime_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> sendToPerson() {
@@ -129,7 +138,7 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(replace
+    String title = RecaseUtil(replace
             .replaceString(
               getRegexFirstMatch(regexString.sendToPersonName),
               "0",
@@ -137,7 +146,12 @@ class CheckSMSType {
             )
             .trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{people_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> receiveFromPerson() {
@@ -146,7 +160,7 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(replace
+    String title = RecaseUtil(replace
             .replaceString(
               getRegexFirstMatch(regexString.receiveFromPersonName),
               "0",
@@ -154,7 +168,12 @@ class CheckSMSType {
             )
             .trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 1};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{people_transaction}",
+      "isDeposit": 1,
+    };
   }
 
   Map<String, dynamic> sendToPaybill() {
@@ -163,10 +182,15 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(
+    String title = RecaseUtil(
             getRegexFirstMatch(regexString.sendToPaybillBusinessName).trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{paybill_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> receiveFromPaybill() {
@@ -175,11 +199,16 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(
+    String title = RecaseUtil(
             getRegexFirstMatch(regexString.receiveFromPaybillBusinessName)
                 .trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 1};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{paybill_transaction}",
+      "isDeposit": 1,
+    };
   }
 
   Map<String, dynamic> sendToBuyGoods() {
@@ -188,10 +217,15 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(
+    String title = RecaseUtil(
             getRegexFirstMatch(regexString.sendToBuyGoodsBusinessName).trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{buy_goods_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> depositToAgent() {
@@ -200,10 +234,15 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(
+    String title = RecaseUtil(
             getRegexFirstMatch(regexString.depositToAgentBusinessName).trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 1};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{agent_transaction}",
+      "isDeposit": 1,
+    };
   }
 
   Map<String, dynamic> withdrawFromAgent() {
@@ -212,11 +251,16 @@ class CheckSMSType {
       ",",
       "",
     ));
-    String title = ReCaseClass(
+    String title = RecaseUtil(
             getRegexFirstMatch(regexString.withdrawFromAgentBusinessName)
                 .trim())
         .title_case;
-    return {"amount": amount, "title": title, "body": body, "isDeposit": 0};
+    return {
+      "amount": amount,
+      "title": title,
+      "body": body + "{agent_transaction}",
+      "isDeposit": 0,
+    };
   }
 
   Map<String, dynamic> reversalToAccount() {
@@ -228,8 +272,8 @@ class CheckSMSType {
     return {
       "amount": amount,
       "title": "Reversal",
-      "body": body,
-      "isDeposit": 1
+      "body": body + "{reversal_transaction}",
+      "isDeposit": 1,
     };
   }
 
@@ -242,8 +286,8 @@ class CheckSMSType {
     return {
       "amount": amount,
       "title": "Reversal",
-      "body": body,
-      "isDeposit": 0
+      "body": body + "{reversal_transaction}",
+      "isDeposit": 0,
     };
   }
 
@@ -259,7 +303,7 @@ class CheckSMSType {
         .toList();
     return {
       "amounts": amounts,
-      "body": body,
+      "body": body + "{other_transaction}",
     };
   }
 }

@@ -8,16 +8,16 @@ class SMSFilter {
   List<Map<String, dynamic>> bodies = [
     {
       "body":
-          "NFM0RAI80W Confirmed.Your M-PESA balance was  Ksh0.00  on 22/6/19 at 10:35 AM. Transaction cost, Ksh0.00.",
+          "NFM0RAI80W Confirmed.Your M-PESA balance was  Ksh0.00  on 22/6/19 at 10:35 AM. Transaction cost, Ksh0.00.[OTHER]",
       "timestamp": "1563442495"
     },
     {
       "body":
-          "NFM6RAIRZO Confirmed.Ksh200.00 transferred from M-Shwari account on 22/6/19 at 10:35 AM. M-Shwari balance is Ksh4,340.43 .M-PESA balance is Ksh200.00 .Transaction cost Ksh.0.00",
+          "NFM6RAIRZO Confirmed.Ksh200.00 transferred from M-Shwari account on 22/6/19 at 10:35 AM. M-Shwari balance is Ksh4,340.43 .M-PESA balance is Ksh200.00 .Transaction cost Ksh.0.00.[OTHER]",
       "timestamp": "1563442495"
     },
     {
-      "body": "NFM2RAJZYM confirmed.You bought Ksh5.00 of airtime on 22/6/19 at 10:37 AM.New M-PESA balance is Ksh195.00. Transaction cost, Ksh0.00. To reverse, forward this message to 456.",
+      "body": "NFM2RAJZYM confirmed.You bought Ksh5.00 of airtime on 22/6/19 at 10:37 AM.New M-PESA balance is Ksh195.00. Transaction cost, Ksh0.00. To reverse, forward this message to 456.[AIRTIME]",
       "timestamp": "1563442495"
     },
     {
