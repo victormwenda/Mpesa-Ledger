@@ -67,7 +67,7 @@ final List<String> schema = [
     year INTEGER NOT NULL,
     deposits REAL NOT NULL,
     withdrawals REAL NOT NULL,
-    transaction_cost REAL NOT NULL
+    transactionCost REAL NOT NULL
   );
   ''',
   '''
