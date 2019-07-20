@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
-import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
-import 'package:mpesa_ledger_flutter/screens/intro/intro_walk_through.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/intro_walk_through_screen.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 

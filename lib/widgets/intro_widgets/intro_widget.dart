@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 
 class IntroWidget extends StatelessWidget {
@@ -10,7 +11,7 @@ class IntroWidget extends StatelessWidget {
 
   skip(BuildContext context) {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (route) => App()));
+        context, MaterialPageRoute(builder: (route) => RetreiveSMS()));
   }
 
   @override
