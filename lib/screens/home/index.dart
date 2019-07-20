@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/transactions/transactions_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
-  var bloc = QuerySMS();
+  QuerySMS bloc = QuerySMS();
+  TransactionBloc transactionBloc = TransactionBloc();
   @override
   _HomeState createState() => _HomeState();
 }
@@ -26,10 +29,10 @@ class _HomeState extends State<Home> {
     return Column(
       children: <Widget>[
         AppbarWidget("Home"),
-        StreamBuilder<List>(
-          stream: widget.bloc.retrieveSMSStream,
+        StreamBuilder<List<TransactionModel>>(
+          stream: widget.transactionBloc.transactionControllerStream,
           initialData: [],
-          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<TransactionModel>> snapshot) {
             return Expanded(
               child: ListView.builder(
                 itemCount: snapshot.data.length,
@@ -37,10 +40,12 @@ class _HomeState extends State<Home> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(snapshot.data[index]["timestamp"]),
-                      SizedBox(
-                        height: 20,
-                      )
+                      Card(
+                        child: ListTile(
+                          title: Text(snapshot.data[index].title.toString()),
+                          leading: Text("KES "+snapshot.data[index].amount.toString()),
+                        ),
+                      ),
                     ],
                   );
                 },

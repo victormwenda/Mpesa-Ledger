@@ -8,8 +8,6 @@ import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
-import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -127,9 +125,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (snapshot.data == null) {
                   return Column(
                     children: <Widget>[
-                      CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                  ),
                       GoogleSignInButton(
                         onPressed: () {
                           widget.firebaseAuthBloc.signInSink.add(null);
@@ -138,6 +133,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   );
                 } else {
+                  
                   widget.runtimePermissionBloc.checkAndRequestPermissionSink
                       .add(null);
                   return CircularProgressIndicator(
