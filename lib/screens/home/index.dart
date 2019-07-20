@@ -5,7 +5,6 @@ import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
-  QuerySMS bloc = QuerySMS();
   TransactionBloc transactionBloc = TransactionBloc();
   @override
   _HomeState createState() => _HomeState();
@@ -14,13 +13,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void dispose() {
-    widget.bloc.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    widget.bloc.retrieveSMSMessages();
     super.initState();
   }
 

@@ -5,16 +5,17 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
-import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
+import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  var runtimePermissionBloc = RuntimePermissionsBloc();
-  var firebaseAuthBloc = FirebaseAuthBloc();
-  var onAuthStateChanged = FirebaseAuthProvider();
-  var databaseProvider = DatabaseProvider();
+  RuntimePermissionsBloc runtimePermissionBloc = RuntimePermissionsBloc();
+  FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
+  FirebaseAuthProvider onAuthStateChanged = FirebaseAuthProvider();
+  QuerySMSBloc querySMSBloc = QuerySMSBloc();
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -89,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
+    widget.runtimePermissionBloc.continueToAppStream.listen((void v) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (route) => App()),
@@ -133,7 +134,6 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   );
                 } else {
-                  
                   widget.runtimePermissionBloc.checkAndRequestPermissionSink
                       .add(null);
                   return CircularProgressIndicator(

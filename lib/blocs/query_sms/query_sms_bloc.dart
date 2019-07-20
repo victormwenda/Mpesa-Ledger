@@ -1,35 +1,35 @@
 import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
+import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
-class QuerySMS extends BaseBloc{
+class QuerySMSBloc extends BaseBloc{
 
   var methodChannel = MethodChannelClass();
+  SMSFilter smsFilter = SMSFilter();
 
-  StreamController<List<dynamic>> retrieveSMSController =
-      StreamController<List<dynamic>>.broadcast();
-  Stream<List<dynamic>> get retrieveSMSStream =>
+  StreamController<void> retrieveSMSController =
+      StreamController<void>.broadcast();
+  Stream<void> get retrieveSMSStream =>
       retrieveSMSController.stream;
-  StreamSink<List<dynamic>> get retrieveSMSSink =>
+  StreamSink<void> get retrieveSMSSink =>
       retrieveSMSController.sink;
-
-  StreamController<List<dynamic>> receiveSMSController =
-      StreamController<List<dynamic>>.broadcast();
-  Stream<List<dynamic>> get receiveSMSStream =>
-      receiveSMSController.stream;
-  StreamSink<List<dynamic>> get receiveSMSSink =>
-      receiveSMSController.sink;
 
   Future<List<dynamic>> retrieveSMSMessages() async {
     var result = await methodChannel.invokeMethod("retrieveSMSMessages");
-    retrieveSMSSink.add(result);
     return result;
+  }
+
+  QuerySMSBloc() {
+    retrieveSMSStream.listen((void data) async {
+      var result = await smsFilter.addSMSTodatabase(await retrieveSMSMessages());
+    });
   }
 
   @override
   void dispose() {
     retrieveSMSController.close();
-    receiveSMSController.close();
   }
 }

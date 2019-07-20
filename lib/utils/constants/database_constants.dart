@@ -6,7 +6,6 @@ final String unrecordedTransactionsTable = "unrecordedTransactions";
 final String categoriesTable = "categories";
 final String transactionCategoryTable = "transactionCategory";
 final String summaryTable = "summary";
-final String settingsTable = "settins";
 
 final List<String> schema = [
   '''
@@ -69,13 +68,6 @@ final List<String> schema = [
     deposits REAL NOT NULL,
     withdrawals REAL NOT NULL,
     transactionCost REAL NOT NULL
-  );
-  ''',
-  '''
-  CREATE TABLE $settingsTable (
-    id INTEGER PRIMARY KEY,
-    transactionId INTEGER NOT NULL,
-    categoryId INTEGER NOT NULL
   );
   ''',
   '''
