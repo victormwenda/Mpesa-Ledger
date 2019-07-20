@@ -8,6 +8,7 @@ import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/intro_walk_through.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
@@ -93,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
     widget.runtimePermissionBloc.continueToAppStream.listen((void v) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (route) => App()),
+        MaterialPageRoute(builder: (route) => IntroWalkThrough()),
       );
     });
 
