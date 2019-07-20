@@ -13,6 +13,11 @@ class FirebaseAuthProvider {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
+      if (googleUser == null) {
+        print("YOU CANCELLED THE SIGNIN");
+        return;
+      }
+
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 

@@ -91,12 +91,12 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    // widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (route) => App()),
-    //   );
-    // });
+    widget.runtimePermissionBloc.continueToAppStream.listen((void data) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (route) => App()),
+      );
+    });
 
     return Scaffold(
       body: Center(
@@ -132,19 +132,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                       GoogleSignInButton(
                         onPressed: () {
-                          // widget.firebaseAuthBloc.signInSink.add(null);
-                          SMSFilter sms = SMSFilter();
-                          sms.test();
-                          // print("STARTED");
-                          // DatabaseProvider databaseProvider = DatabaseProvider();
-                          // databaseProvider.deleteDatabaseMeth();
-
-                          // DatabaseProvider databaseProvider = DatabaseProvider();
-                          // databaseProvider.closeDatabase();
-
-                          // DateFormatUtil dateTime = DateFormatUtil();
-                          // dateTime.getTimestamp("27/6/19 7:33 PM");
-                          // print(dateTime.getCurrentTimestamp);
+                          widget.firebaseAuthBloc.signInSink.add(null);
                         },
                       ),
                     ],

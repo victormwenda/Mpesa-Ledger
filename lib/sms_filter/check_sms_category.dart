@@ -11,24 +11,22 @@ class CheckSMSCategory {
 
   CheckSMSCategory(this.categoryObject, this.body, this.id);
 
-  addCategeoryToTransaction() async {
-    List<Map<String, dynamic>> foundCategories = [];
+  Future<List<Map<String, int>>> addCategeoryToTransaction() async {
+    List<Map<String, int>> foundCategories = [];
     for (var i = 0; i < categoryObject.length; i++) {
-      Map<String, dynamic> transcationCategoryObject = {};
+      Map<String, int> transcationCategoryObject = {};
       var categoryKeywords = categoryObject[i].keywords;
       for (var j = 0; j < categoryKeywords.length; j++) {
         var result = RegexUtil(categoryKeywords[j].toLowerCase(), body.toLowerCase()).hasMatch;
         if (result) {
-          print("True for " + categoryObject[i].keywords[j]);
           transcationCategoryObject.addAll({
-            "transactioId": id,
+            "transactionId": id,
             "categoryId": categoryObject[i].id,
-            "categoryName": categoryObject[i].title
           });
           foundCategories.add(transcationCategoryObject);
         }
       }
     }
-    print(foundCategories);
+    return foundCategories;
   }
 }
