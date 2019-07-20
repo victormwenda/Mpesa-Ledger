@@ -139,6 +139,9 @@ class _SplashScreenState extends State<SplashScreen> {
                           // DatabaseProvider databaseProvider = DatabaseProvider();
                           // databaseProvider.deleteDatabaseMeth();
 
+                          // DatabaseProvider databaseProvider = DatabaseProvider();
+                          // databaseProvider.closeDatabase();
+
                           // DateFormatUtil dateTime = DateFormatUtil();
                           // dateTime.getTimestamp("27/6/19 7:33 PM");
                           // print(dateTime.getCurrentTimestamp);

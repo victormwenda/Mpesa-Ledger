@@ -2,8 +2,10 @@ import 'dart:core';
 
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
+import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
+import 'package:mpesa_ledger_flutter/sms_filter/check_sms_category.dart';
 import 'package:mpesa_ledger_flutter/sms_filter/check_sms_type.dart';
 
 class SMSFilter {
@@ -12,6 +14,7 @@ class SMSFilter {
   TransactionRepository transactionRepo = TransactionRepository();
   UnknownTransactionRepository unknownTransactionRepo =
       UnknownTransactionRepository();
+  CategoryRepository categoryRepo = CategoryRepository();
 
   List<Map<String, dynamic>> bodies = [
     {
@@ -53,6 +56,8 @@ class SMSFilter {
 
   Future<List<Map<String, dynamic>>> test() async {
     try {
+      var categoryObject =
+          await categoryRepo.getAll(["id", "keywords", "title"]);
       List<Map<String, dynamic>> listResult = [];
       for (var i = 0; i < bodies.length; i++) {
         Map<String, dynamic> result = {};
@@ -60,13 +65,16 @@ class SMSFilter {
         if (obj.isNotEmpty) {
           // result.addAll(obj);
           // listResult.add(result);
+          int id;
           if (obj["data"].containsKey("amounts")) {
-            await unknownTransactionRepo.insert(UnknownTransactionsModel.fromMap(obj["data"]));
+            // await unknownTransactionRepo.insert(UnknownTransactionsModel.fromMap(obj["data"]));
             print("UNKNOWN TXN ADDED");
           } else {
-            int id = await transactionRepo.insert(TransactionModel.fromMap(obj["data"]));
-            
+            // int id = await transactionRepo.insert(TransactionModel.fromMap(obj["data"]));
+            print("TXN ADDED ***");
           }
+          var c = CheckSMSCategory(categoryObject, obj["data"]["body"], id);
+          c.addCategeoryToTransaction();
         }
       }
       return listResult;
@@ -74,6 +82,7 @@ class SMSFilter {
       print(e);
     }
   }
+
 
   Future<Map<String, dynamic>> getSMSObject(
       String body, String timestamp) async {

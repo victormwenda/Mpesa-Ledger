@@ -19,7 +19,7 @@ class CategoryModel {
         : map["description"];
     keywords = map["keywords"] == null
         ? null
-        : RegexUtil("\\w+", map["keywords"]).getAllMatchResults;
+        : RegexUtil("[\\w-]+", map["keywords"]).getAllMatchResults;
     showKeywords = map["showKeywords"] == null
         ? null
         : map["showKeywords"] == 1 ? true : false;
