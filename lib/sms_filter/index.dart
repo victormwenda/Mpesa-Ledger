@@ -20,7 +20,7 @@ class SMSFilter {
   TransactionCategoryRepository transactionCategoryRepo =
       TransactionCategoryRepository();
 
-  Future<Map<String, String>> addSMSTodatabase(dynamic bodies) async {
+  Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
       var categoryObject =
           await categoryRepo.getAll(["id", "keywords"]);
@@ -38,6 +38,7 @@ class SMSFilter {
             var transactionCategoryObjectList =
                 await CheckSMSCategory(categoryObject, obj["data"]["body"], id)
                     .addCategeoryToTransaction();
+                    print(transactionCategoryObjectList);
             for (var j = 0; j < transactionCategoryObjectList.length; j++) {
               await transactionCategoryRepo.insert(
                 TransactionCategoryModel.fromMap(transactionCategoryObjectList[j]),
@@ -46,7 +47,7 @@ class SMSFilter {
           }
         }
       }
-      print("FINISHED ADDIND ALL TO DATABSE");
+      print("FINISHED ADDIND ALL TO DATABASE");
       return {
         "success": "Data successfully added to database"
       };

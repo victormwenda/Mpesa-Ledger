@@ -1,21 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
-class QuerySMSBloc extends BaseBloc{
-
+class QuerySMSBloc extends BaseBloc {
   var methodChannel = MethodChannelClass();
   SMSFilter smsFilter = SMSFilter();
 
-  StreamController<void> retrieveSMSController =
-      StreamController<void>.broadcast();
-  Stream<void> get retrieveSMSStream =>
-      retrieveSMSController.stream;
-  StreamSink<void> get retrieveSMSSink =>
-      retrieveSMSController.sink;
+  StreamController<void> retrieveSMSController = StreamController<void>();
+  Stream<void> get retrieveSMSStream => retrieveSMSController.stream;
+  StreamSink<void> get retrieveSMSSink => retrieveSMSController.sink;
 
   Future<List<dynamic>> retrieveSMSMessages() async {
     var result = await methodChannel.invokeMethod("retrieveSMSMessages");
