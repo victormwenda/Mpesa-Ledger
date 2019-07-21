@@ -72,7 +72,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                   // bloc.retrieveSMSSink.add(null);
 
                   DateFormatUtil dateFormatUtil = DateFormatUtil();
-                  print(dateFormatUtil.getYear("1563712349"));
+                  print(await dateFormatUtil.getMonth("1563712349"));
 
                   // DatabaseProvider databaseProvider = DatabaseProvider();
                   // databaseProvider.deleteDatabaseMeth();

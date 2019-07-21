@@ -1,8 +1,8 @@
 package com.example.mpesa_ledger_flutter;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import io.flutter.Log;
@@ -27,12 +27,13 @@ public class DateTime {
     }
   }
 
-//  int getMonth() {
-//    try {
-//      Date date = new SimpleDateFormat("d/M/yy h:mm a").parse(methodCall.argument("dateTime"));
-//    } catch (ParseException e) {
-//      e.printStackTrace();
-//    }
-//  }
+  String getMonth() {
+      Calendar c = Calendar.getInstance();
+      c.setTimeInMillis(Long.parseLong(methodCall.argument("timestamp")) * 1000);
+
+      Date date = c.getTime();
+
+      return new SimpleDateFormat("MMM").format(date);
+  }
 
 }

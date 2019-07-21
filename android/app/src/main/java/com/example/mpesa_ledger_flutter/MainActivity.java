@@ -51,6 +51,9 @@ public class MainActivity extends FlutterActivity {
       } else if (methodCall.method.equals("changeStringToTimestamp")) {
         DateTime dateTime = new DateTime(methodCall);
         result.success(dateTime.getTimestamp());
+      } else if (methodCall.method.equals("getMonth")) {
+        DateTime dateTime = new DateTime(methodCall);
+        result.success(dateTime.getMonth());
       }
     });
   }

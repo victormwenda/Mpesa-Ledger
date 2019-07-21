@@ -17,8 +17,10 @@ class DateFormatUtil {
     return DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp) * 1000).day;
   }
 
-  Future<String> getMonth(String timestamp) {
-
+  Future<String> getMonth(String timestamp) async {
+    var methodChannel = MethodChannelClass();
+    String month = await methodChannel.invokeMethod("getMonth", argument: {"timestamp": timestamp});
+    return month;
   }
 
   int getYear(String timestamp) {
