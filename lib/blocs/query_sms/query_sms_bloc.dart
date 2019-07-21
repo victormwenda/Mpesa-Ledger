@@ -1,11 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:isolate';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
-import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
@@ -24,7 +19,7 @@ class QuerySMSBloc extends BaseBloc {
 
   QuerySMSBloc() {
     retrieveSMSStream.listen((void data) async {
-      var result = await smsFilter.addSMSTodatabase(await retrieveSMSMessages());
+      await smsFilter.addSMSTodatabase(await retrieveSMSMessages());
     });
   }
 
@@ -33,3 +28,17 @@ class QuerySMSBloc extends BaseBloc {
     retrieveSMSController.close();
   }
 }
+
+class QuerySMSCounterPercentage extends BaseBloc {
+
+  StreamController<int> percentageProcessController = StreamController<int>();
+  Stream<int> get percentageProcessStream => percentageProcessController.stream;
+  StreamSink<int> get percentageProcessSink => percentageProcessController.sink;
+
+  @override
+  void dispose() {
+    percentageProcessController.close();
+  }
+}
+
+QuerySMSCounterPercentage counterPercentage = QuerySMSCounterPercentage();

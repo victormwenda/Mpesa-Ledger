@@ -17,6 +17,12 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
     super.initState();
   }
 
+  @override
+  void dispose() { 
+    counterPercentage.dispose();
+    super.dispose();
+  }
+
   static String forloop(int s) {
     for (var i = 0; i < 1000000000; i++) {}
     return "done";
@@ -42,12 +48,21 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
               ),
               Expanded(
                 child: Align(
-                  child: Text(
-                    "100%",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 70.0,
-                    ),
+                  child: StreamBuilder(
+                    stream: counterPercentage.percentageProcessStream,
+                    initialData: 0,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      var percentageComplete = snapshot.data + 4;
+                      return Container(
+                        child: Text(
+                          percentageComplete.toString() + "%",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 70.0,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -62,6 +77,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
 
                   // DatabaseProvider databaseProvider = DatabaseProvider();
                   // databaseProvider.deleteDatabaseMeth();
+                  // databaseProvider.closeDatabase();
                 },
               )
             ],

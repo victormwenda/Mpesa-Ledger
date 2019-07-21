@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
@@ -24,7 +25,8 @@ class SMSFilter {
     try {
       var categoryObject =
           await categoryRepo.getAll(["id", "keywords"]);
-      for (var i = 0; i < bodies.length; i++) {
+      int bodyLength = bodies.length;
+      for (var i = 0; i < bodyLength; i++) {
         var obj = await getSMSObject(bodies[i]["body"], bodies[i]["timestamp"]);
         if (obj.isNotEmpty) {
           if (obj["data"].containsKey("amounts")) {
@@ -46,6 +48,7 @@ class SMSFilter {
             }
           }
         }
+        counterPercentage.percentageProcessSink.add(((i/bodyLength)*100).round());
       }
       print("FINISHED ADDIND ALL TO DATABASE");
       return {
