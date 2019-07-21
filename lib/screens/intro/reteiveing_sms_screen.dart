@@ -1,10 +1,6 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
-import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
-import 'package:mpesa_ledger_flutter/sms_filter/index.dart';
+import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class RetreiveSMS extends StatefulWidget {
   @override
@@ -72,8 +68,11 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
               RaisedButton(
                 onPressed: () async {
                   // print(forloop());
-                  QuerySMSBloc bloc = QuerySMSBloc();
-                  bloc.retrieveSMSSink.add(null);
+                  // QuerySMSBloc bloc = QuerySMSBloc();
+                  // bloc.retrieveSMSSink.add(null);
+
+                  DateFormatUtil dateFormatUtil = DateFormatUtil();
+                  print(dateFormatUtil.getYear("1563712349"));
 
                   // DatabaseProvider databaseProvider = DatabaseProvider();
                   // databaseProvider.deleteDatabaseMeth();

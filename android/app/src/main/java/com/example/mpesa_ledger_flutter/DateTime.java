@@ -27,4 +27,12 @@ public class DateTime {
     }
   }
 
+//  int getMonth() {
+//    try {
+//      Date date = new SimpleDateFormat("d/M/yy h:mm a").parse(methodCall.argument("dateTime"));
+//    } catch (ParseException e) {
+//      e.printStackTrace();
+//    }
+//  }
+
 }

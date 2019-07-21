@@ -12,4 +12,16 @@ class DateFormatUtil {
   int get getCurrentTimestamp {
     return (DateTime.now().millisecondsSinceEpoch/1000).round();
   }
+
+  int getDay(String timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp) * 1000).day;
+  }
+
+  Future<String> getMonth(String timestamp) {
+
+  }
+
+  int getYear(String timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp) * 1000).year;
+  }
 }
