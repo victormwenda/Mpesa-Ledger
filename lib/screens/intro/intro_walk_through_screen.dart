@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 import 'package:mpesa_ledger_flutter/widgets/intro_widgets/intro_widget.dart';
 
 class IntroWalkThrough extends StatefulWidget {

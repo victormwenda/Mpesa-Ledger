@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
-import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class RetreiveSMS extends StatefulWidget {
+  QuerySMSBloc querySMSBloc = QuerySMSBloc();
+
   @override
   _RetreiveSMSState createState() => _RetreiveSMSState();
 }
@@ -11,11 +12,12 @@ class RetreiveSMS extends StatefulWidget {
 class _RetreiveSMSState extends State<RetreiveSMS> {
   @override
   void initState() {
+    widget.querySMSBloc.retrieveSMSSink.add(null);
     super.initState();
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     counterPercentage.dispose();
     super.dispose();
   }
@@ -27,6 +29,15 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
 
   @override
   Widget build(BuildContext context) {
+    widget.querySMSBloc.retrieveSMSCompleteStream.listen((data) {
+      if (data) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (route) => App()),
+        );
+      }
+    });
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -37,7 +48,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    "Fetching all ",
+                    "Fetching MPESA messages",
                     style:
                         TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
                   ),
@@ -49,7 +60,8 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                     stream: counterPercentage.percentageProcessStream,
                     initialData: 0,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var percentageComplete = snapshot.data >= 96 ? 100 : snapshot.data;
+                      var percentageComplete =
+                          snapshot.data >= 96 ? 100 : snapshot.data;
                       return Container(
                         child: Text(
                           percentageComplete.toString() + "%",
@@ -65,22 +77,6 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
               ),
               Expanded(
                 child: Align(child: CircularProgressIndicator()),
-              ),
-              RaisedButton(
-                onPressed: () async {
-                  // print(forloop());
-                  // QuerySMSBloc bloc = QuerySMSBloc();
-                  // bloc.retrieveSMSSink.add(null);
-
-                  // DateFormatUtil dateFormatUtil = DateFormatUtil();
-                  // var r = await dateFormatUtil.getDateTime("1563726831");
-
-                  // print(int.parse(r["year"]));
-
-                  DatabaseProvider databaseProvider = DatabaseProvider();
-                  var p = await databaseProvider.select();
-                  // databaseProvider.deleteDatabaseMeth();
-                },
               )
             ],
           ),

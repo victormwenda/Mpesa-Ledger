@@ -1,21 +1,92 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/app.dart';
+import 'package:flutter/services.dart';
+import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
+import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
-class IntroWidget extends StatelessWidget {
+class IntroWidget extends StatefulWidget {
   String title;
   String description;
 
+  RuntimePermissionsBloc runtimePermissionBloc = RuntimePermissionsBloc();
+
   IntroWidget(this.title, this.description);
 
+  @override
+  _IntroWidgetState createState() => _IntroWidgetState();
+}
+
+class _IntroWidgetState extends State<IntroWidget> {
   skip(BuildContext context) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (route) => RetreiveSMS()));
+    widget.runtimePermissionBloc.checkAndRequestPermissionSink.add(null);
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.runtimePermissionBloc.permissionDenialStream.listen((data) {
+      if (data) {
+        return AlertDialogWidget(
+          context,
+          title: "SMS Permission",
+          content: Text("To use MPESA LEDGER, allow SMS permissions"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("CANCEL"),
+              onPressed: () {
+                SystemChannels.platform
+                    .invokeMethod<void>('SystemNavigator.pop');
+              },
+            ),
+            FlatButton(
+              child: Text("ALLOW PERMISSIONS"),
+              onPressed: () {
+                widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                    .add(null);
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ).show();
+      }
+    });
+
+    widget.runtimePermissionBloc.openAppSettingsStream.listen((data) {
+      if (data) {
+        return AlertDialogWidget(
+          context,
+          title: "SMS Permission",
+          content: Text(
+              "To use MPESA LEDGER, allow SMS permissions are needed, please go to settings > Permissions and turn or SMS"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("CANCEL"),
+              onPressed: () {
+                SystemChannels.platform
+                    .invokeMethod<void>('SystemNavigator.pop');
+              },
+            ),
+            FlatButton(
+              child: Text("TURN ON"),
+              onPressed: () {
+                SystemChannels.platform
+                    .invokeMethod<void>('SystemNavigator.pop');
+                AppSettings.openAppSettings();
+              },
+            )
+          ],
+        ).show();
+      }
+    });
+
+    widget.runtimePermissionBloc.continueToAppStream.listen((void v) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (route) => RetreiveSMS()),
+      );
+    });
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +95,7 @@ class IntroWidget extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                title,
+                widget.title,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 35.0,
@@ -44,7 +115,7 @@ class IntroWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    description,
+                    widget.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -65,7 +136,9 @@ class IntroWidget extends StatelessWidget {
           Expanded(
             child: Align(
                 alignment: Alignment.bottomCenter,
-                child: FlatButtonWidget("SKIP", () {skip(context);})),
+                child: FlatButtonWidget("SKIP", () {
+                  skip(context);
+                })),
           ),
         ],
       ),
