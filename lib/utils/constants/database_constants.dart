@@ -6,6 +6,7 @@ final String unrecordedTransactionsTable = "unrecordedTransactions";
 final String categoriesTable = "categories";
 final String transactionCategoryTable = "transactionCategory";
 final String summaryTable = "summary";
+final String mpesaBalanceTable = "mpesaBalance";
 
 final List<String> schema = [
   '''
