@@ -10,6 +10,12 @@ final String mpesaBalanceTable = "mpesaBalance";
 
 final List<String> schema = [
   '''
+  CREATE TABLE IF NOT EXISTS $mpesaBalanceTable (
+    id INTEGER PRIMARY KEY,
+    mpesaBalance REAL NOT NULL DEFAULT 0.0
+  );
+  ''',
+  '''
   CREATE TABLE IF NOT EXISTS $transactionsTable (
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
