@@ -78,6 +78,11 @@ final List<String> schema = [
   );
   ''',
   '''
+  INSERT INTO $mpesaBalanceTable (mpesaBalance)
+    VALUES
+    (0.0);
+  ''',
+  '''
   INSERT INTO $categoriesTable (title, description, keywords, showKeywords, canDelete,  numberOfTransactions, createdOn) 
     VALUES 
     ("Airtime", "Airtime Description", "['airtime_transaction']", 0, 0, 0, strftime('%s', 'now')),
@@ -87,6 +92,6 @@ final List<String> schema = [
     ("Agent Transactions", "Agent Transactions Description", "['agent_transaction']", 0, 0, 0, strftime('%s', 'now')),
     ("Reversals", "Reversals Description", "['reversal_transaction']", 0, 0, 0, strftime('%s', 'now')),
     ("Other", "These are unknown transactions that were not identified", "['other_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("M-shwari", "Mshwari Description", "['M-shwari']", 0, 0, 0, strftime('%s', 'now'))
+    ("M-shwari", "Mshwari Description", "['M-shwari']", 0, 0, 0, strftime('%s', 'now'));
   '''
 ];

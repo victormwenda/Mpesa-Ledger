@@ -1,11 +1,13 @@
 import 'dart:core';
 
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/mpesa_balance_model.dart';
 import 'package:mpesa_ledger_flutter/models/summary_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
 import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/summary_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
@@ -25,13 +27,16 @@ class SMSFilter {
       TransactionCategoryRepository();
   SummaryRepository summaryRepo = SummaryRepository();
   DateFormatUtil dateFormatUtil = DateFormatUtil();
+  MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
+      List<dynamic> reversedBodies = bodies.reversed.toList();
       var categoryObject = await categoryRepo.getAll(["id", "keywords"]);
-      int bodyLength = bodies.length;
+      int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
-        var obj = await getSMSObject(bodies[i]["body"], bodies[i]["timestamp"]);
+        var obj = await getSMSObject(
+            reversedBodies[i]["body"], reversedBodies[i]["timestamp"]);
         if (obj.isNotEmpty) {
           if (obj["data"].containsKey("amounts")) {
             await unknownTransactionRepo.insert(
@@ -50,8 +55,8 @@ class SMSFilter {
                     transactionCategoryObjectList[j]),
               );
             }
-            Map<dynamic, dynamic> dateTime =
-                await dateFormatUtil.getDateTime(bodies[i]["timestamp"]);
+            Map<dynamic, dynamic> dateTime = await dateFormatUtil
+                .getDateTime(reversedBodies[i]["timestamp"]);
             await summaryRepo.insert(SummaryModel.fromMap({
               "month": dateTime["month"],
               "year": int.parse(dateTime["year"]),
@@ -61,6 +66,10 @@ class SMSFilter {
                   obj["data"]["isDeposit"] == 0 ? obj["data"]["amount"] : 0.0,
               "transactionCost": obj["data"]["transactionCost"]
             }));
+            if (obj["data"]["mpesaBalance"] != null) {
+              await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
+                  {"mpesaBalance": obj["data"]["mpesaBalance"]}));
+            }
           }
         }
         counterPercentage.percentageProcessSink

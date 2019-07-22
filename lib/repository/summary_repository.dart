@@ -14,7 +14,7 @@ class SummaryRepository {
   Future<int> insert(SummaryModel summary) async {
     var db = await database;
     List<SummaryModel> result =
-        await select(columns: ["id"], query: summary.id);
+        await select(columns: ["id", "month", "year"], query: summary.id);
     if (result.isEmpty) {
       return await db.insert(tableName, summary.toMap());
     }

@@ -4,16 +4,14 @@ class MpesaBalanceModel {
 
   MpesaBalanceModel.fromMap(Map<String, dynamic> map) {
     mpesaBalance = map["mpesaBalance"];
-    id = map["id"];
+    id = 1;
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "mpesaBalance": mpesaBalance,
+      "id": id
     };
-    if (id != null) {
-      map["id"] = id;
-    }
     return map;
   }
 }

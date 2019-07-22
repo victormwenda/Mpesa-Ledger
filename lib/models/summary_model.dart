@@ -13,7 +13,7 @@ class SummaryModel {
     withdrawals = map["withdrawals"] == null ? null : map["withdrawals"];
     transactionCost =
         map["transactionCost"] == null ? null : map["transactionCost"];
-    id = map["id"] == null ? null : map["id"];
+    id = year.toString() + "" + month;
   }
 
   Map<String, dynamic> toMap() {
