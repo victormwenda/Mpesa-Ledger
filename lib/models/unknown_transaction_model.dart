@@ -23,7 +23,6 @@ class UnknownTransactionsModel {
           .map(double.parse)
           .toList();
     }
-    amounts = [100.00, 52.00];
     transactionCost = map["transactionCost"];
     transactionId = map["transactionId"];
     id = map["id"] != null ? map["id"] : null;

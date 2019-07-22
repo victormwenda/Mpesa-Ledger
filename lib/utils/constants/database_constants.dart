@@ -30,7 +30,7 @@ final List<String> schema = [
   ''',
   '''
   CREATE TABLE IF NOT EXISTS $unknownTransactionsTable (
-    id INTEGER PRIMAMRY KEY,
+    id INTEGER PRIMARY KEY,
     body TEXT NOT NULL,
     timestamp INTEGER NOT NULL,
     mpesaBalance REAL,
