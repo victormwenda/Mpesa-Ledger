@@ -69,16 +69,16 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
               RaisedButton(
                 onPressed: () async {
                   // print(forloop());
-                  QuerySMSBloc bloc = QuerySMSBloc();
-                  bloc.retrieveSMSSink.add(null);
+                  // QuerySMSBloc bloc = QuerySMSBloc();
+                  // bloc.retrieveSMSSink.add(null);
 
                   // DateFormatUtil dateFormatUtil = DateFormatUtil();
                   // var r = await dateFormatUtil.getDateTime("1563726831");
 
                   // print(int.parse(r["year"]));
 
-                  // DatabaseProvider databaseProvider = DatabaseProvider();
-                  // var p = await databaseProvider.select();
+                  DatabaseProvider databaseProvider = DatabaseProvider();
+                  var p = await databaseProvider.select();
                   // databaseProvider.deleteDatabaseMeth();
                 },
               )
