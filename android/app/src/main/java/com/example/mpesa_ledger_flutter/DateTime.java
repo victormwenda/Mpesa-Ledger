@@ -20,7 +20,7 @@ public class DateTime {
   int getTimestamp() {
     try {
       Date date = new SimpleDateFormat("d/M/yy h:mm a").parse(methodCall.argument("dateTime"));
-      long timestamp = date.getTime()/1000;
+      long timestamp = date.getTime();
       return (int) timestamp;
     } catch (ParseException e) {
       e.printStackTrace();
@@ -31,7 +31,7 @@ public class DateTime {
 
   Map<String, Object> getDateTime() {
     Calendar c = Calendar.getInstance();
-    c.setTimeInMillis(Long.parseLong(methodCall.argument("timestamp")) * 1000);
+    c.setTimeInMillis(Long.parseLong(methodCall.argument("timestamp")));
 
     Date date = c.getTime();
 

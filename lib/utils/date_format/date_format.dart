@@ -11,7 +11,7 @@ class DateFormatUtil {
   }
 
   int get getCurrentTimestamp {
-    return (DateTime.now().millisecondsSinceEpoch / 1000).round();
+    return DateTime.now().millisecondsSinceEpoch;
   }
 
   Future<Map<dynamic, dynamic>> getDateTime(String timestamp) async {

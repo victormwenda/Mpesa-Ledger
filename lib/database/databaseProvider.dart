@@ -56,7 +56,7 @@ class DatabaseProvider {
 
   void select() async {
     var db = await database;
-    List<Map<String, dynamic>> l = await db.query("transactionCategory");
+    List<Map<String, dynamic>> l = await db.query("summary");
     for (var i = 0; i < l.length; i++) {
       print(l[i]);
     }

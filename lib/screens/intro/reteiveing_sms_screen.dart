@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class RetreiveSMS extends StatefulWidget {
@@ -71,13 +72,14 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                   // QuerySMSBloc bloc = QuerySMSBloc();
                   // bloc.retrieveSMSSink.add(null);
 
-                  DateFormatUtil dateFormatUtil = DateFormatUtil();
-                  Map<dynamic, dynamic> v = await dateFormatUtil.getDateTime("1563712349");
-                  print(v["month"]);
+                  // DateFormatUtil dateFormatUtil = DateFormatUtil();
+                  // var r = await dateFormatUtil.getDateTime("1563726831");
 
-                  // DatabaseProvider databaseProvider = DatabaseProvider();
+                  // print(int.parse(r["year"]));
+
+                  DatabaseProvider databaseProvider = DatabaseProvider();
+                  var p = await databaseProvider.select();
                   // databaseProvider.deleteDatabaseMeth();
-                  // databaseProvider.closeDatabase();
                 },
               )
             ],

@@ -1,5 +1,5 @@
 class SummaryModel {
-  int id;
+  String id;
   String month;
   int year;
   double deposits;
@@ -7,12 +7,13 @@ class SummaryModel {
   double transactionCost;
 
   SummaryModel.fromMap(Map<String, dynamic> map) {
-    month = map["month"];
-    year = map["year"];
-    deposits = map["deposits"];
-    withdrawals = map["withdrawals"];
-    transactionCost = map["transactionCost"];
-    id = map["id"] != null ? map["id"] : null;
+    month = map["month"] == null ? null : map["month"];
+    year = map["year"] == null ? null : map["year"];
+    deposits = map["deposits"] == null ? null : map["deposits"];
+    withdrawals = map["withdrawals"] == null ? null : map["withdrawals"];
+    transactionCost =
+        map["transactionCost"] == null ? null : map["transactionCost"];
+    id = year.toString() + "" + month;
   }
 
   Map<String, dynamic> toMap() {
@@ -21,12 +22,9 @@ class SummaryModel {
       "year": year,
       "deposits": deposits,
       "withdrawals": withdrawals,
-      "transactionCost":transactionCost
+      "transactionCost": transactionCost,
+      "id": id
     };
-    if (id != null) {
-      map["id"] = id;
-    }
     return map;
   }
-
 }
