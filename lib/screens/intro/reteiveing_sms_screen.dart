@@ -49,7 +49,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                     stream: counterPercentage.percentageProcessStream,
                     initialData: 0,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var percentageComplete = snapshot.data + 4;
+                      var percentageComplete = snapshot.data >= 96 ? 100 : snapshot.data;
                       return Container(
                         child: Text(
                           percentageComplete.toString() + "%",

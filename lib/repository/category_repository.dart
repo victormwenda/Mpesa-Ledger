@@ -21,4 +21,18 @@ class CategoryRepository {
         : [];
     return categories;
   }
+
+  Future<int> incrementNumOfTransactions(CategoryModel category) async {
+    var db = await database;
+    return await db.rawUpdate(
+      """
+        UPDATE $tableName SET
+        numberOfTransactions = numberOfTransactions + 1
+        WHERE id = ?;
+      """,
+      [
+        category.id
+      ],
+    );
+  }
 }

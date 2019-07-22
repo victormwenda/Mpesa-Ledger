@@ -70,6 +70,7 @@ class SMSFilter {
               await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
                   {"mpesaBalance": obj["data"]["mpesaBalance"]}));
             }
+            // categoryRepo
           }
         }
         counterPercentage.percentageProcessSink
