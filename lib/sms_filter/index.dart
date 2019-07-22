@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/mpesa_balance_model.dart';
 import 'package:mpesa_ledger_flutter/models/summary_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
@@ -54,6 +55,9 @@ class SMSFilter {
                 TransactionCategoryModel.fromMap(
                     transactionCategoryObjectList[j]),
               );
+              await categoryRepo.incrementNumOfTransactions(CategoryModel.fromMap({
+                "id": transactionCategoryObjectList[j]["categoryId"]
+              }));
             }
             Map<dynamic, dynamic> dateTime = await dateFormatUtil
                 .getDateTime(reversedBodies[i]["timestamp"]);
@@ -70,7 +74,6 @@ class SMSFilter {
               await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
                   {"mpesaBalance": obj["data"]["mpesaBalance"]}));
             }
-            // categoryRepo
           }
         }
         counterPercentage.percentageProcessSink
