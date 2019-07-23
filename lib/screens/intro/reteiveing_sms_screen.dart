@@ -19,12 +19,8 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
   @override
   void dispose() {
     counterPercentage.dispose();
+    widget.querySMSBloc.dispose();
     super.dispose();
-  }
-
-  static String forloop(int s) {
-    for (var i = 0; i < 1000000000; i++) {}
-    return "done";
   }
 
   @override
@@ -77,7 +73,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
               ),
               Expanded(
                 child: Align(child: CircularProgressIndicator()),
-              )
+              ),
             ],
           ),
         ),

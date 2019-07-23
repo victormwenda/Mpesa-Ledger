@@ -12,24 +12,37 @@ class SharedPreferencesBloc extends BaseBloc {
   StreamSink<SharedPreferencesModel> get sharedPreferencesSink =>
       _sharedPreferencesController.sink;
 
-  StreamController<SharedPreferencesModel> _changeSharedPreferencesController =
+  // EVENTS
+
+  StreamController<void> _getSharedPreferencesEventController =
+      StreamController<void>();
+  Stream<void> get getSharedPreferencesEventStream =>
+      _getSharedPreferencesEventController.stream;
+  StreamSink<void> get getSharedPreferencesEventSink =>
+      _getSharedPreferencesEventController.sink;
+
+  StreamController<SharedPreferencesModel>
+      _changeSharedPreferencesEventController =
       StreamController<SharedPreferencesModel>();
-  Stream<SharedPreferencesModel> get changeSharedPreferencesStream =>
-      _changeSharedPreferencesController.stream;
-  StreamSink<SharedPreferencesModel> get changeSharedPreferencesSink =>
-      _changeSharedPreferencesController.sink;
+  Stream<SharedPreferencesModel> get changeSharedPreferencesEventStream =>
+      _changeSharedPreferencesEventController.stream;
+  StreamSink<SharedPreferencesModel> get changeSharedPreferencesEventSink =>
+      _changeSharedPreferencesEventController.sink;
 
   SharedPreferencesBloc() {
-    changeSharedPreferencesStream.listen((data) {
+    changeSharedPreferencesEventStream.listen((data) {
       _setSharedPreferences(data);
+    });
+    getSharedPreferencesEventStream.listen((void data) {
+      _getSharedPreferences();
     });
   }
 
   Future<SharedPreferences> get sharedPreferences async {
     return await SharedPreferences.getInstance();
   }
-  
-  Future<void> getSharedPreferences() async {
+
+  Future<void> _getSharedPreferences() async {
     var pref = await sharedPreferences;
     Map<String, dynamic> map = {
       "isDBCreated": pref.getBool("isDBCreated") ?? false,
@@ -47,7 +60,8 @@ class SharedPreferencesBloc extends BaseBloc {
   @override
   void dispose() {
     _sharedPreferencesController.close();
-    _changeSharedPreferencesController.close();
+    _changeSharedPreferencesEventController.close();
+    _getSharedPreferencesEventController.close();
   }
 }
 

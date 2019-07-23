@@ -13,13 +13,12 @@ import 'package:mpesa_ledger_flutter/repository/summary_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
-import 'package:mpesa_ledger_flutter/sms_filter/check_sms_category.dart';
-import 'package:mpesa_ledger_flutter/sms_filter/check_sms_type.dart';
+import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_category.dart';
+import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_type.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class SMSFilter {
   CheckSMSType smsFilters;
-
   TransactionRepository transactionRepo = TransactionRepository();
   UnknownTransactionRepository unknownTransactionRepo =
       UnknownTransactionRepository();
@@ -33,11 +32,10 @@ class SMSFilter {
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
-      var categoryObject = await categoryRepo.getAll(["id", "keywords"]);
+      var categoryObject = await categoryRepo.select(["id", "keywords"]);
       int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
-        var obj = await getSMSObject(
-            reversedBodies[i]["body"], reversedBodies[i]["timestamp"]);
+        var obj = await _getSMSObject(reversedBodies[i]);
         if (obj.isNotEmpty) {
           if (obj["data"].containsKey("amounts")) {
             await unknownTransactionRepo.insert(
@@ -55,9 +53,9 @@ class SMSFilter {
                 TransactionCategoryModel.fromMap(
                     transactionCategoryObjectList[j]),
               );
-              await categoryRepo.incrementNumOfTransactions(CategoryModel.fromMap({
-                "id": transactionCategoryObjectList[j]["categoryId"]
-              }));
+              await categoryRepo.incrementNumOfTransactions(
+                  CategoryModel.fromMap(
+                      {"id": transactionCategoryObjectList[j]["categoryId"]}));
             }
             Map<dynamic, dynamic> dateTime = await dateFormatUtil
                 .getDateTime(reversedBodies[i]["timestamp"]);
@@ -76,6 +74,7 @@ class SMSFilter {
             }
           }
         }
+        print(bodyLength);
         counterPercentage.percentageProcessSink
             .add(((i / bodyLength) * 100).round());
       }
@@ -87,10 +86,9 @@ class SMSFilter {
     }
   }
 
-  Future<Map<String, dynamic>> getSMSObject(
-      String body, String timestamp) async {
+  Future<Map<String, dynamic>> _getSMSObject(Map<dynamic, dynamic> body) async {
     Map<String, dynamic> smsObject = {};
-    smsFilters = CheckSMSType(body, timestamp);
+    smsFilters = CheckSMSType(body["body"], body["timestamp"]);
     var coreValuesObject = await smsFilters.getCoreValues();
     if (!coreValuesObject.containsKey("error")) {
       smsObject.addAll(coreValuesObject);

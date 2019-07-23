@@ -7,12 +7,11 @@ class SummaryModel {
   double transactionCost;
 
   SummaryModel.fromMap(Map<String, dynamic> map) {
-    month = map["month"] == null ? null : map["month"];
-    year = map["year"] == null ? null : map["year"];
-    deposits = map["deposits"] == null ? null : map["deposits"];
-    withdrawals = map["withdrawals"] == null ? null : map["withdrawals"];
-    transactionCost =
-        map["transactionCost"] == null ? null : map["transactionCost"];
+    month = map["month"] ?? null;
+    year = map["year"] ?? null;
+    deposits = map["deposits"] ?? null;
+    withdrawals = map["withdrawals"] ?? null;
+    transactionCost = map["transactionCost"] ?? null;
     id = year.toString() + "" + month;
   }
 

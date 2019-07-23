@@ -29,7 +29,7 @@ class TransactionModel {
     isDeposit = map["isDeposit"] == 1 ? true : false;
     transactionCost = map["transactionCost"];
     transactionId = map["transactionId"];
-    id = map["id"] != null ? map["id"] : null;
+    id = map["id"] ?? null;
   }
 
   Map<String, dynamic> toMap() {

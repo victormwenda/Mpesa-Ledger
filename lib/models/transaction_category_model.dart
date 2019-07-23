@@ -6,7 +6,7 @@ class TransactionCategoryModel {
   TransactionCategoryModel.fromMap(Map<String, dynamic> map) {
     transactionId = map["transactionId"];
     categoryId = map["categoryId"];
-    id = map["id"] != null ? map["id"] : null;
+    id = map["id"] ?? null;
   }
 
   Map<String, dynamic> toMap() {

@@ -25,7 +25,7 @@ class UnknownTransactionsModel {
     }
     transactionCost = map["transactionCost"];
     transactionId = map["transactionId"];
-    id = map["id"] != null ? map["id"] : null;
+    id = map["id"] ?? null;
   }
 
   Map<String, dynamic> toMap() {

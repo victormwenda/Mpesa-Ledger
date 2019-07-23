@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/blocs/bottombar_navigation/bottombar_nav_bloc.dart';import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
+import 'package:mpesa_ledger_flutter/blocs/bottombar_navigation/bottombar_nav_bloc.dart';
+import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
-  var bloc = BottombarNavigationBloc();
+  BottombarNavigationBloc bottombarNavigationBloc = BottombarNavigationBloc();
 
-  BottomNavigationBarWidget(this.bloc);
+  BottomNavigationBarWidget(this.bottombarNavigationBloc);
 
   @override
   _BottomNavigationBarWidgetState createState() =>
@@ -43,14 +44,9 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         setState(() {
           _selectedIndex = index;
         });
-        widget.bloc.showScreen(Screens.values[index]);
+        widget.bottombarNavigationBloc.changeScreenEventSink
+            .add(Screens.values[index]);
       },
     );
-  }
-
-  @override
-  void dispose() {
-    widget.bloc.dispose();
-    super.dispose();
   }
 }

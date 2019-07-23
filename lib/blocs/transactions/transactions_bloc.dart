@@ -8,20 +8,20 @@ class TransactionBloc extends BaseBloc{
 
   TransactionRepository transactionRepo = TransactionRepository();
 
-  StreamController<List<TransactionModel>> transactionController = StreamController<List<TransactionModel>>();
-  Stream<List<TransactionModel>> get transactionControllerStream => transactionController.stream;
-  StreamSink<List<TransactionModel>> get transactionControllerSink => transactionController.sink;
+  StreamController<List<TransactionModel>> _transactionController = StreamController<List<TransactionModel>>();
+  Stream<List<TransactionModel>> get transactionControllerStream => _transactionController.stream;
+  StreamSink<List<TransactionModel>> get transactionControllerSink => _transactionController.sink;
 
   TransactionBloc() {
-    getAllTransactions();
+    _getAllTransactions();
   }
 
-  Future<void> getAllTransactions() async {
-    transactionControllerSink.add(await transactionRepo.getAll());
+  Future<void> _getAllTransactions() async {
+    transactionControllerSink.add(await transactionRepo.select());
   }
 
   @override
   void dispose() {
-    transactionController.close();
+    _transactionController.close();
   }
 }

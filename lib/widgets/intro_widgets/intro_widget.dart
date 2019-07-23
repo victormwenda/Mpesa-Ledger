@@ -20,7 +20,7 @@ class IntroWidget extends StatefulWidget {
 
 class _IntroWidgetState extends State<IntroWidget> {
   skip(BuildContext context) {
-    widget.runtimePermissionBloc.checkAndRequestPermissionSink.add(null);
+    widget.runtimePermissionBloc.checkAndRequestPermissionEventSink.add(null);
   }
 
   @override
@@ -42,7 +42,7 @@ class _IntroWidgetState extends State<IntroWidget> {
             FlatButton(
               child: Text("ALLOW PERMISSIONS"),
               onPressed: () {
-                widget.runtimePermissionBloc.checkAndRequestPermissionSink
+                widget.runtimePermissionBloc.checkAndRequestPermissionEventSink
                     .add(null);
                 Navigator.pop(context);
               },

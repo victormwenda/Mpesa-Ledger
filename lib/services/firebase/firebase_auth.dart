@@ -12,20 +12,12 @@ class FirebaseAuthProvider {
   Future<void> signIn() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-
-      if (googleUser == null) {
-        print("YOU CANCELLED THE SIGNIN");
-        return;
-      }
-
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
       await _firebaseAuth.signInWithCredential(credential);
     } catch (e) {
       print("Error here " + e.toString());

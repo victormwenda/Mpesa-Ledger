@@ -5,18 +5,14 @@ import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 
 class RuntimePermissionsBloc extends BaseBloc {
-  StreamController<void> _checkAndRequestPermissionController =
-      StreamController<void>();
-  Stream<void> get checkAndRequestPermissionStream =>
-      _checkAndRequestPermissionController.stream;
-  StreamSink<void> get checkAndRequestPermissionSink =>
-      _checkAndRequestPermissionController.sink;
+  MethodChannelClass methodChannel = MethodChannelClass();
 
   StreamController<void> _continueToAppController = StreamController<void>();
   Stream<void> get continueToAppStream => _continueToAppController.stream;
   StreamSink<void> get continueToAppSink => _continueToAppController.sink;
 
-  StreamController<bool> _permissionDenialController = StreamController<bool>.broadcast();
+  StreamController<bool> _permissionDenialController =
+      StreamController<bool>.broadcast();
   Stream<bool> get permissionDenialStream => _permissionDenialController.stream;
   StreamSink<bool> get permissionDenialSink => _permissionDenialController.sink;
 
@@ -24,10 +20,18 @@ class RuntimePermissionsBloc extends BaseBloc {
   Stream<bool> get openAppSettingsStream => _openAppSettingsController.stream;
   StreamSink<bool> get openAppSettingsSink => _openAppSettingsController.sink;
 
+  // EVENTS
+
+  StreamController<void> _checkAndRequestPermissionEventController =
+      StreamController<void>();
+  Stream<void> get checkAndRequestPermissionEventStream =>
+      _checkAndRequestPermissionEventController.stream;
+  StreamSink<void> get checkAndRequestPermissionEventSink =>
+      _checkAndRequestPermissionEventController.sink;
+
   RuntimePermissionsBloc() {
-    var methodChannel = MethodChannelClass();
     methodChannel.setMethodCallHandler(_handleCallsFromNative);
-    checkAndRequestPermissionStream.listen((void data) async {
+    checkAndRequestPermissionEventStream.listen((void data) async {
       await methodChannel.invokeMethod("isPermissionsAllowed");
     });
   }
@@ -49,7 +53,7 @@ class RuntimePermissionsBloc extends BaseBloc {
   @override
   void dispose() {
     _continueToAppController.close();
-    _checkAndRequestPermissionController.close();
+    _checkAndRequestPermissionEventController.close();
     _permissionDenialController.close();
     _openAppSettingsController.close();
   }

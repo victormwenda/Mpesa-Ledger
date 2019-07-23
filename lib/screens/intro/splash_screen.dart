@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
@@ -11,9 +9,9 @@ import 'package:mpesa_ledger_flutter/screens/intro/intro_walk_through_screen.dar
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
-  FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
-  FirebaseAuthProvider onAuthStateChanged = FirebaseAuthProvider();
-  QuerySMSBloc querySMSBloc = QuerySMSBloc();
+  final FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
+  final FirebaseAuthProvider onAuthStateChanged = FirebaseAuthProvider();
+  final QuerySMSBloc querySMSBloc = QuerySMSBloc();
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -83,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   );
                 } else {
-                  sharedPreferencesBloc.getSharedPreferences();
+                  sharedPreferencesBloc.getSharedPreferencesEventSink.add(null);
                   return CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                   );

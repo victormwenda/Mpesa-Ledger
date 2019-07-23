@@ -9,7 +9,6 @@ class DatabaseProvider {
 
   Future<Database> get database async {
     if (_database != null) {
-      print("DATABASE EXISTS");
       return _database;
     }
     _database = await initializedDatabase();
@@ -22,21 +21,17 @@ class DatabaseProvider {
   }
 
   Future<Database> initializedDatabase() async {
-    print("INITIALIZING DATABASE 1");
     String path = await databasePath();
     Database database = await openDatabase(
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        print("CREATING DATABASE 2");
         // When creating the db, create the table
         for (var i = 0; i < schema.length; i++) {
           await db.execute(schema[i]);
         }
-        print("DATABASE CREATED 3");
       },
     );
-    print("DATABASE CREATED 4");
     return database;
   }
 
@@ -62,3 +57,5 @@ class DatabaseProvider {
     }
   }
 }
+
+DatabaseProvider databaseProvider = DatabaseProvider();

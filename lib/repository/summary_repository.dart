@@ -4,11 +4,10 @@ import 'package:mpesa_ledger_flutter/utils/constants/database_constants.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SummaryRepository {
-  DatabaseProvider _databaseProvider = DatabaseProvider();
   String tableName = summaryTable;
 
   Future<Database> get database async {
-    return await _databaseProvider.database;
+    return await databaseProvider.database;
   }
 
   Future<int> insert(SummaryModel summary) async {

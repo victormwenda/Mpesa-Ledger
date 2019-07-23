@@ -9,13 +9,26 @@ import 'package:mpesa_ledger_flutter/screens/home/main_home.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/main_summary.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
-class BottombarNavigationBloc extends BaseBloc{
-  StreamController<Widget> screensController = StreamController<Widget>();
+class BottombarNavigationBloc extends BaseBloc {
+  StreamController<Widget> _screensController = StreamController<Widget>();
+  Stream<Widget> get screensControllerStream => _screensController.stream;
+  StreamSink<Widget> get screensControllerSink => _screensController.sink;
 
-  Stream<Widget> get screensControllerStream => screensController.stream;
-  StreamSink<Widget> get screensControllerSink => screensController.sink;
+  // EVENTS
+  StreamController<Screens> _changeScreenEventController =
+      StreamController<Screens>();
+  Stream<Screens> get changeScreenEventStream =>
+      _changeScreenEventController.stream;
+  StreamSink<Screens> get changeScreenEventSink =>
+      _changeScreenEventController.sink;
 
-  void showScreen(Screens screen) {
+  BottombarNavigationBloc() {
+    changeScreenEventStream.listen((data) {
+      _showScreen(data);
+    });
+  }
+
+  void _showScreen(Screens screen) {
     Widget choosenScreen;
     switch (screen) {
       case Screens.home:
@@ -38,7 +51,7 @@ class BottombarNavigationBloc extends BaseBloc{
 
   @override
   void dispose() {
-    screensController.close();
+    _screensController.close();
+    _changeScreenEventController.close();
   }
-
 }

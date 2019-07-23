@@ -4,11 +4,10 @@ import 'package:mpesa_ledger_flutter/utils/constants/database_constants.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class TransactionRepository {
-  DatabaseProvider _databaseProvider = DatabaseProvider();
   String tableName = transactionsTable;
 
   Future<Database> get database async {
-    return await _databaseProvider.database;
+    return await databaseProvider.database;
   }
 
   Future<int> insert(TransactionModel transaction) async {
@@ -16,7 +15,7 @@ class TransactionRepository {
     return await db.insert(tableName, transaction.toMap());
   }
 
-  Future<List<TransactionModel>> getAll(
+  Future<List<TransactionModel>> select(
       {List<String> columns, String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;

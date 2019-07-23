@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
 
 class AppbarWidget extends StatefulWidget {
@@ -6,6 +7,8 @@ class AppbarWidget extends StatefulWidget {
   bool showSearch;
   bool showAddCategory;
   bool showPopupMenuButton;
+
+  FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
 
   AppbarWidget(this.title,
       {this.showSearch: true,
@@ -17,7 +20,7 @@ class AppbarWidget extends StatefulWidget {
 }
 
 class _AppbarWidgetState extends State<AppbarWidget> {
-  List<Widget> showAppIcons(BuildContext context) {
+  List<Widget> _showAppIcons(BuildContext context) {
     List<Widget> appbarIcons = [];
     if (widget.showSearch) {
       appbarIcons.add(IconButton(
@@ -56,6 +59,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
             Navigator.pushNamed(context, '/settings');
           } else if (item == PopupMenuButtonItems.about) {
             Navigator.pushNamed(context, '/about');
+          } else if (item == PopupMenuButtonItems.signOut) {
+            widget.firebaseAuthBloc.signOutSink.add(null);
           }
         },
         itemBuilder: (context) {
@@ -67,6 +72,10 @@ class _AppbarWidgetState extends State<AppbarWidget> {
             PopupMenuItem(
               value: PopupMenuButtonItems.about,
               child: Text("About"),
+            ),
+            PopupMenuItem(
+              value: PopupMenuButtonItems.signOut,
+              child: Text("Sign Out"),
             )
           ];
         },
@@ -82,7 +91,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),
-      actions: showAppIcons(context),
+      actions: _showAppIcons(context),
       backgroundColor: Colors.white,
       title: Text(
         widget.title,
