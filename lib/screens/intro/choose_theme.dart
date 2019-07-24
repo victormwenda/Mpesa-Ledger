@@ -1,14 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/theme_card/theme_card.dart';
 
-class ChooseTheme extends StatefulWidget {
+class ChooseThemeWidget extends StatefulWidget {
+
   @override
-  _ChooseThemeState createState() => _ChooseThemeState();
+  _ChooseThemeWidgetState createState() => _ChooseThemeWidgetState();
 }
 
-class _ChooseThemeState extends State<ChooseTheme> {
+class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +41,9 @@ class _ChooseThemeState extends State<ChooseTheme> {
                 viewportFraction: 0.65,
                 enableInfiniteScroll: false,
                 initialPage: 0,
+                onPageChanged: (int index) {
+                  themeBloc.changeThemeEventSink.add(index);
+                },
               ),
             ),
           ),

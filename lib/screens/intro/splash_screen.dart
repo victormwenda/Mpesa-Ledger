@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (data.isDBCreated == true) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (route) => ChooseTheme()),
+          MaterialPageRoute(builder: (route) => ChooseThemeWidget()),
         );
       } else {
         Navigator.pushReplacement(
