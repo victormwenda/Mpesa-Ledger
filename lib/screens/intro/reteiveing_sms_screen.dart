@@ -45,8 +45,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     "Fetching MPESA messages",
-                    style:
-                        TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.display3,
                   ),
                 ),
               ),

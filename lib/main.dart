@@ -18,6 +18,7 @@ class MainApp extends StatelessWidget {
           focusColor: Colors.deepPurpleAccent[400],
           fontFamily: "Montserrat",
           textTheme: TextTheme(
+            display3: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             headline: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800),
             subhead: TextStyle(fontSize: 15.0,),
             title: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
