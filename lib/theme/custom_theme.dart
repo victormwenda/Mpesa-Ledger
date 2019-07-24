@@ -5,11 +5,14 @@ class CustomTheme {
   ThemeData themeData;
 
   CustomTheme(this.themeMap) {
+    var primaryColor = themeMap["primaryColor"];
+    var accentColor = themeMap["accentColor"];
+
     themeData = ThemeData(
-      primaryColor: themeMap["primaryColor"],
-      accentColor: themeMap["accentColor"],
-      cursorColor: themeMap["primaryColor"],
-      focusColor: themeMap["primaryColor"],
+      primaryColor: Color(primaryColor),
+      accentColor: Color(accentColor),
+      cursorColor: Color(primaryColor),
+      focusColor: Color(primaryColor),
       fontFamily: "Montserrat",
       textTheme: TextTheme(
         display3: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),

@@ -27,9 +27,10 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
   Widget build(BuildContext context) {
     widget.querySMSBloc.retrieveSMSCompleteStream.listen((data) {
       if (data) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (route) => App()),
+          (Route<dynamic> route) => false
         );
       }
     });

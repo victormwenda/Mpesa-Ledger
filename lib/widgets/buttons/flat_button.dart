@@ -4,8 +4,10 @@ class FlatButtonWidget extends StatefulWidget {
   String text;
   VoidCallback onPressed;
   bool loading;
+  bool setColorToWhite;
 
-  FlatButtonWidget(this.text, this.onPressed, {this.loading = false});
+  FlatButtonWidget(this.text, this.onPressed,
+      {this.loading = false, this.setColorToWhite = false});
 
   @override
   _FlatButtonWidgetState createState() => _FlatButtonWidgetState();
@@ -29,9 +31,12 @@ class _FlatButtonWidgetState extends State<FlatButtonWidget> {
       child: FlatButton(
         onPressed: widget.onPressed,
         child: showLoading(widget.loading),
-        textColor: Theme.of(context).primaryColor,
+        textColor: widget.setColorToWhite
+            ? Colors.white
+            : Theme.of(context).primaryColor,
         shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(5.0)),
+          borderRadius: new BorderRadius.circular(5.0),
+        ),
       ),
     );
   }

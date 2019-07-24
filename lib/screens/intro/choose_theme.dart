@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/theme_card/theme_card.dart';
 
 class ChooseThemeWidget extends StatefulWidget {
-
   @override
   _ChooseThemeWidgetState createState() => _ChooseThemeWidgetState();
 }
@@ -50,7 +50,12 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
           Expanded(
             flex: 1,
             child: Center(
-              child: RaisedButtonWidget("CONTINUE", () {}),
+              child: RaisedButtonWidget("CONTINUE", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (route) => RetreiveSMS()),
+                );
+              }),
             ),
           )
         ],

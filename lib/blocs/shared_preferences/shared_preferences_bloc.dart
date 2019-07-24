@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/shared_preferences_model.dart';
@@ -46,6 +47,7 @@ class SharedPreferencesBloc extends BaseBloc {
     var pref = await sharedPreferences;
     Map<String, dynamic> map = {
       "isDBCreated": pref.getBool("isDBCreated") ?? false,
+      "themeMap": pref.getString("themeMap") != null ? json.decode(pref.getString("themeMap")) : null,
     };
     sharedPreferencesSink.add(SharedPreferencesModel.fromMap(map));
   }
@@ -54,6 +56,9 @@ class SharedPreferencesBloc extends BaseBloc {
     var pref = await sharedPreferences;
     if (model.isDBCreated != null) {
       pref.setBool("isDBCreated", model.isDBCreated);
+    }
+    if(model.themeMap != null) {
+      pref.setString("themeMap", json.encode(model.themeMap));
     }
   }
 

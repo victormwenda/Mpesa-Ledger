@@ -2,7 +2,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
-import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
@@ -81,9 +81,9 @@ class _IntroWidgetState extends State<IntroWidget> {
     });
 
     widget.runtimePermissionBloc.continueToAppStream.listen((void v) {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (route) => RetreiveSMS()),
+        MaterialPageRoute(builder: (route) => ChooseThemeWidget()),
       );
     });
 
@@ -97,9 +97,10 @@ class _IntroWidgetState extends State<IntroWidget> {
               child: Text(
                 widget.title,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 35.0,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 35.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -134,11 +135,19 @@ class _IntroWidgetState extends State<IntroWidget> {
             ),
           ),
           Expanded(
-            child: Align(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Align(
                 alignment: Alignment.bottomCenter,
-                child: FlatButtonWidget("SKIP", () {
-                  skip(context);
-                })),
+                child: FlatButtonWidget(
+                  "SKIP",
+                  () {
+                    skip(context);
+                  },
+                  setColorToWhite: true,
+                ),
+              ),
+            ),
           ),
         ],
       ),

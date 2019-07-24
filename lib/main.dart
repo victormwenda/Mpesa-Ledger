@@ -12,13 +12,16 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final navigatorKey = GlobalKey<NavigatorState>();
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
       stream: themeBloc.themeControllerStream,
+      initialData: {
+        "primaryColor": 0XFF000000,
+        "accentColor": 0XFFBDBDBD
+      },
       builder: (context, snapshot) {
+        print("THEME DATA => " + snapshot.data.toString());
         return MaterialApp(
             title: 'Material App',
             theme: CustomTheme(snapshot.data).getTheme,
