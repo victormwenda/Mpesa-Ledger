@@ -11,15 +11,18 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: textFieldController,
-      autofocus: autoFocus,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        filled: false,
-        labelText: label,
-        contentPadding: EdgeInsets.all(20.0),
-        border: OutlineInputBorder(),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        controller: textFieldController,
+        autofocus: autoFocus,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          filled: false,
+          labelText: label,
+          contentPadding: EdgeInsets.all(17.0),
+          border: OutlineInputBorder(),
+        ),
       ),
     );
   }

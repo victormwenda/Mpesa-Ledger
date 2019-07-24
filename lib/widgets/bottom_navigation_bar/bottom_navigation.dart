@@ -36,10 +36,10 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           title: Text('Category'),
         ),
       ],
+      backgroundColor: Theme.of(context).primaryColor,
       currentIndex: _selectedIndex,
       showUnselectedLabels: true,
-      selectedItemColor: Colors.amber[800],
-      unselectedItemColor: Colors.black,
+      unselectedItemColor: Colors.white54,
       onTap: (int index) {
         setState(() {
           _selectedIndex = index;

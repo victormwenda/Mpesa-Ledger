@@ -7,20 +7,19 @@ import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/widgets/bottom_navigation_bar/bottom_navigation.dart';
 
 class App extends StatefulWidget {
-
   final FirebaseAuthProvider firebaseAuthProvider = FirebaseAuthProvider();
-  final BottombarNavigationBloc bottombarNavigationBloc = BottombarNavigationBloc();
+  final BottombarNavigationBloc bottombarNavigationBloc =
+      BottombarNavigationBloc();
 
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-
   @override
   void initState() {
     widget.firebaseAuthProvider.onAuthStateChanged.listen((data) {
-      if(data == null) {
+      if (data == null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (route) => SplashScreen()),
@@ -31,13 +30,13 @@ class _AppState extends State<App> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     widget.bottombarNavigationBloc.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
         initialData: MainHome(),
@@ -46,7 +45,12 @@ class _AppState extends State<App> {
           return snapshot.data;
         },
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(widget.bottombarNavigationBloc),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Theme.of(context).primaryColor
+        ),
+        child: BottomNavigationBarWidget(widget.bottombarNavigationBloc),
+      ),
     );
   }
 }

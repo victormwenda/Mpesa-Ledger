@@ -22,16 +22,16 @@ class _FlatButtonWidgetState extends State<FlatButtonWidget> {
       }
       return Text(
         widget.text,
-        style: TextStyle(fontWeight: FontWeight.w600),
       );
     }
 
     return Container(
       child: FlatButton(
         onPressed: widget.onPressed,
-        padding: EdgeInsets.only(top: 13, bottom: 13, left: 20, right: 20),
         child: showLoading(widget.loading),
-        textColor: Colors.white,
+        textColor: Theme.of(context).primaryColor,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0)),
       ),
     );
   }

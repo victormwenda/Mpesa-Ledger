@@ -22,14 +22,13 @@ class _RaisedButtonWidgetState extends State<RaisedButtonWidget> {
       }
       return Text(
         widget.text,
-        style: TextStyle(fontWeight: FontWeight.w600),
       );
     }
 
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Colors.deepPurpleAccent,
+          color: Theme.of(context).accentColor,
           offset: Offset(0, 7.0),
           spreadRadius: -5.0,
           blurRadius: 15.0,
@@ -37,11 +36,9 @@ class _RaisedButtonWidgetState extends State<RaisedButtonWidget> {
       ]),
       child: RaisedButton(
         onPressed: widget.onPressed,
-        padding: EdgeInsets.only(top: 13, bottom: 13, left: 20, right: 20),
         child: showLoading(widget.loading),
-        color: Colors.deepPurpleAccent[400],
+        color: Theme.of(context).primaryColor,
         textColor: Colors.white,
-        disabledElevation: 0,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(5.0)),
       ),
