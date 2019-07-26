@@ -21,7 +21,6 @@ class _MainAppState extends State<MainApp> {
         "accentColor": 0XFFBDBDBD
       },
       builder: (context, snapshot) {
-        print("THEME DATA => " + snapshot.data.toString());
         return MaterialApp(
             title: 'Material App',
             theme: CustomTheme(snapshot.data).getTheme,

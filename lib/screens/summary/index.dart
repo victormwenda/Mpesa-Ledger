@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/summary/summary_bloc.dart';
 
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Summary extends StatefulWidget {
+
+  SummaryBloc summaryBloc = SummaryBloc();
+
   @override
   _SummaryState createState() => _SummaryState();
 }
