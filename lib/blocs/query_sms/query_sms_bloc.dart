@@ -43,7 +43,7 @@ class QuerySMSBloc extends BaseBloc {
 }
 
 class QuerySMSCounterPercentage extends BaseBloc {
-  StreamController<int> _percentageProcessController = StreamController<int>();
+  StreamController<int> _percentageProcessController = StreamController<int>.broadcast();
   Stream<int> get percentageProcessStream =>
       _percentageProcessController.stream;
   StreamSink<int> get percentageProcessSink =>

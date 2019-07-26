@@ -12,7 +12,7 @@ class RetreiveSMS extends StatefulWidget {
 class _RetreiveSMSState extends State<RetreiveSMS> {
   @override
   void initState() {
-    widget.querySMSBloc.retrieveSMSSink.add(null);
+    // widget.querySMSBloc.retrieveSMSSink.add(null);
     super.initState();
   }
 
@@ -36,47 +36,47 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
     });
 
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    "Fetching MPESA messages",
-                    style: Theme.of(context).textTheme.display3,
-                  ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Align(
+                child: Text(
+                  "Fetching MPESA messages",
+                  style: Theme.of(context).textTheme.display3,
                 ),
               ),
-              Expanded(
-                child: Align(
-                  child: StreamBuilder(
-                    stream: counterPercentage.percentageProcessStream,
-                    initialData: 0,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var percentageComplete =
-                          snapshot.data >= 96 ? 100 : snapshot.data;
-                      return Container(
-                        child: Text(
-                          percentageComplete.toString() + "%",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 70.0,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Align(child: CircularProgressIndicator()),
-              ),
-            ],
+            ),
           ),
-        ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              child: StreamBuilder(
+                stream: counterPercentage.percentageProcessStream,
+                initialData: 0,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  var percentageComplete =
+                      snapshot.data >= 96 ? 100 : snapshot.data;
+                  return Container(
+                    child: Text(
+                      percentageComplete.toString() + "%",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 70.0,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Align(child: CircularProgressIndicator()),
+          ),
+        ],
       ),
     );
   }

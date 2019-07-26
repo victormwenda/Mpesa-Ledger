@@ -49,7 +49,7 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
           ),
           Expanded(
             flex: 1,
-            child: Center(
+            child: Align(
               child: RaisedButtonWidget("CONTINUE", () {
                 Navigator.push(
                   context,

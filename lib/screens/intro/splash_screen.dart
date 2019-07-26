@@ -11,7 +11,6 @@ import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 class SplashScreen extends StatefulWidget {
   final FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
   final FirebaseAuthProvider onAuthStateChanged = FirebaseAuthProvider();
-  final QuerySMSBloc querySMSBloc = QuerySMSBloc();
   final SharedPreferencesBloc sharedPrefBloc = SharedPreferencesBloc();
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -46,51 +45,49 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "TEST",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 45.0),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "MPESA",
+                    style: Theme.of(context).textTheme.display3
+                  ),
+                  Text(
+                    "Ledger",
+                    style: Theme.of(context).textTheme.headline
+                  ),
+                ],
+              ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Align(
+              child: StreamBuilder(
+                stream: widget.onAuthStateChanged.onAuthStateChanged,
+                builder: (BuildContext context,
+                    AsyncSnapshot<FirebaseUser> snapshot) {
+                  if (snapshot.data == null) {
+                    return GoogleSignInButton(
+                      onPressed: () {
+                        widget.firebaseAuthBloc.signInSink.add(null);
+                      },
+                    );
+                  } else {
+                    widget.sharedPrefBloc.getSharedPreferencesEventSink
+                        .add(null);
+                    return CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    );
+                  }
+                },
+              ),
             ),
-            Text(
-              "TEST",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 45.0),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            StreamBuilder(
-              stream: widget.onAuthStateChanged.onAuthStateChanged,
-              builder:
-                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-                if (snapshot.data == null) {
-                  return Column(
-                    children: <Widget>[
-                      GoogleSignInButton(
-                        onPressed: () {
-                          widget.firebaseAuthBloc.signInSink.add(null);
-                        },
-                      ),
-                    ],
-                  );
-                } else {
-                  widget.sharedPrefBloc.getSharedPreferencesEventSink.add(null);
-                  return CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                  );
-                }
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
