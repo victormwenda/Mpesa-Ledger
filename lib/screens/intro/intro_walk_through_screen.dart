@@ -31,7 +31,7 @@ class IntroPage1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.purple,
       body: Container(
-        child: IntroWidget("This is intro 1", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 1", "This is where the desription will be displayed"),
       ),
     );
   }
@@ -43,7 +43,7 @@ class IntroPage2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.pink,
       body: Container(
-        child: IntroWidget("This is intro 2", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 2", "This is where the desription will be displayed"),
       ),
     );
   }
@@ -55,7 +55,7 @@ class IntroPage3 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Container(
-        child: IntroWidget("This is intro 3", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 3", "This is where the desription will be displayed"),
       ),
     );
   }

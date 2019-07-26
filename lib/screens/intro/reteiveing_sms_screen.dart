@@ -12,7 +12,7 @@ class RetreiveSMS extends StatefulWidget {
 class _RetreiveSMSState extends State<RetreiveSMS> {
   @override
   void initState() {
-    // widget.querySMSBloc.retrieveSMSSink.add(null);
+    widget.querySMSBloc.retrieveSMSSink.add(null);
     super.initState();
   }
 

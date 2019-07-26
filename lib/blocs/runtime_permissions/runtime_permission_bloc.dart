@@ -7,7 +7,7 @@ import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
 class RuntimePermissionsBloc extends BaseBloc {
   MethodChannelClass methodChannel = MethodChannelClass();
 
-  StreamController<void> _continueToAppController = StreamController<void>();
+  StreamController<void> _continueToAppController = StreamController<void>.broadcast();
   Stream<void> get continueToAppStream => _continueToAppController.stream;
   StreamSink<void> get continueToAppSink => _continueToAppController.sink;
 
@@ -16,7 +16,7 @@ class RuntimePermissionsBloc extends BaseBloc {
   Stream<bool> get permissionDenialStream => _permissionDenialController.stream;
   StreamSink<bool> get permissionDenialSink => _permissionDenialController.sink;
 
-  StreamController<bool> _openAppSettingsController = StreamController<bool>();
+  StreamController<bool> _openAppSettingsController = StreamController<bool>.broadcast();
   Stream<bool> get openAppSettingsStream => _openAppSettingsController.stream;
   StreamSink<bool> get openAppSettingsSink => _openAppSettingsController.sink;
 

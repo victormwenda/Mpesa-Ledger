@@ -87,70 +87,68 @@ class _IntroWidgetState extends State<IntroWidget> {
       );
     });
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Align(
-              alignment: Alignment.bottomCenter,
               child: Text(
                 widget.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.display2,
               ),
             ),
           ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.chevron_left,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Text(
-                    widget.description,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Row(
+            children: <Widget>[
+              Icon(
+                Icons.chevron_left,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text(
+                  widget.description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.chevron_right,
-                  color: Colors.white,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Icon(
+                Icons.chevron_right,
+                color: Colors.white,
+              ),
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: FlatButtonWidget(
-                  "SKIP",
-                  () {
-                    skip(context);
-                  },
-                  setColorToWhite: true,
-                ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FlatButtonWidget(
+                "SKIP",
+                () {
+                  skip(context);
+                },
+                setColorToWhite: true,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

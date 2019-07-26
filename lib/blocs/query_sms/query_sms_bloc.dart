@@ -15,7 +15,7 @@ class QuerySMSBloc extends BaseBloc {
   StreamSink<void> get retrieveSMSSink => _retrieveSMSController.sink;
 
   StreamController<bool> _retrieveSMSCompleteController =
-      StreamController<bool>();
+      StreamController<bool>.broadcast();
   Stream<bool> get retrieveSMSCompleteStream =>
       _retrieveSMSCompleteController.stream;
   StreamSink<bool> get retrieveSMSCompleteSink =>
