@@ -22,6 +22,7 @@ class CustomTheme {
           fontSize: 15.0,
         ),
         title: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        subtitle: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         body1: TextStyle(),
         button: TextStyle(
           fontWeight: FontWeight.w800,

@@ -16,6 +16,7 @@ class SummaryBloc extends BaseBloc {
 
   SummaryBloc() {
     _getSummary();
+    // _select();
   }
 
   // _insert() {
@@ -27,6 +28,13 @@ class SummaryBloc extends BaseBloc {
   //     "transactionCost" : 20.0
   //   }));
   // }
+
+  _select() async {
+    var l = await _summaryRepository.select();
+    for (var i = 0; i < l.length; i++) {
+      print(l[i].toMap());
+    }
+  }
 
   Future<void> _getSummary() async {
     List<SummaryModel> result = await _summaryRepository.select();
@@ -56,20 +64,22 @@ class SummaryBloc extends BaseBloc {
     List<Map<String, dynamic>> listMap = [];
     Set<int> yearSet = _getYearSet(list);
     yearSet.forEach(
-      (data) {
+      (year) {
         Map<String, dynamic> yearMap = {};
         List<Map<String, dynamic>> monthlyTotalsList = [];
-        yearMap["year"] = data;
+        yearMap["year"] = year;
         for (var i = 0; i < list.length; i++) {
           Map<String, dynamic> monthlyTotalsMap = {};
-          if (data == list[i].toMap()["year"]) {
+          if (year == list[i].toMap()["year"]) {
             monthlyTotalsMap["deposits"] = list[i].toMap()["deposits"];
             monthlyTotalsMap["withdrawals"] = list[i].toMap()["withdrawals"];
             monthlyTotalsMap["transactionCost"] =
                 list[i].toMap()["transactionCost"];
             monthlyTotalsMap["month"] = list[i].toMap()["month"];
           }
-          monthlyTotalsList.add(monthlyTotalsMap);
+          if (monthlyTotalsMap.isNotEmpty) {
+            monthlyTotalsList.add(monthlyTotalsMap);
+          }
         }
         yearMap["monthlyTotals"] = monthlyTotalsList;
         listMap.add(yearMap);
