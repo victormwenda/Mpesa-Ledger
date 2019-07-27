@@ -18,6 +18,16 @@ class SummaryBloc extends BaseBloc {
     _getSummary();
   }
 
+  // _insert() {
+  //   _summaryRepository.insert(SummaryModel.fromMap({
+  //     "year": 2019,
+  //     "month": "Mar",
+  //     "deposits": 200.0,
+  //     "withdrawals": 45.00,
+  //     "transactionCost" : 20.0
+  //   }));
+  // }
+
   Future<void> _getSummary() async {
     List<SummaryModel> result = await _summaryRepository.select();
     Map<String, dynamic> map = {};
@@ -71,7 +81,6 @@ class SummaryBloc extends BaseBloc {
   _getYearSet(List<SummaryModel> list) {
     List<int> years = [];
     for (var i = 0; i < list.length; i++) {
-      print(list[i].toMap());
       years.add(list[i].toMap()["year"]);
     }
     return years.toSet();

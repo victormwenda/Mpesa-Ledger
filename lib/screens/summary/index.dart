@@ -29,8 +29,10 @@ class _SummaryState extends State<Summary> {
               stream: widget.summaryBloc.transactionTotalsStream,
               builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                 if (snapshot.hasData) {
+                  List<Map<String, dynamic>> yearMonthlyTotalsList = snapshot.data["yearMonthlyTotals"];
+                  print(snapshot.data);
                   return ListView.builder(
-                    itemCount: 50,
+                    itemCount: yearMonthlyTotalsList.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index == 0) {
                         return Container(
@@ -112,7 +114,7 @@ class _SummaryState extends State<Summary> {
                           ),
                         );
                       }
-                      return Text(index.toString());
+                      return Text(snapshot.data["yearMonthlyTotals"][index - 1]["year"].toString());
                     },
                   );
                 } else {
