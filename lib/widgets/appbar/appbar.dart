@@ -95,7 +95,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       backgroundColor: Colors.white,
       title: Text(
         widget.title,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        style: Theme.of(context).textTheme.title,
       ),
       centerTitle: true,
     );

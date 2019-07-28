@@ -4,7 +4,7 @@ class MpesaBalanceModel {
 
   MpesaBalanceModel.fromMap(Map<String, dynamic> map) {
     mpesaBalance = map["mpesaBalance"];
-    id = 1;
+    id = map["id"] ?? 1;
   }
 
   Map<String, dynamic> toMap() {

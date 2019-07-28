@@ -15,10 +15,10 @@ class SummaryBloc extends BaseBloc {
       _transactionTotalsController.sink;
 
   SummaryBloc() {
-    _getSummary();
+    _getSummaryData();
   }
 
-  Future<void> _getSummary() async {
+  Future<void> _getSummaryData() async {
     List<SummaryModel> result = await _summaryRepository.select();
     Map<String, dynamic> map = {};
     map["totals"] = _getTotal(result);
