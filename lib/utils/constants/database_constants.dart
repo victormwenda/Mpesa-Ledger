@@ -71,6 +71,7 @@ final List<String> schema = [
   CREATE TABLE $summaryTable (
     id TEXT PRIMARY KEY,
     month TEXT NOT NULL,
+    monthInt TEXT NOT NULL,
     year INTEGER NOT NULL,
     deposits REAL NOT NULL,
     withdrawals REAL NOT NULL,

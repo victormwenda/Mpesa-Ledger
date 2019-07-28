@@ -13,7 +13,7 @@ class SummaryRepository {
   Future<int> insert(SummaryModel summary) async {
     var db = await database;
     List<SummaryModel> result =
-        await select(columns: ["id", "month", "year"], query: summary.id);
+        await select(columns: ["id", "monthInt", "year"], query: summary.id);
     if (result.isEmpty) {
       return await db.insert(tableName, summary.toMap());
     }
@@ -51,7 +51,10 @@ class SummaryRepository {
         whereArgs: [query],
       );
     } else {
-      result = await db.query(tableName);
+      result = await db.rawQuery('''
+        SELECT * FROM $tableName
+        ORDER BY id DESC
+      ''');
     }
     List<SummaryModel> summaries;
     summaries = result.isNotEmpty

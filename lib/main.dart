@@ -25,7 +25,7 @@ class _MainAppState extends State<MainApp> {
             title: 'Material App',
             theme: CustomTheme(snapshot.data).getTheme,
             debugShowCheckedModeBanner: false,
-            home: SplashScreen());
+            home: Scaffold(body: SplashScreen()));
       }
     );
   }

@@ -42,7 +42,7 @@ class DatabaseProvider {
     _database = null;
   }
 
-  void deleteDatabaseMeth() async {
+  void deleteDB() async {
     String path = await databasePath();
     deleteDatabase(path);
     _database = null;

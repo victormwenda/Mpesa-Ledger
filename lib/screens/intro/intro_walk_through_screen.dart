@@ -9,18 +9,15 @@ class IntroWalkThrough extends StatefulWidget {
 class _IntroWalkThroughState extends State<IntroWalkThrough> {
   @override
   Widget build(BuildContext context) {
-
     PageController pageController = PageController(
       initialPage: 0,
     );
 
-    return PageView(
-      controller: pageController,
-      children: <Widget>[
-        IntroPage1(),
-        IntroPage2(),
-        IntroPage3()
-      ],
+    return Scaffold(
+      body: PageView(
+        controller: pageController,
+        children: <Widget>[IntroPage1(), IntroPage2(), IntroPage3()],
+      ),
     );
   }
 }
@@ -31,7 +28,8 @@ class IntroPage1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.purple,
       body: Container(
-        child: IntroWidget("This is introduction 1", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 1",
+            "This is where the desription will be displayed"),
       ),
     );
   }
@@ -43,7 +41,8 @@ class IntroPage2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.pink,
       body: Container(
-        child: IntroWidget("This is introduction 2", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 2",
+            "This is where the desription will be displayed"),
       ),
     );
   }
@@ -55,7 +54,8 @@ class IntroPage3 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Container(
-        child: IntroWidget("This is introduction 3", "This is where the desription will be displayed"),
+        child: IntroWidget("This is introduction 3",
+            "This is where the desription will be displayed"),
       ),
     );
   }

@@ -61,6 +61,7 @@ class SMSFilter {
                 .getDateTime(reversedBodies[i]["timestamp"]);
             await summaryRepo.insert(SummaryModel.fromMap({
               "month": dateTime["month"],
+              "monthInt": dateTime["monthInt"],
               "year": int.parse(dateTime["year"]),
               "deposits":
                   obj["data"]["isDeposit"] == 1 ? obj["data"]["amount"] : 0.0,

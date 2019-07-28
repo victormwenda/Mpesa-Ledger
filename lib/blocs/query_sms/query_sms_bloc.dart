@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/shared_preferences_model.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/index.dart';
 import 'package:mpesa_ledger_flutter/utils/method_channel/methodChannel.dart';
@@ -28,10 +29,16 @@ class QuerySMSBloc extends BaseBloc {
 
   QuerySMSBloc() {
     retrieveSMSStream.listen((void data) async {
-      await smsFilter.addSMSTodatabase(await _retrieveSMSMessages());
-      sharedPreferencesBloc.changeSharedPreferencesEventSink
-          .add(SharedPreferencesModel.fromMap({"isDBCreated": true}));
-      retrieveSMSCompleteSink.add(true);
+      var result =
+          await smsFilter.addSMSTodatabase(await _retrieveSMSMessages());
+      if (result.containsKey("success")) {
+        sharedPreferencesBloc.changeSharedPreferencesEventSink
+            .add(SharedPreferencesModel.fromMap({"isDBCreated": true}));
+        retrieveSMSCompleteSink.add(true);
+      } else {
+        databaseProvider.deleteDB();
+        retrieveSMSCompleteSink.add(false);
+      }
     });
   }
 
@@ -43,7 +50,8 @@ class QuerySMSBloc extends BaseBloc {
 }
 
 class QuerySMSCounterPercentage extends BaseBloc {
-  StreamController<int> _percentageProcessController = StreamController<int>.broadcast();
+  StreamController<int> _percentageProcessController =
+      StreamController<int>.broadcast();
   Stream<int> get percentageProcessStream =>
       _percentageProcessController.stream;
   StreamSink<int> get percentageProcessSink =>

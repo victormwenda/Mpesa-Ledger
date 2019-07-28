@@ -40,6 +40,7 @@ public class DateTime {
     map.put("dayString", new SimpleDateFormat("EEEE").format(date));
     map.put("dayInt", new SimpleDateFormat("d").format(date));
     map.put("month", new SimpleDateFormat("MMM").format(date));
+    map.put("monthInt", new SimpleDateFormat("MM").format(date));
     map.put("year", new SimpleDateFormat("yyyy").format(date));
     map.put("dateTime", new SimpleDateFormat("d MMM yyyy, h:mm a").format(date));
 
