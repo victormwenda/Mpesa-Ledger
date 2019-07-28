@@ -16,25 +16,6 @@ class SummaryBloc extends BaseBloc {
 
   SummaryBloc() {
     _getSummary();
-    // _insert();
-  }
-
-  _insert() {
-    _summaryRepository.insert(SummaryModel.fromMap({
-      "year": 2018,
-      "month": "Sep",
-      "monthInt": "09",
-      "deposits": 30.0,
-      "withdrawals": 50.00,
-      "transactionCost" : 2.0
-    }));
-  }
-
-  _select() async {
-    var l = await _summaryRepository.select();
-    for (var i = 0; i < l.length; i++) {
-      print(l[i].toMap());
-    }
   }
 
   Future<void> _getSummary() async {
@@ -70,7 +51,6 @@ class SummaryBloc extends BaseBloc {
         List<Map<String, dynamic>> monthlyTotalsList = [];
         yearMap["year"] = year;
         for (var i = 0; i < list.length; i++) {
-          print(list[i].toMap());
           Map<String, dynamic> monthlyTotalsMap = {};
           if (year == list[i].toMap()["year"]) {
             monthlyTotalsMap["deposits"] = list[i].toMap()["deposits"];

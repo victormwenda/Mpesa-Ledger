@@ -8,7 +8,7 @@ class WhiteCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(20),
         child: child,
       ),
       elevation: 5,

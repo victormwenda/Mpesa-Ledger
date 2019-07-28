@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/screens/summary/widgets/summary_chart.dart';
 import 'package:mpesa_ledger_flutter/widgets/cards/white_card.dart';
 
 class SummaryYearMonthlyTotals extends StatelessWidget {
   int year;
+  List<Map<String, dynamic>> monthlyTotals;
   String totalDeposits;
   String totalWithdrawals;
   List<Widget> monthlyDepositsAnsWithdrawals;
 
-  SummaryYearMonthlyTotals(this.year, this.totalDeposits, this.totalWithdrawals,
-      this.monthlyDepositsAnsWithdrawals);
+  SummaryYearMonthlyTotals(this.year, this.monthlyTotals, this.totalDeposits,
+      this.totalWithdrawals, this.monthlyDepositsAnsWithdrawals);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,17 @@ class SummaryYearMonthlyTotals extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
                 year.toString(),
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline.merge(TextStyle(
+                  fontWeight: FontWeight.w700
+                )),
               ),
             ),
           ),
           Container(
-            child: Text("CHART HERE"),
+            child: SizedBox(
+              height: 200.0,
+              child: SummaryChart(monthlyTotals),
+            ),
           ),
           Container(
             child: ExpansionTile(

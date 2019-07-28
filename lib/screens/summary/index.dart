@@ -20,7 +20,7 @@ class _SummaryState extends State<Summary> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     widget.summaryBloc.dispose();
     super.dispose();
   }
@@ -51,25 +51,34 @@ class _SummaryState extends State<Summary> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                listMap[i]["month"],
-                style: Theme.of(context).textTheme.subtitle,
+              Expanded(
+                flex: 1,
+                child: Text(
+                  listMap[i]["month"],
+                  style: Theme.of(context).textTheme.subtitle,
+                ),
               ),
-              Text(
-                "+KES " + listMap[i]["deposits"].toString(),
-                style: Theme.of(context).textTheme.subtitle.merge(
-                      TextStyle(
-                        color: Color(0XFF4CAF50),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  "+KES " + listMap[i]["deposits"].toString(),
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Color(0XFF4CAF50),
+                        ),
                       ),
-                    ),
+                ),
               ),
-              Text(
-                "-KES " + listMap[i]["withdrawals"].toString(),
-                style: Theme.of(context).textTheme.subtitle.merge(
-                      TextStyle(
-                        color: Color(0XFFF44336),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  "-KES " + listMap[i]["withdrawals"].toString(),
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Color(0XFFF44336),
+                        ),
                       ),
-                    ),
+                ),
               ),
             ],
           ),
@@ -97,13 +106,13 @@ class _SummaryState extends State<Summary> {
                     if (index == 0) {
                       return SummaryTotals(snapshot.data["totals"]);
                     }
-                    print(snapshot.data["yearMonthlyTotals"][index - 1]);
                     var year =
                         snapshot.data["yearMonthlyTotals"][index - 1]["year"];
                     var monthlyTotals = snapshot.data["yearMonthlyTotals"]
                         [index - 1]["monthlyTotals"];
                     return SummaryYearMonthlyTotals(
                       year,
+                      monthlyTotals,
                       totalDeposits(monthlyTotals),
                       totalWithdrawals(monthlyTotals),
                       monthlyDepositsAnsWithdrawals(monthlyTotals),
