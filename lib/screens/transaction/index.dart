@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/utils/string_utils/replace.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
+import 'package:mpesa_ledger_flutter/widgets/cards/card.dart';
 
 class Transaction extends StatelessWidget {
   Map<String, dynamic> transaction;
 
   Transaction(this.transaction);
+  ReplaceUtil replaceUtil = ReplaceUtil();
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +111,28 @@ class Transaction extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Original Message",
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CardWidget(
+                  Text(
+                    replaceUtil.replaceString(
+                        transaction["body"], "\\{.*\\}", ""),
+                    style: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .merge(TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  color: Theme.of(context).accentColor,
+                  margin: 0,
+                )
               ],
             ),
           ),

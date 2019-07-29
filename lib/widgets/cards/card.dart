@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
   Widget child;
-  bool colored;
-  CardWidget(this.child, {this.colored = false});
+  Color color;
+  double padding;
+  double margin;
+  CardWidget(this.child, {this.color = Colors.white, this.padding: 20, this.margin: 10});
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(padding),
         child: child,
       ),
       elevation: 5,
-      color: !colored ? Colors.white : Theme.of(context).primaryColor,
-      margin: EdgeInsets.all(10),
+      color: color,
+      margin: EdgeInsets.all(margin),
       shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0)),
     );
