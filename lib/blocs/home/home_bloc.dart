@@ -48,6 +48,7 @@ class HomeBloc extends BaseBloc {
       transactionMap["transactionCost"] = result[i].transactionCost;
       transactionMap["timestamp"] = result[i].timestamp;
       transactionMap["day"] = datetime["dayInt"];
+      transactionMap["time"] = datetime["time"];
       transactionList.add(transactionMap);
     }
     var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/summary/summary_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/widgets/summary_totals.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/widgets/summary_year_monthly_totals.dart';
-
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
-import 'package:mpesa_ledger_flutter/widgets/cards/white_card.dart';
 
 class Summary extends StatefulWidget {
   SummaryBloc summaryBloc = SummaryBloc();

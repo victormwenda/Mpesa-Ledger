@@ -87,7 +87,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 0.0,
+      // elevation: 0.0,
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),

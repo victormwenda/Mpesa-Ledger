@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ColoredCardWidget extends StatelessWidget {
+class CardWidget extends StatelessWidget {
   Widget child;
-  ColoredCardWidget(this.child);
-
+  bool colored;
+  CardWidget(this.child, {this.colored = false});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -11,9 +11,9 @@ class ColoredCardWidget extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: child,
       ),
-      color: Theme.of(context).primaryColor,
       elevation: 5,
-      margin: EdgeInsets.all(20),
+      color: !colored ? Colors.white : Theme.of(context).primaryColor,
+      margin: EdgeInsets.all(10),
       shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0)),
     );

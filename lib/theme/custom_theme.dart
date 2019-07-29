@@ -14,7 +14,6 @@ class CustomTheme {
       cursorColor: Color(primaryColor),
       focusColor: Color(primaryColor),
       fontFamily: "Montserrat",
-      scaffoldBackgroundColor: Colors.white,
       textTheme: TextTheme(
         display3: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         display2: TextStyle(fontSize: 55.0, color: Colors.white, fontWeight: FontWeight.bold),
