@@ -9,9 +9,9 @@ class DateFormatUtil {
 
   Future<int> getTimestamp(String dateTime) async {
     var methodChannel = MethodChannelClass();
-    int timestamp = await methodChannel.invokeMethod("changeStringToTimestamp",
+    String timestamp = await methodChannel.invokeMethod("changeStringToTimestamp",
         argument: {"dateTime": dateTime});
-    return timestamp;
+    return int.parse(timestamp);
   }
 
   Future<Map<dynamic, dynamic>> getDateTime(String timestamp) async {

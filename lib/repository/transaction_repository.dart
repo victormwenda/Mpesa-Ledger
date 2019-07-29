@@ -27,7 +27,12 @@ class TransactionRepository {
         whereArgs: ["%$query%"],
       );
     } else {
-      result = await db.query(tableName);
+      // result = await db.query(tableName);
+      result = await db.rawQuery('''
+        SELECT * FROM $tableName
+        ORDER BY
+        timestamp DESC;
+      ''');
     }
     List<TransactionModel> transactions = result.isNotEmpty
         ? result.map((data) => TransactionModel.fromMap(data)).toList()

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import io.flutter.Log;
 import io.flutter.plugin.common.MethodCall;
@@ -17,15 +18,17 @@ public class DateTime {
     this.methodCall = methodCall;
   }
 
-  int getTimestamp() {
+  String getTimestamp() {
     try {
-      Date date = new SimpleDateFormat("d/M/yy h:mm a").parse(methodCall.argument("dateTime"));
+      SimpleDateFormat dateFormat = new SimpleDateFormat("d/MM/yy h:mm a");
+      dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+      Date date = dateFormat.parse(methodCall.argument("dateTime"));
       long timestamp = date.getTime();
-      return (int) timestamp;
+      return timestamp + "";
     } catch (ParseException e) {
       e.printStackTrace();
       Log.e("TIMESTAMP", e.getMessage());
-      return 0;
+      return "0";
     }
   }
 

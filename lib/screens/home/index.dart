@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
+import 'package:mpesa_ledger_flutter/screens/home/widgets/daily_transactions.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/home_header.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/mpesa_bal.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
@@ -33,12 +34,12 @@ class _HomeState extends State<Home> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: 100,
+                itemCount: snapshot.data["transactions"].length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return HomeHeader(snapshot.data["headerData"]);
                   }
-                  return Text(("CONTENT " + index.toString()));
+                  return DailyTransactions(snapshot.data["transactions"][index - 1]);
                 },
               );
             } else {
