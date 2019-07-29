@@ -24,7 +24,7 @@ class DailyTransactions extends StatelessWidget {
       var container = Container(
         child: InkWell(
           onTap: () {
-            print(listMap[i]["title"]);
+            Navigator.pushNamed(context, "/transaction", arguments: listMap[i]);
           },
           child: ListTile(
             contentPadding: EdgeInsets.all(0),

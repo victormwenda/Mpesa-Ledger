@@ -47,6 +47,7 @@ class HomeBloc extends BaseBloc {
       Map<String, dynamic> transactionMap = {};
       transactionMap["title"] = result[i].title;
       transactionMap["amount"] = result[i].amount;
+      transactionMap["mpesaBalance"] = result[i].mpesaBalance;
       transactionMap["isDeposit"] = result[i].isDeposit;
       transactionMap["body"] = result[i].body;
       transactionMap["id"] = result[i].id;
@@ -54,6 +55,7 @@ class HomeBloc extends BaseBloc {
       transactionMap["transactionCost"] = result[i].transactionCost;
       transactionMap["timestamp"] = result[i].timestamp;
       transactionMap["day"] = datetime["dayInt"];
+      transactionMap["dateTime"] = datetime["dateTime"];
       transactionMap["time"] = datetime["time"];
       transactionMap["categories"] = await _getCategory(result[i].id.toString());
       transactionList.add(transactionMap);
