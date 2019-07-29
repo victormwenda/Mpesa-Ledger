@@ -14,7 +14,16 @@ class CategoryRepository {
       {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
-    result = await db.query(tableName, columns: columns);
+    if (query != null && query.isNotEmpty) {
+      result = await db.query(
+        tableName,
+        columns: columns,
+        where: "id = ?",
+        whereArgs: ["$query"],
+      );
+    } else {
+      result = await db.query(tableName, columns: columns);
+    }
     List<CategoryModel> categories = result.isNotEmpty
         ? result.map((data) => CategoryModel.fromMap(data)).toList()
         : [];

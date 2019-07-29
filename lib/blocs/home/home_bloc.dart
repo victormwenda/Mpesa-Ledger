@@ -2,13 +2,19 @@ import 'dart:async';
 import "package:collection/collection.dart";
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/category_model.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
+import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class HomeBloc extends BaseBloc {
   MpesaBalanceRepository _mpesaBalanceRepository = MpesaBalanceRepository();
   TransactionRepository _transactionRepository = TransactionRepository();
+  TransactionCategoryRepository _transactionCategoryRepository = TransactionCategoryRepository();
+  CategoryRepository _categoryRepository = CategoryRepository();
 
   DateFormatUtil dateFormatUtil = DateFormatUtil();
 
@@ -49,6 +55,7 @@ class HomeBloc extends BaseBloc {
       transactionMap["timestamp"] = result[i].timestamp;
       transactionMap["day"] = datetime["dayInt"];
       transactionMap["time"] = datetime["time"];
+      transactionMap["categories"] = await _getCategory(result[i].id.toString());
       transactionList.add(transactionMap);
     }
     var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);
@@ -66,6 +73,16 @@ class HomeBloc extends BaseBloc {
       transactionByDayList.add(map);
     });
     return transactionByDayList;
+  }
+
+  Future<List<String>> _getCategory(String id) async {
+    List<String> categoryList = [];
+    List<TransactionCategoryModel> transactionCategory = await _transactionCategoryRepository.select(query: id);
+    for (var i = 0; i < transactionCategory.length; i++) {
+      List<CategoryModel> category = await _categoryRepository.select(["title"], query: transactionCategory[i].categoryId.toString());
+      categoryList.add(category[0].title);
+    }
+    return categoryList;
   }
 
   @override

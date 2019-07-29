@@ -29,24 +29,26 @@ class _HomeState extends State<Home> {
       children: <Widget>[
         AppbarWidget("Home"),
         Expanded(
-            child: StreamBuilder(
-          stream: widget._homeBloc.homeStream,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data["transactions"].length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return HomeHeader(snapshot.data["headerData"]);
-                  }
-                  return DailyTransactions(snapshot.data["transactions"][index - 1]);
-                },
-              );
-            } else {
-              return Container();
-            }
-          },
-        ))
+          child: StreamBuilder(
+            stream: widget._homeBloc.homeStream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data["transactions"].length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return HomeHeader(snapshot.data["headerData"]);
+                    }
+                    return DailyTransactions(
+                        snapshot.data["transactions"][index - 1]);
+                  },
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+        )
       ],
     );
   }
