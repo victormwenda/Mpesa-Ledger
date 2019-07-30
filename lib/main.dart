@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
 
 import 'package:mpesa_ledger_flutter/screens/intro/splash_screen.dart';
@@ -12,6 +13,14 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+
+  @override
+  void dispose() { 
+    themeBloc.dispose();
+    searchBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(

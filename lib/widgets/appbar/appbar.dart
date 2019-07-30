@@ -106,7 +106,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
 }
 
 class DataSearch extends SearchDelegate<String> {
-
   Widget _generateSearchResults(context) {
     closeSearch() {
       close(context, query);
@@ -131,7 +130,18 @@ class DataSearch extends SearchDelegate<String> {
             },
           );
         }
-        return Container();
+        return Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(),
+            )
+          ],
+        );
       },
     );
   }

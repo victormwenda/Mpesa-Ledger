@@ -30,7 +30,7 @@ class _CalculatorState extends State<Calculator> {
 
     return Column(
       children: <Widget>[
-        AppbarWidget("Calculator"),
+        AppbarWidget("Calculator", showSearch: false,),
         Expanded(
           child: Column(
             children: <Widget>[

@@ -10,15 +10,15 @@ class SearchBloc extends BaseBloc {
   TransactionRepository _transactionRepository = TransactionRepository();
   HomeBloc _homeBloc = HomeBloc();
 
-  StreamController<List<Map<String, dynamic>>> searchController = StreamController<List<Map<String, dynamic>>>.broadcast();
-  Stream<List<Map<String, dynamic>>> get searchStream => searchController.stream;
-  StreamSink<List<Map<String, dynamic>>> get searchSink => searchController.sink;
+  StreamController<List<Map<String, dynamic>>> _searchController = StreamController<List<Map<String, dynamic>>>.broadcast();
+  Stream<List<Map<String, dynamic>>> get searchStream => _searchController.stream;
+  StreamSink<List<Map<String, dynamic>>> get searchSink => _searchController.sink;
 
   // EVENT
 
-  StreamController<String> searchEventController = StreamController<String>.broadcast();
-  Stream<String> get searchEventStream => searchEventController.stream;
-  StreamSink<String> get searchEventSink => searchEventController.sink;
+  StreamController<String> _searchEventController = StreamController<String>.broadcast();
+  Stream<String> get searchEventStream => _searchEventController.stream;
+  StreamSink<String> get searchEventSink => _searchEventController.sink;
 
   SearchBloc() {
     searchEventStream.listen((data) async {
@@ -34,7 +34,8 @@ class SearchBloc extends BaseBloc {
 
   @override
   void dispose() {
-    
+    _searchController.close();
+    _searchEventController.close();
   }
   
 }

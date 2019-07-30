@@ -44,7 +44,9 @@ class _HomeState extends State<Home> {
                   },
                 );
               } else {
-                return Container();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             },
           ),

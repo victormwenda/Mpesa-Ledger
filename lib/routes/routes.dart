@@ -36,6 +36,8 @@ class RouteGeneratorCalculator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Calculator());
+      case '/transaction':
+        return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
       case '/about':
@@ -54,6 +56,8 @@ class RouteGeneratorSummary {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Summary());
+      case '/transaction':
+        return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
       case '/about':
@@ -72,6 +76,8 @@ class RouteGeneratorCategory {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Category());
+      case '/transaction':
+        return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
       case '/about':

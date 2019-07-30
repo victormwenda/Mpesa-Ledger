@@ -117,9 +117,10 @@ class _SummaryState extends State<Summary> {
                     );
                   },
                 );
-              } else {
-                return Container();
               }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             },
           ),
         ),
