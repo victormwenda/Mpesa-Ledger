@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/daily_transactions.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/home_header.dart';
-import 'package:mpesa_ledger_flutter/screens/home/widgets/mpesa_bal.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
@@ -15,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void dispose() {
+    // widget._homeBloc.dispose();
     super.dispose();
   }
 

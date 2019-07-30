@@ -17,11 +17,10 @@ class UnknownTransactionRepository {
     return await db.insert(tableName, unknownTransaction.toMap());
   }
 
-  Future<List<UnknownTransactionsModel>> select(
-      List<String> columns) async {
+  Future<List<UnknownTransactionsModel>> select() async {
     var db = await database;
     List<Map<String, dynamic>> result;
-    result = await db.query(tableName, columns: columns);
+    result = await db.query(tableName);
     List<UnknownTransactionsModel> unknownTransactions = result.isNotEmpty
         ? result.map((data) => UnknownTransactionsModel.fromMap(data)).toList()
         : [];

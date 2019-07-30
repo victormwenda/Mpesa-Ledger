@@ -29,7 +29,9 @@ class UnknownTransactionCount extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FlatButtonWidget(
                   "VIEW",
-                  () {},
+                  () {
+                    Navigator.pushNamed(context, "/unknownTransactions");
+                  },
                   setColorToWhite: true,
                 ))
           ],

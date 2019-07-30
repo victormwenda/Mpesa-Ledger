@@ -111,5 +111,7 @@ class HomeBloc extends BaseBloc {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _homeController.close();
+  }
 }
