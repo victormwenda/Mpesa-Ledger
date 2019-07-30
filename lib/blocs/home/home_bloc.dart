@@ -9,13 +9,17 @@ import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class HomeBloc extends BaseBloc {
   MpesaBalanceRepository _mpesaBalanceRepository = MpesaBalanceRepository();
   TransactionRepository _transactionRepository = TransactionRepository();
-  TransactionCategoryRepository _transactionCategoryRepository = TransactionCategoryRepository();
+  TransactionCategoryRepository _transactionCategoryRepository =
+      TransactionCategoryRepository();
   CategoryRepository _categoryRepository = CategoryRepository();
+  UnknownTransactionRepository _unknownTransactionRepository =
+      UnknownTransactionRepository();
 
   DateFormatUtil dateFormatUtil = DateFormatUtil();
 
@@ -30,7 +34,10 @@ class HomeBloc extends BaseBloc {
 
   Future<void> _getHomeData() async {
     Map<String, dynamic> map = {};
-    map["headerData"] = {"mpesaBalance": await _getMpesaBalance()};
+    map["headerData"] = {
+      "mpesaBalance": await _getMpesaBalance(),
+      "unknownTransactionCount": await _getUnkwownTransactionCount()
+    };
     map["transactions"] = await getTransactions();
     homeSink.add(map);
   }
@@ -40,7 +47,8 @@ class HomeBloc extends BaseBloc {
     return result.mpesaBalance;
   }
 
-  Future<List<Map<String, dynamic>>> getTransactions({List<TransactionModel> transactions}) async {
+  Future<List<Map<String, dynamic>>> getTransactions(
+      {List<TransactionModel> transactions}) async {
     List<TransactionModel> result = [];
     if (transactions != null && transactions.isNotEmpty) {
       result = transactions;
@@ -49,7 +57,8 @@ class HomeBloc extends BaseBloc {
     }
     List<Map<String, dynamic>> transactionList = [];
     for (var i = 0; i < result.length; i++) {
-      var datetime = await dateFormatUtil.getDateTime(result[i].timestamp.toString());
+      var datetime =
+          await dateFormatUtil.getDateTime(result[i].timestamp.toString());
       Map<String, dynamic> transactionMap = {};
       transactionMap["title"] = result[i].title;
       transactionMap["amount"] = result[i].amount;
@@ -63,13 +72,15 @@ class HomeBloc extends BaseBloc {
       transactionMap["day"] = datetime["dayInt"];
       transactionMap["dateTime"] = datetime["dateTime"];
       transactionMap["time"] = datetime["time"];
-      transactionMap["categories"] = await _getCategory(result[i].id.toString());
+      transactionMap["categories"] =
+          await _getCategory(result[i].id.toString());
       transactionList.add(transactionMap);
     }
     var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);
     List<Map<String, dynamic>> transactionByDayList = [];
     transactionByDayMap.forEach((key, value) async {
-      var dateTime = await dateFormatUtil.getDateTime(value[0]["timestamp"].toString());
+      var dateTime =
+          await dateFormatUtil.getDateTime(value[0]["timestamp"].toString());
       Map<String, dynamic> map = {};
       map["dateTime"] = {
         "dayInt": key,
@@ -85,12 +96,18 @@ class HomeBloc extends BaseBloc {
 
   Future<List<String>> _getCategory(String id) async {
     List<String> categoryList = [];
-    List<TransactionCategoryModel> transactionCategory = await _transactionCategoryRepository.select(query: id);
+    List<TransactionCategoryModel> transactionCategory =
+        await _transactionCategoryRepository.select(query: id);
     for (var i = 0; i < transactionCategory.length; i++) {
-      List<CategoryModel> category = await _categoryRepository.select(["title"], query: transactionCategory[i].categoryId.toString());
+      List<CategoryModel> category = await _categoryRepository.select(["title"],
+          query: transactionCategory[i].categoryId.toString());
       categoryList.add(category[0].title);
     }
     return categoryList;
+  }
+
+  Future<int> _getUnkwownTransactionCount() async {
+    return _unknownTransactionRepository.count();
   }
 
   @override

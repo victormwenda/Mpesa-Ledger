@@ -1,6 +1,7 @@
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
 import 'package:mpesa_ledger_flutter/utils/constants/database_constants.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class UnknownTransactionRepository {
@@ -26,4 +27,11 @@ class UnknownTransactionRepository {
         : [];
     return unknownTransactions;
   }
+
+  Future<int> count() async {
+    var db = await database;
+    return Sqflite
+    .firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
+  }
+
 }
