@@ -148,7 +148,7 @@ class Transaction extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .body1
-                          .merge(TextStyle(fontWeight: FontWeight.bold)),
+                          .merge(TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor)),
                     ),
                     color: Theme.of(context).accentColor,
                     margin: 0,

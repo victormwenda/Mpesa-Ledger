@@ -16,18 +16,16 @@ class TransactionRepository {
   }
 
   Future<List<TransactionModel>> select(
-      {List<String> columns, String query}) async {
+      {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
     if (query != null && query.isNotEmpty) {
       result = await db.query(
         tableName,
-        columns: columns,
         where: "body LIKE ?",
         whereArgs: ["%$query%"],
       );
     } else {
-      // result = await db.query(tableName);
       result = await db.rawQuery('''
         SELECT * FROM $tableName
         ORDER BY

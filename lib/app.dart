@@ -46,9 +46,8 @@ class _AppState extends State<App> {
         },
       ),
       bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Theme.of(context).primaryColor
-        ),
+        data: Theme.of(context)
+            .copyWith(canvasColor: Theme.of(context).primaryColor),
         child: BottomNavigationBarWidget(widget.bottombarNavigationBloc),
       ),
     );

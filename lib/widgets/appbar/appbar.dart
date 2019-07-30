@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
+import 'package:mpesa_ledger_flutter/screens/home/widgets/generate_transactions.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
+import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 
 class AppbarWidget extends StatefulWidget {
   String title;
@@ -37,13 +41,12 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         color: Colors.black,
         onPressed: () {
           showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text("Jama Mohamed"),
-              );
-            }
-          );
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Jama Mohamed"),
+                );
+              });
         },
       ));
     }
@@ -103,7 +106,35 @@ class _AppbarWidgetState extends State<AppbarWidget> {
 }
 
 class DataSearch extends SearchDelegate<String> {
-  List<int> test = [1, 2, 3, 4, 5, 6, 7];
+
+  Widget _generateSearchResults(context) {
+    closeSearch() {
+      close(context, query);
+    }
+
+    searchBloc.searchEventSink.add(query);
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: searchBloc.searchStream,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Column(
+                  children: GenerateTransactions().generateTransactions(context,
+                      snapshot.data[index]["transactions"], closeSearch),
+                ),
+              );
+            },
+          );
+        }
+        return Container();
+      },
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -114,6 +145,7 @@ class DataSearch extends SearchDelegate<String> {
         color: Colors.black,
         onPressed: () {
           query = "";
+          searchBloc.searchSink.add([]);
         },
       )
     ];
@@ -121,24 +153,16 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return null;
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return null;
+    return _generateSearchResults(context);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    return ListView.builder(
-      itemCount: test.length,
-      itemBuilder: (context, index) {
-        return Text(test[index].toString());
-      },
-    );
+    return _generateSearchResults(context);
   }
 }
