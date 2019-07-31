@@ -58,9 +58,9 @@ class GenerateTransactions {
                 SizedBox(
                   height: 2,
                 ),
-                Text(
+                listMap[i]["transactionId"] != null ? Text(
                   listMap[i]["transactionId"],
-                ),
+                ) : Container(),
                 SizedBox(
                   height: 2,
                 ),

@@ -29,21 +29,27 @@ class SMSFilter {
   DateFormatUtil dateFormatUtil = DateFormatUtil();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
-  Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
+  Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies, {bool fromQueryBloc = true}) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
       var categoryObject = await categoryRepo.select(["id", "keywords"]);
       int bodyLength = reversedBodies.length;
+      Map<String, dynamic> obj = {};
       for (var i = 0; i < bodyLength; i++) {
-        var obj = await _getSMSObject(reversedBodies[i]);
+        if(fromQueryBloc) {
+          obj = await _getSMSObject(reversedBodies[i]);
+        } else {
+          obj = reversedBodies[i];
+        }
         if (obj.isNotEmpty) {
           if (obj["data"].containsKey("amounts")) {
             await unknownTransactionRepo.insert(
               UnknownTransactionsModel.fromMap(obj["data"]),
             );
           } else {
+            print(obj["data"].runtimeType);
             int id = await transactionRepo.insert(
-              TransactionModel.fromMap(obj["data"]),
+              TransactionModel.fromMap(Map<String, dynamic>.from(obj["data"])),
             );
             var transactionCategoryObjectList =
                 await CheckSMSCategory(categoryObject, obj["data"]["body"], id)
@@ -58,7 +64,7 @@ class SMSFilter {
                       {"id": transactionCategoryObjectList[j]["categoryId"]}));
             }
             Map<dynamic, dynamic> dateTime = await dateFormatUtil
-                .getDateTime(reversedBodies[i]["timestamp"]);
+                .getDateTime(reversedBodies[i]["timestamp"] ?? obj["data"]["timestamp"].toString());
             await summaryRepo.insert(SummaryModel.fromMap({
               "month": dateTime["month"],
               "monthInt": dateTime["monthInt"],
@@ -69,13 +75,12 @@ class SMSFilter {
                   obj["data"]["isDeposit"] == 0 ? obj["data"]["amount"] : 0.0,
               "transactionCost": obj["data"]["transactionCost"]
             }));
-            if (obj["data"]["mpesaBalance"] != null) {
-              await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
-                  {"mpesaBalance": obj["data"]["mpesaBalance"]}));
-            }
+          }
+          if (obj["data"]["mpesaBalance"] != null) {
+            await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
+                {"mpesaBalance": obj["data"]["mpesaBalance"]}));
           }
         }
-        print(bodyLength);
         counterPercentage.percentageProcessSink
             .add(((i / bodyLength) * 100).round());
       }

@@ -11,8 +11,7 @@ class UnknownTransactionRepository {
     return await databaseProvider.database;
   }
 
-  Future<int> insert(
-      UnknownTransactionsModel unknownTransaction) async {
+  Future<int> insert(UnknownTransactionsModel unknownTransaction) async {
     var db = await database;
     return await db.insert(tableName, unknownTransaction.toMap());
   }
@@ -27,10 +26,18 @@ class UnknownTransactionRepository {
     return unknownTransactions;
   }
 
-  Future<int> count() async {
+  Future<void> delete(int id) async {
     var db = await database;
-    return Sqflite
-    .firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
+    await db.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
+  Future<int> count() async {
+    var db = await database;
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
+  }
 }

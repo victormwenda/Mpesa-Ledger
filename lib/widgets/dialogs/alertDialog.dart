@@ -18,7 +18,7 @@ class AlertDialogWidget {
         return AlertDialog(
           title: Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: Theme.of(context).textTheme.title,
           ),
           content: content,
           actions: actions,
