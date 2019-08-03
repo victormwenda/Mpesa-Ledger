@@ -6,13 +6,11 @@ import 'package:mpesa_ledger_flutter/models/mpesa_balance_model.dart';
 import 'package:mpesa_ledger_flutter/models/summary_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
-import 'package:mpesa_ledger_flutter/models/unknown_transaction_model.dart';
 import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/summary_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
-import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_category.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_type.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
@@ -20,8 +18,6 @@ import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 class SMSFilter {
   CheckSMSType smsFilters;
   TransactionRepository transactionRepo = TransactionRepository();
-  UnknownTransactionRepository unknownTransactionRepo =
-      UnknownTransactionRepository();
   CategoryRepository categoryRepo = CategoryRepository();
   TransactionCategoryRepository transactionCategoryRepo =
       TransactionCategoryRepository();
@@ -29,53 +25,42 @@ class SMSFilter {
   DateFormatUtil dateFormatUtil = DateFormatUtil();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
-  Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies, {bool fromQueryBloc = true}) async {
+  Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies,
+      {bool fromQueryBloc = true}) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
       var categoryObject = await categoryRepo.select(["id", "keywords"]);
       int bodyLength = reversedBodies.length;
-      Map<String, dynamic> obj = {};
       for (var i = 0; i < bodyLength; i++) {
-        if(fromQueryBloc) {
-          obj = await _getSMSObject(reversedBodies[i]);
-        } else {
-          obj = reversedBodies[i];
-        }
-        if (obj.isNotEmpty) {
-          if (obj["data"].containsKey("amounts")) {
-            await unknownTransactionRepo.insert(
-              UnknownTransactionsModel.fromMap(obj["data"]),
+        Map<String, dynamic> obj = await _getSMSObject(reversedBodies[i]);
+        if (obj.isNotEmpty && !obj["data"].containsKey("unknown")) {
+          int id = await transactionRepo.insert(
+            TransactionModel.fromMap(Map<String, dynamic>.from(obj["data"])),
+          );
+          var transactionCategoryObjectList =
+              await CheckSMSCategory(categoryObject, obj["data"]["body"], id)
+                  .addCategeoryToTransaction();
+          for (var j = 0; j < transactionCategoryObjectList.length; j++) {
+            await transactionCategoryRepo.insert(
+              TransactionCategoryModel.fromMap(
+                  transactionCategoryObjectList[j]),
             );
-          } else {
-            print(obj["data"].runtimeType);
-            int id = await transactionRepo.insert(
-              TransactionModel.fromMap(Map<String, dynamic>.from(obj["data"])),
-            );
-            var transactionCategoryObjectList =
-                await CheckSMSCategory(categoryObject, obj["data"]["body"], id)
-                    .addCategeoryToTransaction();
-            for (var j = 0; j < transactionCategoryObjectList.length; j++) {
-              await transactionCategoryRepo.insert(
-                TransactionCategoryModel.fromMap(
-                    transactionCategoryObjectList[j]),
-              );
-              await categoryRepo.incrementNumOfTransactions(
-                  CategoryModel.fromMap(
-                      {"id": transactionCategoryObjectList[j]["categoryId"]}));
-            }
-            Map<dynamic, dynamic> dateTime = await dateFormatUtil
-                .getDateTime(reversedBodies[i]["timestamp"] ?? obj["data"]["timestamp"].toString());
-            await summaryRepo.insert(SummaryModel.fromMap({
-              "month": dateTime["month"],
-              "monthInt": dateTime["monthInt"],
-              "year": int.parse(dateTime["year"]),
-              "deposits":
-                  obj["data"]["isDeposit"] == 1 ? obj["data"]["amount"] : 0.0,
-              "withdrawals":
-                  obj["data"]["isDeposit"] == 0 ? obj["data"]["amount"] : 0.0,
-              "transactionCost": obj["data"]["transactionCost"]
-            }));
+            await categoryRepo.incrementNumOfTransactions(CategoryModel.fromMap(
+                {"id": transactionCategoryObjectList[j]["categoryId"]}));
           }
+          Map<dynamic, dynamic> dateTime = await dateFormatUtil.getDateTime(
+              reversedBodies[i]["timestamp"] ??
+                  obj["data"]["timestamp"].toString());
+          await summaryRepo.insert(SummaryModel.fromMap({
+            "month": dateTime["month"],
+            "monthInt": dateTime["monthInt"],
+            "year": int.parse(dateTime["year"]),
+            "deposits":
+                obj["data"]["isDeposit"] == 1 ? obj["data"]["amount"] : 0.0,
+            "withdrawals":
+                obj["data"]["isDeposit"] == 0 ? obj["data"]["amount"] : 0.0,
+            "transactionCost": obj["data"]["transactionCost"]
+          }));
           if (obj["data"]["mpesaBalance"] != null) {
             await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
                 {"mpesaBalance": obj["data"]["mpesaBalance"]}));

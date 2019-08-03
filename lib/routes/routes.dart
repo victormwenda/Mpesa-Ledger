@@ -7,7 +7,6 @@ import 'package:mpesa_ledger_flutter/screens/home/index.dart';
 import 'package:mpesa_ledger_flutter/screens/settings/index.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 import 'package:mpesa_ledger_flutter/screens/transaction/index.dart';
-import 'package:mpesa_ledger_flutter/screens/unknown_transactions/index.dart';
 
 class RouteGeneratorHome {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,8 +18,6 @@ class RouteGeneratorHome {
         return MaterialPageRoute(builder: (_) => Home());
       case '/transaction':
         return MaterialPageRoute(builder: (_) => Transaction(args));
-      case '/unknownTransactions':
-        return MaterialPageRoute(builder: (_) => UnknownTransactions());
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
       case '/about':

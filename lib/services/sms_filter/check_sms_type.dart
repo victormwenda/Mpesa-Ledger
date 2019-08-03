@@ -54,7 +54,9 @@ class CheckSMSType {
     } else if (isRegexTrue(regexString.reversalFromAccount)) {
       result = reversalFromAccount();
     } else {
-      result = unknownSMSMessage();
+      result = {
+        "unknown": "Unknown Transaction",
+      };
     }
     return result;
   }
@@ -288,22 +290,6 @@ class CheckSMSType {
       "title": "Reversal",
       "body": body + "{reversal_transaction}",
       "isDeposit": 0,
-    };
-  }
-
-  Map<String, dynamic> unknownSMSMessage() {
-    String replaceCoreValues = replace.replaceString(
-      replace.replaceString(body, regexString.mpesaBalance, ""),
-      regexString.transactionCost,
-      "",
-    );
-    String replaceCommas = replace.replaceString(replaceCoreValues, ",", "");
-    List<double> amounts = getRegexAllMatches(regexString.amount, replaceCommas)
-        .map(double.parse)
-        .toList();
-    return {
-      "amounts": amounts,
-      "body": body + "{other_transaction}",
     };
   }
 }

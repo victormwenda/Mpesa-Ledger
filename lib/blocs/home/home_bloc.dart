@@ -9,7 +9,6 @@ import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
-import 'package:mpesa_ledger_flutter/repository/unknown_transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class HomeBloc extends BaseBloc {
@@ -18,8 +17,6 @@ class HomeBloc extends BaseBloc {
   TransactionCategoryRepository _transactionCategoryRepository =
       TransactionCategoryRepository();
   CategoryRepository _categoryRepository = CategoryRepository();
-  UnknownTransactionRepository _unknownTransactionRepository =
-      UnknownTransactionRepository();
 
   DateFormatUtil dateFormatUtil = DateFormatUtil();
 
@@ -36,7 +33,6 @@ class HomeBloc extends BaseBloc {
     Map<String, dynamic> map = {};
     map["headerData"] = {
       "mpesaBalance": await _getMpesaBalance(),
-      "unknownTransactionCount": await _getUnkwownTransactionCount()
     };
     map["transactions"] = await getTransactions();
     homeSink.add(map);
@@ -104,10 +100,6 @@ class HomeBloc extends BaseBloc {
       categoryList.add(category[0].title);
     }
     return categoryList;
-  }
-
-  Future<int> _getUnkwownTransactionCount() async {
-    return _unknownTransactionRepository.count();
   }
 
   @override

@@ -1,7 +1,6 @@
 final String databaseName = "MpesaLedger.db";
 
 final String transactionsTable = "transactions";
-final String unknownTransactionsTable = "unknownTransactions";
 final String unrecordedTransactionsTable = "unrecordedTransactions";
 final String categoriesTable = "categories";
 final String transactionCategoryTable = "transactionCategory";
@@ -24,17 +23,6 @@ final List<String> schema = [
     mpesaBalance REAL,
     amount REAL NOT NULL,
     isDeposit INTEGER NOT NULL CHECK(isDeposit = 0 or isDeposit = 1),
-    transactionCost REAL NOT NULL,
-    transactionId TEXT
-  );
-  ''',
-  '''
-  CREATE TABLE IF NOT EXISTS $unknownTransactionsTable (
-    id INTEGER PRIMARY KEY,
-    body TEXT NOT NULL,
-    timestamp INTEGER NOT NULL,
-    mpesaBalance REAL,
-    amounts TEXT,
     transactionCost REAL NOT NULL,
     transactionId TEXT
   );

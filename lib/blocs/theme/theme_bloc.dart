@@ -45,7 +45,7 @@ class ThemeBloc extends BaseBloc {
       case 0:
         map["name"] = "Black";
         map["primaryColor"] = 0XFF000000;
-        map["accentColor"] = 0XFFBDBDBD;
+        map["accentColor"] = 0XFFE0E0E0;
         break;
       case 1:
         map["name"] = "Pink";
@@ -55,17 +55,17 @@ class ThemeBloc extends BaseBloc {
       case 2:
         map["name"] = "Purple";
         map["primaryColor"] = 0XFF9C27B0;
-        map["accentColor"] = 0XFFCE93D8;
+        map["accentColor"] = 0XFFE1BEE7;
         break;
       case 3:
         map["name"] = "Blue";
         map["primaryColor"] = 0XFF2196F3;
-        map["accentColor"] = 0XFF90CAF9;
+        map["accentColor"] = 0XFFBBDEFB;
         break;
       default:
         map["name"] = "Black";
         map["primaryColor"] = 0XFF000000;
-        map["accentColor"] = 0XFFBDBDBD;
+        map["accentColor"] = 0XFFE0E0E0;
     }
     themeControllerSink.add(map);
     sharedPreferencesBloc.changeSharedPreferencesEventSink
