@@ -29,7 +29,7 @@ class SMSFilter {
       {bool fromQueryBloc = true}) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
-      var categoryObject = await categoryRepo.select(["id", "keywords"]);
+      var categoryObject = await categoryRepo.select(columns: ["id", "keywords"]);
       int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
         Map<String, dynamic> obj = await _getSMSObject(reversedBodies[i]);

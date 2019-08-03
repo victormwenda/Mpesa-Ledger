@@ -95,7 +95,7 @@ class HomeBloc extends BaseBloc {
     List<TransactionCategoryModel> transactionCategory =
         await _transactionCategoryRepository.select(query: id);
     for (var i = 0; i < transactionCategory.length; i++) {
-      List<CategoryModel> category = await _categoryRepository.select(["title"],
+      List<CategoryModel> category = await _categoryRepository.select(columns: ["title"],
           query: transactionCategory[i].categoryId.toString());
       categoryList.add(category[0].title);
     }
