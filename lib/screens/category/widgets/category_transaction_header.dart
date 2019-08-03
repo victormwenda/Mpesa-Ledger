@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CategoryTransactionHeader  extends StatelessWidget {
-
+class CategoryTransactionHeader extends StatelessWidget {
   Map<String, dynamic> totals;
+  String description;
 
-  CategoryTransactionHeader(this.totals);
+  CategoryTransactionHeader(this.totals, this.description);
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +63,15 @@ class CategoryTransactionHeader  extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            Text("Description", style: Theme.of(context).textTheme.caption,),
+            SizedBox(height: 5,),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.body1,
+            ),
+            SizedBox(
+              height: 10,
             )
           ],
         ),
