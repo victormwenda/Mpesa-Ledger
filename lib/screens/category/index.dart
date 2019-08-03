@@ -30,7 +30,9 @@ class _CategoryState extends State<Category> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, "/categoryTransaction", arguments: {"id": snapshot.data[index]["id"], "title": snapshot.data[index]["title"]});
+                      },
                       child: ListTile(
                         title: Text(
                           snapshot.data[index]["title"],

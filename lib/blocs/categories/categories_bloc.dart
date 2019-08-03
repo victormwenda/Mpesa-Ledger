@@ -32,9 +32,20 @@ class CategoriesBloc extends BaseBloc {
   StreamSink<Map<String, dynamic>> get transactionsSink =>
       _transactionsController.sink;
 
+  // EVENTS
+  StreamController<String> _getTransactionsController =
+      StreamController<String>();
+  Stream<String> get getTransactionsStream =>
+      _getTransactionsController.stream;
+  StreamSink<String> get getTransactionsSink =>
+      _getTransactionsController.sink;
+
+
   CategoriesBloc() {
     _getCategories();
-    // _getTransactions("1");
+    getTransactionsStream.listen((data) {
+      _getTransactions(data);
+    });
   }
 
   Future<void> _getCategories() async {
