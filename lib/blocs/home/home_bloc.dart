@@ -93,7 +93,7 @@ class HomeBloc extends BaseBloc {
   Future<List<String>> _getCategory(String id) async {
     List<String> categoryList = [];
     List<TransactionCategoryModel> transactionCategory =
-        await _transactionCategoryRepository.select(query: id);
+        await _transactionCategoryRepository.selectTransactions(query: id);
     for (var i = 0; i < transactionCategory.length; i++) {
       List<CategoryModel> category = await _categoryRepository.select(columns: ["title"],
           query: transactionCategory[i].categoryId.toString());

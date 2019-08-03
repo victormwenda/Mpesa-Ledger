@@ -15,13 +15,33 @@ class TransactionCategoryRepository {
     return await db.insert(tableName, transactionCategory.toMap());
   }
 
-  Future<List<TransactionCategoryModel>> select({String query}) async {
+  Future<List<TransactionCategoryModel>> selectTransactions(
+      {String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
     if (query != null && query.isNotEmpty) {
       result = await db.query(
         tableName,
         where: "transactionId = ?",
+        whereArgs: ["$query"],
+      );
+    } else {
+      result = await db.query(tableName);
+    }
+    List<TransactionCategoryModel> transactionCategory = result.isNotEmpty
+        ? result.map((data) => TransactionCategoryModel.fromMap(data)).toList()
+        : [];
+    return transactionCategory;
+  }
+
+  Future<List<TransactionCategoryModel>> selectCategories(
+      {String query}) async {
+    var db = await database;
+    List<Map<String, dynamic>> result;
+    if (query != null && query.isNotEmpty) {
+      result = await db.query(
+        tableName,
+        where: "categoryId = ?",
         whereArgs: ["$query"],
       );
     } else {

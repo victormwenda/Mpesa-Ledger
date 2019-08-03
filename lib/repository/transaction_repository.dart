@@ -22,8 +22,8 @@ class TransactionRepository {
     if (query != null && query.isNotEmpty) {
       result = await db.query(
         tableName,
-        where: "body LIKE ?",
-        whereArgs: ["%$query%"],
+        where: "id = ?",
+        whereArgs: ["$query"],
       );
     } else {
       result = await db.rawQuery('''
@@ -32,6 +32,20 @@ class TransactionRepository {
         timestamp DESC;
       ''');
     }
+    List<TransactionModel> transactions = result.isNotEmpty
+        ? result.map((data) => TransactionModel.fromMap(data)).toList()
+        : [];
+    return transactions;
+  }
+
+  Future<List<TransactionModel>> searchTransaction(String query) async {
+    var db = await database;
+    List<Map<String, dynamic>> result;
+    result = await db.query(
+        tableName,
+        where: "body LIKE ?",
+        whereArgs: ["%$query%"],
+      );
     List<TransactionModel> transactions = result.isNotEmpty
         ? result.map((data) => TransactionModel.fromMap(data)).toList()
         : [];

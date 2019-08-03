@@ -24,7 +24,7 @@ class SearchBloc extends BaseBloc {
     searchEventStream.listen((data) async {
       List<TransactionModel> result = [];
       if (data.isNotEmpty) {
-        result = await _transactionRepository.select(query: data);
+        result = await _transactionRepository.searchTransaction(data);
         searchSink.add(await _homeBloc.getTransactions(transactions: result));
       } else {
         searchSink.add([]);

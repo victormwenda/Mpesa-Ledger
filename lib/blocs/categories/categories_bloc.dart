@@ -2,38 +2,76 @@ import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 
 class CategoriesBloc extends BaseBloc {
-
   CategoryRepository _categoryRepository = CategoryRepository();
+  TransactionCategoryRepository _transactionCategoryRepository =
+      TransactionCategoryRepository();
+  TransactionRepository _transactionRepository = TransactionRepository();
 
-  StreamController<List<Map<String, dynamic>>> _categoriesController = StreamController<List<Map<String, dynamic>>>();
-  Stream<List<Map<String, dynamic>>> get categoriesStream => _categoriesController.stream;
-  StreamSink<List<Map<String, dynamic>>> get categoriesSink => _categoriesController.sink;
+  List<Map<String, dynamic>> _listCategoriesMap = [];
+  Map<String, dynamic> _categoryTotalsMap = {};
+  List<Map<String, dynamic>> _listTransactionsMap = [];
+
+  StreamController<List<Map<String, dynamic>>> _categoriesController =
+      StreamController<List<Map<String, dynamic>>>();
+  Stream<List<Map<String, dynamic>>> get categoriesStream =>
+      _categoriesController.stream;
+  StreamSink<List<Map<String, dynamic>>> get categoriesSink =>
+      _categoriesController.sink;
+
+  StreamController<Map<String, dynamic>> _transactionsController =
+      StreamController<Map<String, dynamic>>();
+  Stream<Map<String, dynamic>> get transactionsStream =>
+      _transactionsController.stream;
+  StreamSink<Map<String, dynamic>> get transactionsSink =>
+      _transactionsController.sink;
 
   CategoriesBloc() {
-    print("started");
-    _getCategoryData();
+    _getCategories();
+    // _getTransactions("1");
   }
 
-  Future<void> _getCategoryData() async {
-    List<Map<String, dynamic>> listMap = [];
-    var result = await _getCategories();
+  Future<void> _getCategories() async {
+    var result = await _categoryRepository.select();
     for (var i = 0; i < result.length; i++) {
-      listMap.add(result[i].toMap());
+      _listCategoriesMap.add(result[i].toMap());
     }
-    categoriesSink.add(listMap);
+    categoriesSink.add(_listCategoriesMap);
   }
 
-
-  Future<List<CategoryModel>> _getCategories() async {
-    return await _categoryRepository.select();
+  _getTransactions(String id) async {
+    double deposits = 0;
+    double withdrawals = 0;
+    double transactionCosts = 0;
+    List<TransactionCategoryModel> transactionCategory =
+        await _transactionCategoryRepository.selectCategories(query: id);
+    for (var i = 0; i < transactionCategory.length; i++) {
+      List<TransactionModel> transaction = await _transactionRepository.select(
+          query: transactionCategory[i].transactionId.toString());
+      if (transaction[0].isDeposit) {
+        deposits += transaction[0].amount;
+      } else {
+        withdrawals += transaction[0].amount;
+      }
+      transactionCosts += transaction[0].transactionCost;
+      _listTransactionsMap.add(transaction[0].toMap());
+    }
+    _categoryTotalsMap = {
+      "deposits": deposits,
+      "withdrawals": withdrawals,
+      "transactionCosts": transactionCosts
+    };
+    transactionsSink.add(
+      {"transactions": _listTransactionsMap, "totals": _categoryTotalsMap},
+    );
   }
 
   @override
-  void dispose() {
-    
-  }
-  
+  void dispose() {}
 }
