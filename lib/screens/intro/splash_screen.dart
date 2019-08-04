@@ -103,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (route) => ChooseThemeWidget()),
+          MaterialPageRoute(builder: (route) => ChooseThemeWidget(true)),
         );
       }
     });

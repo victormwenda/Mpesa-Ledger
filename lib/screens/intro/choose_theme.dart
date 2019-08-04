@@ -6,6 +6,10 @@ import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/theme_card/theme_card.dart';
 
 class ChooseThemeWidget extends StatefulWidget {
+  bool route;
+
+  ChooseThemeWidget(this.route);
+
   @override
   _ChooseThemeWidgetState createState() => _ChooseThemeWidgetState();
 }
@@ -50,11 +54,15 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
           Expanded(
             flex: 1,
             child: Align(
-              child: RaisedButtonWidget("CONTINUE", () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (route) => RetreiveSMS()),
-                );
+              child: RaisedButtonWidget(widget.route ? "CONTINUE" : "DONE", () {
+                if (widget.route) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (route) => RetreiveSMS()),
+                  );
+                } else {
+                  Navigator.pop(context);
+                }
               }),
             ),
           )
