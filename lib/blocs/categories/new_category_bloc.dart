@@ -1,11 +1,16 @@
 import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 
 class NewCategoryBloc extends BaseBloc {
+  TransactionRepository _transactionRepository = TransactionRepository();
+
   List<String> keywordList = [];
+  List<int> transactionIdList = [];
 
   StreamController<List<String>> _keyWordChipController =
       StreamController<List<String>>();
@@ -29,11 +34,27 @@ class NewCategoryBloc extends BaseBloc {
   NewCategoryBloc() {
     addKeywordStream.listen((data) {
       _addKeyword(data);
-      
+      _getTransactions();
     });
     deleteKeywordStream.listen((data) {
       _deleteKeyword(data);
+      _getTransactions();
     });
+  }
+
+  _getTransactions() async {
+    String schema = _generateSchema();
+    transactionIdList = [];
+    if (schema.isNotEmpty) {
+      var result =
+          await _transactionRepository.selectByKeyword(_generateSchema());
+      counter.counterSink.add(result.length);
+      for (var i = 0; i < result.length; i++) {
+        transactionIdList.add(result[i].id);
+      }
+    } else {
+      counter.counterSink.add(0);
+    }
   }
 
   String _generateSchema() {

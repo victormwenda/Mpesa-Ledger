@@ -15,8 +15,7 @@ class TransactionRepository {
     return await db.insert(tableName, transaction.toMap());
   }
 
-  Future<List<TransactionModel>> select(
-      {String query}) async {
+  Future<List<TransactionModel>> select({String query}) async {
     var db = await database;
     List<Map<String, dynamic>> result;
     if (query != null && query.isNotEmpty) {
@@ -38,14 +37,26 @@ class TransactionRepository {
     return transactions;
   }
 
+  Future<List<TransactionModel>> selectByKeyword(String schema) async {
+    var db = await database;
+    List<Map<String, dynamic>> result;
+    result = await db.rawQuery('''
+      SELECT * FROM $tableName WHERE $schema
+    ''');
+    List<TransactionModel> transactions = result.isNotEmpty
+        ? result.map((data) => TransactionModel.fromMap(data)).toList()
+        : [];
+    return transactions;
+  }
+
   Future<List<TransactionModel>> searchTransaction(String query) async {
     var db = await database;
     List<Map<String, dynamic>> result;
     result = await db.query(
-        tableName,
-        where: "body LIKE ?",
-        whereArgs: ["%$query%"],
-      );
+      tableName,
+      where: "body LIKE ?",
+      whereArgs: ["%$query%"],
+    );
     List<TransactionModel> transactions = result.isNotEmpty
         ? result.map((data) => TransactionModel.fromMap(data)).toList()
         : [];
