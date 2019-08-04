@@ -31,7 +31,7 @@ class _MainAppState extends State<MainApp> {
       },
       builder: (context, snapshot) {
         return MaterialApp(
-            title: 'Material App',
+            title: 'MPESA Ledger',
             theme: CustomTheme(snapshot.data).getTheme,
             debugShowCheckedModeBanner: false,
             home: Scaffold(body: SplashScreen()));

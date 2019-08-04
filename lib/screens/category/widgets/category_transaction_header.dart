@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/models/category_model.dart';
+import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 
 class CategoryTransactionHeader extends StatelessWidget {
   Map<String, dynamic> totals;
-  String description;
+  CategoryModel categoryModel;
 
-  CategoryTransactionHeader(this.totals, this.description);
+  CategoryTransactionHeader(this.totals, this.categoryModel);
+
+  List<Widget> _generateChips(List<String> listString) {
+    List<Widget> chipList = [];
+    for (var i = 0; i < listString.length; i++) {
+      if (categoryModel.showKeywords) {
+        chipList.add(
+          ChipWidget(
+            listString[i],
+          ),
+        );
+        chipList.add(SizedBox(
+          width: 10,
+        ));
+      }
+    }
+    return chipList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +83,22 @@ class CategoryTransactionHeader extends StatelessWidget {
                 ),
               ),
             ),
-            Text("Description", style: Theme.of(context).textTheme.caption,),
-            SizedBox(height: 5,),
             Text(
-              description,
+              "Description",
+              style: Theme.of(context).textTheme.caption,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              categoryModel.description,
               style: Theme.of(context).textTheme.body1,
             ),
             SizedBox(
               height: 10,
+            ),
+            Wrap(
+              children: _generateChips(categoryModel.keywords),
             )
           ],
         ),

@@ -47,6 +47,7 @@ class NewCategoryBloc extends BaseBloc {
   StreamSink<int> get deleteKeywordSink => _deleteKeywordController.sink;
 
   NewCategoryBloc() {
+    databaseProvider.select();
     addCategoryStream.listen((data) {
       _addCategory(data);
     });
@@ -78,10 +79,6 @@ class NewCategoryBloc extends BaseBloc {
         }));
       }
       categoriesBloc.getCategoriesSink.add(null);
-      Flushbar(
-        duration: Duration(seconds: 3),
-        message: map["title"] + " added",
-      )..show(map["context"]);
       Navigator.pop(map["context"]);
     }
   }

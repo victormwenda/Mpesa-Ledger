@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
@@ -48,6 +49,13 @@ class CategoriesBloc extends BaseBloc {
   StreamSink<String> get getTransactionsSink =>
       _getTransactionsController.sink;
 
+  StreamController<String> _deleteCategoryController =
+      StreamController<String>.broadcast();
+  Stream<String> get deleteCategoryStream =>
+      _deleteCategoryController.stream;
+  StreamSink<String> get deleteCategorySink =>
+      _deleteCategoryController.sink;
+
 
   CategoriesBloc() {
     getCategoriesStream.listen((void data) {
@@ -55,6 +63,9 @@ class CategoriesBloc extends BaseBloc {
     });
     getTransactionsStream.listen((data) {
       _getTransactions(data);
+    });
+    deleteCategoryStream.listen((data) {
+      _deleteCategory(data);
     });
   }
 
@@ -67,7 +78,15 @@ class CategoriesBloc extends BaseBloc {
     categoriesSink.add(_listCategoriesMap);
   }
 
+  _deleteCategory(String id) async {
+    print("called");
+    await _categoryRepository.delete(id);
+    await _transactionCategoryRepository.delete(id);
+    getCategoriesSink.add(null);
+  }
+
   _getTransactions(String id) async {
+    _listTransactionsMap = [];
     double deposits = 0;
     double withdrawals = 0;
     double transactionCosts = 0;

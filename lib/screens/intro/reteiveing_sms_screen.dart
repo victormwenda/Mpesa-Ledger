@@ -21,7 +21,6 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
 
   @override
   void dispose() {
-    counter.dispose();
     widget.querySMSBloc.dispose();
     super.dispose();
   }

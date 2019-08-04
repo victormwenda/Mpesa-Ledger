@@ -144,6 +144,9 @@ class _CreateCategoryState extends State<CreateCategory> {
                           prefix0.Text("messages found")
                         ],
                       ),
+                    ),
+                    prefix0.SizedBox(
+                      height: 30,
                     )
                   ],
                 ),

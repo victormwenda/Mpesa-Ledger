@@ -23,7 +23,7 @@ class TransactionCategoryRepository {
       result = await db.query(
         tableName,
         where: "transactionId = ?",
-        whereArgs: ["$query"],
+        whereArgs: [query],
       );
     } else {
       result = await db.query(tableName);
@@ -42,7 +42,7 @@ class TransactionCategoryRepository {
       result = await db.query(
         tableName,
         where: "categoryId = ?",
-        whereArgs: ["$query"],
+        whereArgs: [query],
       );
     } else {
       result = await db.query(tableName);
@@ -51,5 +51,14 @@ class TransactionCategoryRepository {
         ? result.map((data) => TransactionCategoryModel.fromMap(data)).toList()
         : [];
     return transactionCategory;
+  }
+
+  Future<void> delete(String id) async {
+    var db = await database;
+    db.delete(
+      tableName,
+      where: 'categoryId = ?',
+      whereArgs: [id],
+    );
   }
 }

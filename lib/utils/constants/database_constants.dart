@@ -80,7 +80,6 @@ final List<String> schema = [
     ("Buy Goods", "Buy Goods Description", "['buy_goods_transaction']", 0, 0, 0, strftime('%s', 'now')),
     ("Agent Transactions", "Agent Transactions Description", "['agent_transaction']", 0, 0, 0, strftime('%s', 'now')),
     ("Reversals", "Reversals Description", "['reversal_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("Other", "These are unknown transactions that were not identified", "['other_transaction']", 0, 0, 0, strftime('%s', 'now')),
     ("M-shwari", "Mshwari Description", "['M-shwari']", 0, 0, 0, strftime('%s', 'now'));
   '''
 ];

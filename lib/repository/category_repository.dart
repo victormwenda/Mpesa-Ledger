@@ -39,6 +39,15 @@ class CategoryRepository {
     return categories;
   }
 
+  Future<void> delete(String id) async {
+    var db = await database;
+    db.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<int> incrementNumOfTransactions(CategoryModel category) async {
     var db = await database;
     return await db.rawUpdate(
