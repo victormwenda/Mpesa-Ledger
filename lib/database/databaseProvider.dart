@@ -46,15 +46,6 @@ class DatabaseProvider {
     String path = await databasePath();
     deleteDatabase(path);
     _database = null;
-    print("DATABASE DELETED");
-  }
-
-  void select() async {
-    var db = await database;
-    var r = await db.query("transactionCategory");
-    for (var i = 0; i < r.length; i++) {
-      print(r[i]);
-    }
   }
 }
 

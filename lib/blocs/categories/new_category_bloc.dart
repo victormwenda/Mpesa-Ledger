@@ -47,7 +47,6 @@ class NewCategoryBloc extends BaseBloc {
   StreamSink<int> get deleteKeywordSink => _deleteKeywordController.sink;
 
   NewCategoryBloc() {
-    databaseProvider.select();
     addCategoryStream.listen((data) {
       _addCategory(data);
     });

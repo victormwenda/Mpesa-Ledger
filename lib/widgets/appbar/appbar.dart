@@ -19,7 +19,9 @@ class AppbarWidget extends StatefulWidget {
   AppbarWidget(this.title,
       {this.showSearch: true,
       this.showPopupMenuButton: true,
-      this.showAddCategory: false, this.showAddNewCategory: false, this.addNewCategory});
+      this.showAddCategory: false,
+      this.showAddNewCategory: false,
+      this.addNewCategory});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -93,7 +95,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // elevation: 0.0,
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),
