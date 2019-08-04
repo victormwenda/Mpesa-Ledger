@@ -40,13 +40,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         icon: Icon(Icons.add),
         color: Colors.black,
         onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("Jama Mohamed"),
-                );
-              });
+          Navigator.pushNamed(context, '/createCategory');
         },
       ));
     }

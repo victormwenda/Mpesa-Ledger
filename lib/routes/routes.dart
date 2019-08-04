@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/screens/about/about.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
 import 'package:mpesa_ledger_flutter/screens/category/category_transaction.dart';
+import 'package:mpesa_ledger_flutter/screens/category/create_category.dart';
 import 'package:mpesa_ledger_flutter/screens/category/index.dart';
 import 'package:mpesa_ledger_flutter/screens/home/index.dart';
 import 'package:mpesa_ledger_flutter/screens/settings/index.dart';
@@ -77,6 +78,8 @@ class RouteGeneratorCategory {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Category());
+        case '/createCategory':
+        return MaterialPageRoute(builder: (_) => CreateCategory());
       case '/categoryTransaction':
         return MaterialPageRoute(builder: (_) => CategoryTransaction(args));
       case '/transaction':
