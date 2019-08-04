@@ -4,13 +4,19 @@ import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Category extends StatefulWidget {
-  CategoriesBloc _categoryBloc = CategoriesBloc();
 
   @override
   _CategoryState createState() => _CategoryState();
 }
 
 class _CategoryState extends State<Category> {
+
+  @override
+  void initState() {
+    categoriesBloc.getCategoriesSink.add(null);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +28,7 @@ class _CategoryState extends State<Category> {
         ),
         Expanded(
           child: StreamBuilder(
-            stream: widget._categoryBloc.categoriesStream,
+            stream: categoriesBloc.categoriesStream,
             initialData: [],
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {

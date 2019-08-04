@@ -19,22 +19,30 @@ class CategoriesBloc extends BaseBloc {
   List<Map<String, dynamic>> _listTransactionsMap = [];
 
   StreamController<List<Map<String, dynamic>>> _categoriesController =
-      StreamController<List<Map<String, dynamic>>>();
+      StreamController<List<Map<String, dynamic>>>.broadcast();
   Stream<List<Map<String, dynamic>>> get categoriesStream =>
       _categoriesController.stream;
   StreamSink<List<Map<String, dynamic>>> get categoriesSink =>
       _categoriesController.sink;
 
   StreamController<Map<String, dynamic>> _transactionsController =
-      StreamController<Map<String, dynamic>>();
+      StreamController<Map<String, dynamic>>.broadcast();
   Stream<Map<String, dynamic>> get transactionsStream =>
       _transactionsController.stream;
   StreamSink<Map<String, dynamic>> get transactionsSink =>
       _transactionsController.sink;
 
   // EVENTS
+
+  StreamController<void> _getCategoriesController =
+      StreamController<void>();
+  Stream<void> get getCategoriesStream =>
+      _getCategoriesController.stream;
+  StreamSink<void> get getCategoriesSink =>
+      _getCategoriesController.sink;
+
   StreamController<String> _getTransactionsController =
-      StreamController<String>();
+      StreamController<String>.broadcast();
   Stream<String> get getTransactionsStream =>
       _getTransactionsController.stream;
   StreamSink<String> get getTransactionsSink =>
@@ -42,13 +50,16 @@ class CategoriesBloc extends BaseBloc {
 
 
   CategoriesBloc() {
-    _getCategories();
+    getCategoriesStream.listen((void data) {
+      _getCategories();
+    });
     getTransactionsStream.listen((data) {
       _getTransactions(data);
     });
   }
 
   Future<void> _getCategories() async {
+    _listCategoriesMap = [];
     var result = await _categoryRepository.select();
     for (var i = 0; i < result.length; i++) {
       _listCategoriesMap.add(result[i].toMap());
@@ -86,3 +97,5 @@ class CategoriesBloc extends BaseBloc {
   @override
   void dispose() {}
 }
+
+CategoriesBloc categoriesBloc = CategoriesBloc();

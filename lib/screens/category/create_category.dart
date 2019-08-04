@@ -48,7 +48,18 @@ class _CreateCategoryState extends State<CreateCategory> {
           showPopupMenuButton: false,
           showAddNewCategory: true,
           addNewCategory: () {
-            print("ok");
+            if (widget.title.text.isEmpty && widget.description.text.isEmpty) {
+              Flushbar(
+                message: "Please add a title and a description",
+                duration: Duration(seconds: 3),
+              )..show(context);
+            } else {
+              widget._newCategoryBloc.addCategorySink.add({
+                "context": context,
+                "title": widget.title.text,
+                "description": widget.description.text
+              });
+            }
           },
         ),
         Expanded(
@@ -62,7 +73,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                     TextFieldWidget("Title", widget.title),
                     TextFieldWidget(
                       "Description",
-                      widget.title,
+                      widget.description,
                       keyboardType: TextInputType.multiline,
                       maxlines: 3,
                     ),
@@ -70,7 +81,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                       height: 10,
                     ),
                     Text(
-                      "Key Words",
+                      "Keywords",
                       style: prefix0.Theme.of(context).textTheme.caption,
                     ),
                     StreamBuilder<List<String>>(

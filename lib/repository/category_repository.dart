@@ -10,6 +10,11 @@ class CategoryRepository {
     return await databaseProvider.database;
   }
 
+  Future<int> insert(CategoryModel category) async {
+    var db = await database;
+    return await db.insert(tableName, category.toMap());
+  }
+
   Future<List<CategoryModel>> select(
       {List<String> columns, String query}) async {
     var db = await database;

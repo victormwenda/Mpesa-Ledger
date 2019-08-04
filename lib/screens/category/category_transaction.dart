@@ -6,7 +6,6 @@ import 'package:mpesa_ledger_flutter/screens/category/widgets/transaction_list_i
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class CategoryTransaction extends StatefulWidget {
-  CategoriesBloc _categoryBloc = CategoriesBloc();
 
   Map<dynamic, dynamic> map;
 
@@ -20,7 +19,7 @@ class _CategoryTransactionState extends State<CategoryTransaction> {
 
   @override
   void initState() {
-    widget._categoryBloc.getTransactionsSink.add(widget.map["id"].toString());
+    categoriesBloc.getTransactionsSink.add(widget.map["id"].toString());
     super.initState();
   }
 
@@ -35,7 +34,7 @@ class _CategoryTransactionState extends State<CategoryTransaction> {
         ),
         Expanded(
           child: StreamBuilder(
-            stream: widget._categoryBloc.transactionsStream,
+            stream: categoriesBloc.transactionsStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(

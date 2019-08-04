@@ -1,13 +1,23 @@
 import 'dart:async';
 
+import 'package:flushbar/flushbar.dart';
+import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
+import 'package:mpesa_ledger_flutter/models/category_model.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
+import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
+import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
+import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 
 class NewCategoryBloc extends BaseBloc {
   TransactionRepository _transactionRepository = TransactionRepository();
+  CategoryRepository _categoryRepository = CategoryRepository();
+  TransactionCategoryRepository _transactionCategoryRepository = TransactionCategoryRepository();
 
   List<String> keywordList = [];
   List<int> transactionIdList = [];
@@ -23,6 +33,11 @@ class NewCategoryBloc extends BaseBloc {
 
   // EVENTS
 
+  StreamController<Map<String, dynamic>> _addCategoryController =
+      StreamController<Map<String, dynamic>>();
+  Stream<Map<String, dynamic>> get addCategoryStream => _addCategoryController.stream;
+  StreamSink<Map<String, dynamic>> get addCategorySink => _addCategoryController.sink;
+
   StreamController<String> _addKeywordController = StreamController<String>();
   Stream<String> get addKeywordStream => _addKeywordController.stream;
   StreamSink<String> get addKeywordSink => _addKeywordController.sink;
@@ -32,6 +47,9 @@ class NewCategoryBloc extends BaseBloc {
   StreamSink<int> get deleteKeywordSink => _deleteKeywordController.sink;
 
   NewCategoryBloc() {
+    addCategoryStream.listen((data) {
+      _addCategory(data);
+    });
     addKeywordStream.listen((data) {
       _addKeyword(data);
       _getTransactions();
@@ -40,6 +58,32 @@ class NewCategoryBloc extends BaseBloc {
       _deleteKeyword(data);
       _getTransactions();
     });
+  }
+
+  _addCategory(Map<String, dynamic> map) async {
+    if (keywordList.isEmpty) {
+      Flushbar(
+        duration: Duration(seconds: 3),
+        message: "Please add keywords",
+      )..show(map["context"]);
+    } else {
+      map["keywords"] = keywordList.toString();
+      int id = await _categoryRepository.insert(CategoryModel.fromMap(map));
+      for (var i = 0; i < transactionIdList.length; i++) {
+        map["transactionId"] = transactionIdList[i];
+        map["categoryId"] = id;
+        await _transactionCategoryRepository.insert(TransactionCategoryModel.fromMap(map));
+        await _categoryRepository.incrementNumOfTransactions(CategoryModel.fromMap({
+          "id": id
+        }));
+      }
+      categoriesBloc.getCategoriesSink.add(null);
+      Flushbar(
+        duration: Duration(seconds: 3),
+        message: map["title"] + " added",
+      )..show(map["context"]);
+      Navigator.pop(map["context"]);
+    }
   }
 
   _getTransactions() async {

@@ -1,3 +1,4 @@
+import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 
 class CategoryModel {
@@ -17,13 +18,13 @@ class CategoryModel {
         ? null
         : RegexUtil("[\\w-]+", map["keywords"]).getAllMatchResults;
     showKeywords = map["showKeywords"] == null
-        ? null
+        ? true
         : map["showKeywords"] == 1 ? true : false;
     canDelete = map["canDelete"] == null 
-        ? null 
+        ? true 
         : map["canDelete"] == 1 ? true : false;
-    numberOfTransactions = map["numberOfTransactions"] ?? null;
-    createdOn = map["createdOn"] ?? null;
+    numberOfTransactions = map["numberOfTransactions"] ?? 0;
+    createdOn = map["createdOn"] ?? DateFormatUtil().getCurrentTimestamp;
     id = map["id"] ?? null;
   }
 
