@@ -11,13 +11,15 @@ class AppbarWidget extends StatefulWidget {
   bool showSearch;
   bool showAddCategory;
   bool showPopupMenuButton;
+  bool showAddNewCategory;
+  VoidCallback addNewCategory;
 
   FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
 
   AppbarWidget(this.title,
       {this.showSearch: true,
       this.showPopupMenuButton: true,
-      this.showAddCategory: false});
+      this.showAddCategory: false, this.showAddNewCategory: false, this.addNewCategory});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -42,6 +44,13 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         onPressed: () {
           Navigator.pushNamed(context, '/createCategory');
         },
+      ));
+    }
+    if (widget.showAddNewCategory) {
+      appbarIcons.add(IconButton(
+        icon: Icon(Icons.done),
+        color: Colors.black,
+        onPressed: widget.addNewCategory,
       ));
     }
     if (widget.showPopupMenuButton) {

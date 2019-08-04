@@ -2,8 +2,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
-import 'package:mpesa_ledger_flutter/widgets/snackbar/snackbar.dart';
 
 class RetreiveSMS extends StatefulWidget {
   QuerySMSBloc querySMSBloc = QuerySMSBloc();
@@ -21,7 +21,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
 
   @override
   void dispose() {
-    counterPercentage.dispose();
+    counter.dispose();
     widget.querySMSBloc.dispose();
     super.dispose();
   }
@@ -64,7 +64,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
             flex: 2,
             child: Align(
               child: StreamBuilder(
-                stream: counterPercentage.percentageProcessStream,
+                stream: counter.counterStream,
                 initialData: 0,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   var percentageComplete =

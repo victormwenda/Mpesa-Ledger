@@ -48,19 +48,3 @@ class QuerySMSBloc extends BaseBloc {
     _retrieveSMSCompleteController.close();
   }
 }
-
-class QuerySMSCounterPercentage extends BaseBloc {
-  StreamController<int> _percentageProcessController =
-      StreamController<int>.broadcast();
-  Stream<int> get percentageProcessStream =>
-      _percentageProcessController.stream;
-  StreamSink<int> get percentageProcessSink =>
-      _percentageProcessController.sink;
-
-  @override
-  void dispose() {
-    _percentageProcessController.close();
-  }
-}
-
-QuerySMSCounterPercentage counterPercentage = QuerySMSCounterPercentage();

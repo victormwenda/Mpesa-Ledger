@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/mpesa_balance_model.dart';
 import 'package:mpesa_ledger_flutter/models/summary_model.dart';
@@ -66,7 +66,7 @@ class SMSFilter {
                 {"mpesaBalance": obj["data"]["mpesaBalance"]}));
           }
         }
-        counterPercentage.percentageProcessSink
+        counter.counterSink
             .add(((i / bodyLength) * 100).round());
       }
       print("FINISHED ADDIND ALL TO DATABASE");

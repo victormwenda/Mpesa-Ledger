@@ -5,7 +5,7 @@ class ChipWidget extends StatelessWidget {
   String label;
   VoidCallback onDelete;
 
-  ChipWidget(this.label, {this.onDelete = null});
+  ChipWidget(this.label, {this.onDelete});
 
   @override
   Widget build(BuildContext context) {

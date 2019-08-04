@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:mpesa_ledger_flutter/blocs/categories/new_category_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
@@ -45,6 +46,10 @@ class _CreateCategoryState extends State<CreateCategory> {
           "New Category",
           showSearch: false,
           showPopupMenuButton: false,
+          showAddNewCategory: true,
+          addNewCategory: () {
+            print("ok");
+          },
         ),
         Expanded(
           child: ListView(
@@ -110,14 +115,20 @@ class _CreateCategoryState extends State<CreateCategory> {
                     prefix0.Center(
                       child: prefix0.Column(
                         children: <Widget>[
-                          prefix0.Text(
-                            "29",
-                            style: prefix0.Theme.of(context)
-                                .textTheme
-                                .display3
-                                .merge(prefix0.TextStyle(
-                                    color: prefix0.Theme.of(context)
-                                        .primaryColor)),
+                          StreamBuilder(
+                            stream: counter.counterStream,
+                            initialData: 0,
+                            builder: (context, snapshot) {
+                              return prefix0.Text(
+                                snapshot.data.toString(),
+                                style: prefix0.Theme.of(context)
+                                    .textTheme
+                                    .display3
+                                    .merge(prefix0.TextStyle(
+                                        color: prefix0.Theme.of(context)
+                                            .primaryColor)),
+                              );
+                            }
                           ),
                           prefix0.Text("messages found")
                         ],
