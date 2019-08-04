@@ -10,4 +10,6 @@ class RecaseUtil {
 
   String get title_case => recase.titleCase;
 
+  String get sentenceCase => recase.sentenceCase;
+
 }

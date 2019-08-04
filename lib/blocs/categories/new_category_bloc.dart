@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
+import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 
 class NewCategoryBloc extends BaseBloc {
   List<String> keywordList = [];
@@ -27,15 +29,30 @@ class NewCategoryBloc extends BaseBloc {
   NewCategoryBloc() {
     addKeywordStream.listen((data) {
       _addKeyword(data);
+      
     });
     deleteKeywordStream.listen((data) {
       _deleteKeyword(data);
     });
   }
 
+  String _generateSchema() {
+    if (keywordList.isNotEmpty) {
+      String s = "";
+      for (var i = 0; i < keywordList.length; i++) {
+        var index = keywordList[i];
+        s += "body LIKE '%$index%' OR ";
+      }
+      return s.replaceRange(s.length - 4, s.length, "");
+    }
+    return "";
+  }
+
   _addKeyword(String keyword) {
-    keywordList.add(keyword);
-    keyWordChipSink.add(keywordList);
+    if (!keywordList.contains(keyword)) {
+      keywordList.add(keyword);
+      keyWordChipSink.add(keywordList);
+    }
   }
 
   _deleteKeyword(int index) {

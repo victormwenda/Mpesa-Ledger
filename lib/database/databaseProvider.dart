@@ -51,7 +51,16 @@ class DatabaseProvider {
 
   void select() async {
     var db = await database;
-    List<Map<String, dynamic>> l = await db.query("transactions");
+    var li = ['samson', 'strathmore', "bank"];
+    String s = '';
+    for (var i = 0; i < li.length; i++) {
+      var index = li[i];
+      s += "body LIKE '%$index%' OR ";
+    }
+    s = s.replaceRange(s.length - 4, s.length, "");
+    List<Map<String, dynamic>> l = await db.rawQuery('''
+      SELECT * FROM transactions WHERE $s
+    ''');
     for (var i = 0; i < l.length; i++) {
       print(l[i]);
     }
