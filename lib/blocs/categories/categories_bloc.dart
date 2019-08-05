@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
-import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
-import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
@@ -75,11 +73,10 @@ class CategoriesBloc extends BaseBloc {
     for (var i = 0; i < result.length; i++) {
       _listCategoriesMap.add(result[i].toMap());
     }
-    categoriesSink.add(_listCategoriesMap);
+    categoriesSink.add(_listCategoriesMap.reversed.toList());
   }
 
   _deleteCategory(String id) async {
-    print("called");
     await _categoryRepository.delete(id);
     await _transactionCategoryRepository.delete(id);
     getCategoriesSink.add(null);
@@ -109,7 +106,7 @@ class CategoriesBloc extends BaseBloc {
       "transactionCosts": transactionCosts
     };
     transactionsSink.add(
-      {"transactions": _listTransactionsMap, "totals": _categoryTotalsMap},
+      {"transactions": _listTransactionsMap.reversed.toList(), "totals": _categoryTotalsMap},
     );
   }
 

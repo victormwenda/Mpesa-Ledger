@@ -25,9 +25,10 @@ class SummaryYearMonthlyTotals extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   year.toString(),
-                  style: Theme.of(context).textTheme.headline.merge(TextStyle(
-                    fontWeight: FontWeight.w700
-                  )),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline
+                      .merge(TextStyle(fontWeight: FontWeight.w700)),
                 ),
               ),
             ),
@@ -39,28 +40,31 @@ class SummaryYearMonthlyTotals extends StatelessWidget {
             ),
             Container(
               child: ExpansionTile(
-                title: Row(
-                  children: <Widget>[
-                    Text(
-                      "+KES " + totalDeposits,
-                      style: Theme.of(context).textTheme.subtitle.merge(
-                            TextStyle(
-                              color: Color(0XFF4CAF50),
+                title: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "+KES " + totalDeposits,
+                        style: Theme.of(context).textTheme.subtitle.merge(
+                              TextStyle(
+                                color: Color(0XFF4CAF50),
+                              ),
                             ),
-                          ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "-KES " + totalWithdrawals,
-                      style: Theme.of(context).textTheme.subtitle.merge(
-                            TextStyle(
-                              color: Color(0XFFF44336),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "-KES " + totalWithdrawals,
+                        style: Theme.of(context).textTheme.subtitle.merge(
+                              TextStyle(
+                                color: Color(0XFFF44336),
+                              ),
                             ),
-                          ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
                 children: monthlyDepositsAnsWithdrawals,
               ),

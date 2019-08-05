@@ -9,6 +9,7 @@ import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permissio
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,16 +43,16 @@ class _SplashScreenState extends State<SplashScreen> {
           title: "SMS Permission",
           content: Text("To use MPESA LEDGER, allow SMS permissions"),
           actions: <Widget>[
-            FlatButton(
-              child: Text("CANCEL"),
-              onPressed: () {
+            FlatButtonWidget(
+              "CANCEL",
+              () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
               },
             ),
-            FlatButton(
-              child: Text("ALLOW PERMISSIONS"),
-              onPressed: () {
+            FlatButtonWidget(
+              "ALLOW PERMISSIONS",
+              () {
                 widget.runtimePermissionBloc.checkAndRequestPermissionEventSink
                     .add(null);
                 Navigator.pop(context);
@@ -70,16 +71,16 @@ class _SplashScreenState extends State<SplashScreen> {
           content: Text(
               "To use MPESA LEDGER, allow SMS permissions are needed, please go to settings > Permissions and turn or SMS"),
           actions: <Widget>[
-            FlatButton(
-              child: Text("CANCEL"),
-              onPressed: () {
+            FlatButtonWidget(
+              "CANCEL",
+              () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
               },
             ),
-            FlatButton(
-              child: Text("TURN ON"),
-              onPressed: () {
+            FlatButtonWidget(
+              "TURN ON",
+              () {
                 SystemChannels.platform
                     .invokeMethod<void>('SystemNavigator.pop');
                 AppSettings.openAppSettings();

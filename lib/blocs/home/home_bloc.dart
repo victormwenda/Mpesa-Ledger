@@ -35,7 +35,6 @@ class HomeBloc extends BaseBloc {
 
   HomeBloc() {
     getSMSDataStream.listen((void data) {
-      databaseProvider.select();
       _getHomeData();
     });
   }
