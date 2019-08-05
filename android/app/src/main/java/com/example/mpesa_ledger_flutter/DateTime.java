@@ -21,7 +21,7 @@ public class DateTime {
   String getTimestamp() {
     try {
       SimpleDateFormat dateFormat = new SimpleDateFormat("d/MM/yy h:mm a");
-      dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+      dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
       Date date = dateFormat.parse(methodCall.argument("dateTime"));
       long timestamp = date.getTime();
       return timestamp + "";

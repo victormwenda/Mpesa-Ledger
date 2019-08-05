@@ -48,7 +48,7 @@ class SMSFilter {
                 {"id": transactionCategoryObjectList[j]["categoryId"]}));
           }
           Map<dynamic, dynamic> dateTime = await dateFormatUtil.getDateTime(
-              reversedBodies[i]["timestamp"] ??
+              reversedBodies[i]["timestamp"].toString() ??
                   obj["data"]["timestamp"].toString());
           await summaryRepo.insert(SummaryModel.fromMap({
             "month": dateTime["month"],
@@ -60,11 +60,11 @@ class SMSFilter {
                 obj["data"]["isDeposit"] == 0 ? obj["data"]["amount"] : 0.0,
             "transactionCost": obj["data"]["transactionCost"]
           }));
-          if (obj["data"]["mpesaBalance"] != null) {
+        }
+        if (obj.isNotEmpty && obj["data"]["mpesaBalance"] != null) {
             await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
                 {"mpesaBalance": obj["data"]["mpesaBalance"]}));
           }
-        }
         counter.counterSink
             .add(((i / bodyLength) * 100).round());
       }
@@ -78,7 +78,7 @@ class SMSFilter {
 
   Future<Map<String, dynamic>> _getSMSObject(Map<dynamic, dynamic> body) async {
     Map<String, dynamic> smsObject = {};
-    smsFilters = CheckSMSType(body["body"], body["timestamp"]);
+    smsFilters = CheckSMSType(body["body"], body["timestamp"].toString());
     var coreValuesObject = await smsFilters.getCoreValues();
     if (!coreValuesObject.containsKey("error")) {
       smsObject.addAll(coreValuesObject);

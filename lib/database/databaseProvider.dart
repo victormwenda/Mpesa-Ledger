@@ -50,8 +50,11 @@ class DatabaseProvider {
 
   void select() async {
     var db = await database;
-    var r = await db.query("unrecordedTransactions");
+    var r = await db.query("transactions");
     print("called");
+    if (r.isEmpty) {
+      print("no data in table");
+    }
     for (var i = 0; i < r.length; i++) {
       print(r[i]);
     }
