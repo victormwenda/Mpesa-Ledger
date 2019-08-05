@@ -47,6 +47,15 @@ class DatabaseProvider {
     deleteDatabase(path);
     _database = null;
   }
+
+  void select() async {
+    var db = await database;
+    var r = await db.query("unrecordedTransactions");
+    print("called");
+    for (var i = 0; i < r.length; i++) {
+      print(r[i]);
+    }
+  }
 }
 
 DatabaseProvider databaseProvider = DatabaseProvider();

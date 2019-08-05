@@ -9,17 +9,6 @@ class TransactionModel {
   double transactionCost;
   String transactionId;
 
-  TransactionModel(
-      {this.id,
-      this.title,
-      this.body,
-      this.timestamp,
-      this.mpesaBalance,
-      this.amount,
-      this.isDeposit,
-      this.transactionCost,
-      this.transactionId});
-
   TransactionModel.fromMap(Map<String, dynamic> map) {
     title = map["title"];
     body = map["body"];

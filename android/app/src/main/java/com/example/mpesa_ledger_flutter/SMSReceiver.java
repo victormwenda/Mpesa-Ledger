@@ -24,10 +24,18 @@ public class SMSReceiver extends BroadcastReceiver {
       for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
         Map<String, String> map = new HashMap<>();
         map.put("address", smsMessage.getOriginatingAddress());
-        map.put("body", smsMessage.getMessageBody());
-        map.put("timestamp", String.valueOf((smsMessage.getTimestampMillis()/1000)));
-        mapList.add(map);
+        if (smsMessage.getOriginatingAddress().equals("MPESA")) {
+          map.put("body", smsMessage.getMessageBody());
+          map.put("timestamp", String.valueOf(smsMessage.getTimestampMillis()));
+          mapList.add(map);
+        }
       }
+
+      if (!mapList.isEmpty()) {
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        databaseHelper.insertUnrecordedTransactions(mapList);
+      }
+
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();
     }
   }

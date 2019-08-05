@@ -12,19 +12,19 @@ import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-  final String tableName = "unrecordedMessages";
+  final String tableName = "unrecordedTransactions";
 
   public DatabaseHelper(Context context) {
     super(context, "MpesaLedger.db", null, 1);
 //    this.context = context;
   }
 
-  DatabaseHelper insertToDatabase(List<Map<String, String>> mapList) {
+  DatabaseHelper insertUnrecordedTransactions(List<Map<String, String>> mapList) {
     SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
     sqLiteDatabase.beginTransaction();
     for(Map<String, String> map: mapList) {
       ContentValues contentValues = new ContentValues();
-      contentValues.put("address", map.get("address"));
+      contentValues.put("timestamp", map.get("timestamp"));
       contentValues.put("body", map.get("body"));
       sqLiteDatabase.insert(tableName, null, contentValues);
     }

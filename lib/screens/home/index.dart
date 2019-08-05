@@ -5,7 +5,6 @@ import 'package:mpesa_ledger_flutter/screens/home/widgets/home_header.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
-  HomeBloc _homeBloc = HomeBloc();
 
   @override
   _HomeState createState() => _HomeState();
@@ -20,6 +19,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    homeBloc.getSMSDataSink.add(null);
     super.initState();
   }
 
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
         AppbarWidget("Home"),
         Expanded(
           child: StreamBuilder(
-            stream: widget._homeBloc.homeStream,
+            stream: homeBloc.homeStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(

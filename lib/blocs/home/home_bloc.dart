@@ -2,6 +2,7 @@ import 'dart:async';
 import "package:collection/collection.dart";
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
@@ -19,23 +20,34 @@ class HomeBloc extends BaseBloc {
   CategoryRepository _categoryRepository = CategoryRepository();
 
   DateFormatUtil dateFormatUtil = DateFormatUtil();
+  Map<String, dynamic> _homeTransactionMap = {};
 
   StreamController<Map<String, dynamic>> _homeController =
-      StreamController<Map<String, dynamic>>();
+      StreamController<Map<String, dynamic>>.broadcast();
   Stream<Map<String, dynamic>> get homeStream => _homeController.stream;
   StreamSink<Map<String, dynamic>> get homeSink => _homeController.sink;
 
+
+  StreamController<void> _getSMSDataController =
+      StreamController<void>();
+  Stream<void> get getSMSDataStream => _getSMSDataController.stream;
+  StreamSink<void> get getSMSDataSink => _getSMSDataController.sink;
+
   HomeBloc() {
-    _getHomeData();
+    getSMSDataStream.listen((void data) {
+      databaseProvider.select();
+      _getHomeData();
+    });
   }
 
   Future<void> _getHomeData() async {
-    Map<String, dynamic> map = {};
-    map["headerData"] = {
-      "mpesaBalance": await _getMpesaBalance(),
+    var mpesaBalance = await _getMpesaBalance();
+    var transactions = await getTransactions();
+    _homeTransactionMap["headerData"] = {
+      "mpesaBalance": mpesaBalance,
     };
-    map["transactions"] = await getTransactions();
-    homeSink.add(map);
+    _homeTransactionMap["transactions"] = transactions;
+    homeSink.add(_homeTransactionMap);
   }
 
   Future<double> _getMpesaBalance() async {
@@ -107,3 +119,5 @@ class HomeBloc extends BaseBloc {
     _homeController.close();
   }
 }
+
+HomeBloc homeBloc = HomeBloc();

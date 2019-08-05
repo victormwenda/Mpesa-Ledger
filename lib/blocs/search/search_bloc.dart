@@ -8,7 +8,6 @@ import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 class SearchBloc extends BaseBloc {
 
   TransactionRepository _transactionRepository = TransactionRepository();
-  HomeBloc _homeBloc = HomeBloc();
 
   StreamController<List<Map<String, dynamic>>> _searchController = StreamController<List<Map<String, dynamic>>>.broadcast();
   Stream<List<Map<String, dynamic>>> get searchStream => _searchController.stream;
@@ -25,7 +24,7 @@ class SearchBloc extends BaseBloc {
       List<TransactionModel> result = [];
       if (data.isNotEmpty) {
         result = await _transactionRepository.searchTransaction(data);
-        searchSink.add(await _homeBloc.getTransactions(transactions: result));
+        searchSink.add(await homeBloc.getTransactions(transactions: result));
       } else {
         searchSink.add([]);
       }
