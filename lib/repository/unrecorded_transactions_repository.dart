@@ -19,4 +19,13 @@ class UnrecordedTransactionsRepository {
         : [];
     return unrecordedTransactions;
   }
+
+  Future<void> delete(String id) async {
+    var db = await database;
+    db.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
