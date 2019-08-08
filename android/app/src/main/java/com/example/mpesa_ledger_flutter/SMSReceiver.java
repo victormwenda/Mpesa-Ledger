@@ -21,19 +21,28 @@ public class SMSReceiver extends BroadcastReceiver {
 
       Toast.makeText(context, "Message received from SMS", Toast.LENGTH_SHORT).show();
       List<Map<String, String>> mapList = new ArrayList<>();
+      String body = "";
+      String timestamp = "";
+      String address = "";
       for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-        Map<String, String> map = new HashMap<>();
-        map.put("address", smsMessage.getOriginatingAddress());
-        if (smsMessage.getOriginatingAddress().equals("MPESA")) {
-          map.put("body", smsMessage.getMessageBody());
-          map.put("timestamp", String.valueOf(smsMessage.getTimestampMillis()));
-          mapList.add(map);
-        }
+        body += smsMessage.getMessageBody();
+        address = smsMessage.getOriginatingAddress();
+        timestamp = String.valueOf(smsMessage.getTimestampMillis());
+      }
+
+      Log.d("MPESA", body);
+
+      Map<String, String> map = new HashMap<>();
+      if (address.equals("MPESA")) {
+        map.put("body", body);
+        map.put("timestamp", timestamp);
+        mapList.add(map);
       }
 
       if (!mapList.isEmpty()) {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         databaseHelper.insertUnrecordedTransactions(mapList);
+        Log.d("MPESA", mapList.toString());
       }
 
       Toast.makeText(context, mapList.toString(), Toast.LENGTH_SHORT).show();

@@ -28,11 +28,13 @@ class SMSFilter {
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
+      print("ALL THE LISTS OF TRANSACTIONS => " + reversedBodies.toString());
       var categoryObject = await categoryRepo.select(columns: ["id", "keywords"]);
       int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
         Map<String, dynamic> obj = await _getSMSObject(reversedBodies[i]);
         if (obj.isNotEmpty && !obj["data"].containsKey("unknown")) {
+          print("ONE OF THE TRANSACTIONS => " + obj["data"].toString());
           int id = await transactionRepo.insert(
             TransactionModel.fromMap(Map<String, dynamic>.from(obj["data"])),
           );

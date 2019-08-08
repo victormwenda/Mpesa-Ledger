@@ -36,3 +36,11 @@ String withdrawFromAgentBusinessName = "(?<=from\\s*?\\d+\\s*?-\\s*?).*(?=\\s*?N
 // REVERSAL REGEX
 String reversalToAccount = "(?<=reversed\\s*?on\\s*?$date\\s*?at\\s*?$time\\s*?and\\s*?$currency)$amount(?=\\s*?is\\s*?credited)";
 String reversalFromAccount = "(?<=reversed\\s*?on\\s*?$date\\s*?at\\s*?$time\\s*?and\\s*?$currency)$amount(?=\\s*?is\\s*?debited)";
+
+// M-SHWARI REGEX
+String transferToMshwari = "$amount(?=\\s*?transfer?red\\s*?to\\s*?M-Shwari)";
+String transferFromMshwari = "$amount(?=\\s*?transfer?red\\s*?from\\s*?M-Shwari)";
+
+// KCB M-PESA REGEX
+String transferToKCBMpesa = "$amount(?=\\s*?transfer?red\\s*?to\\s*?KCB\\s*?M-PESA)";
+String transferFromKCBMpesa = "(?<=[Yy]ou\\s*?have\\s*?transfer?red\\s*?$currency)$amount(?=\\s*?from\\s*?your\\s*?KCB\\s*?M-PESA)";

@@ -12,6 +12,7 @@ class TransactionRepository {
 
   Future<int> insert(TransactionModel transaction) async {
     var db = await database;
+    print("FROM THE REPO => " + transaction.toMap().toString());
     return await db.insert(tableName, transaction.toMap());
   }
 

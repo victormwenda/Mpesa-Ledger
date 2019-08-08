@@ -43,15 +43,18 @@ class CategoryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(
-      _generateChartData(context),
-      animate: true,
-      defaultRenderer: new charts.ArcRendererConfig(
-        arcRendererDecorators: [
-          new charts.ArcLabelDecorator(
-            labelPosition: charts.ArcLabelPosition.outside,
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: charts.PieChart(
+        _generateChartData(context),
+        animate: true,
+        defaultRenderer: new charts.ArcRendererConfig(
+          arcRendererDecorators: [
+            new charts.ArcLabelDecorator(
+              labelPosition: charts.ArcLabelPosition.outside,
+            )
+          ],
+        ),
       ),
     );
   }

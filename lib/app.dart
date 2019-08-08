@@ -11,21 +11,25 @@ import 'package:mpesa_ledger_flutter/widgets/bottom_navigation_bar/bottom_naviga
 
 class App extends StatefulWidget {
   FirebaseAuthProvider _firebaseAuthProvider = FirebaseAuthProvider();
-  BottombarNavigationBloc _bottombarNavigationBloc =
-      BottombarNavigationBloc();
-  UnrecordedTransactionsBloc _unrecordedTransactionsBloc = UnrecordedTransactionsBloc();
+  BottombarNavigationBloc _bottombarNavigationBloc = BottombarNavigationBloc();
+  UnrecordedTransactionsBloc _unrecordedTransactionsBloc =
+      UnrecordedTransactionsBloc();
 
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
+
+  Timer _timer;
+
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 10), (timer) {
-     widget._unrecordedTransactionsBloc.insertUnrecordedTransactionsToDBSink.add(null);
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      print("COUNTER " + timer.tick.toString());
+      widget._unrecordedTransactionsBloc.insertUnrecordedTransactionsToDBSink
+          .add(null);
     });
-    
     widget._firebaseAuthProvider.onAuthStateChanged.listen((data) {
       if (data == null) {
         Navigator.pushReplacement(
@@ -39,6 +43,7 @@ class _AppState extends State<App> {
 
   @override
   void dispose() {
+    _timer?.cancel();
     widget._bottombarNavigationBloc.dispose();
     super.dispose();
   }

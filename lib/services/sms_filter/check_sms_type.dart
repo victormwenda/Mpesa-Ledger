@@ -53,6 +53,14 @@ class CheckSMSType {
       result = reversalToAccount();
     } else if (isRegexTrue(regexString.reversalFromAccount)) {
       result = reversalFromAccount();
+    } else if (isRegexTrue(regexString.transferToMshwari)) {
+      result = transferToMshwari();
+    } else if (isRegexTrue(regexString.transferFromMshwari)) {
+      result = transferFromMshwari();
+    } else if (isRegexTrue(regexString.transferToKCBMpesa)) {
+      result = transferToKCBMpesa();
+    } else if (isRegexTrue(regexString.transferFromKCBMpesa)) {
+      result = transferFromKCBMpesa();
     } else {
       result = {
         "unknown": "Unknown Transaction",
@@ -290,6 +298,62 @@ class CheckSMSType {
       "title": "Reversal",
       "body": body + "{reversal_transaction}",
       "isDeposit": 0,
+    };
+  }
+
+  Map<String, dynamic> transferToMshwari() {
+    double amount = double.parse(replace.replaceString(
+      getRegexFirstMatch(regexString.transferToMshwari),
+      ",",
+      "",
+    ));
+    return {
+      "amount": amount,
+      "title": "M-Shwari Deposit",
+      "body": body,
+      "isDeposit": 0,
+    };
+  }
+
+  Map<String, dynamic> transferFromMshwari() {
+    double amount = double.parse(replace.replaceString(
+      getRegexFirstMatch(regexString.transferFromMshwari),
+      ",",
+      "",
+    ));
+    return {
+      "amount": amount,
+      "title": "M-Shwari Withdrawal",
+      "body": body,
+      "isDeposit": 1,
+    };
+  }
+
+  Map<String, dynamic> transferToKCBMpesa() {
+    double amount = double.parse(replace.replaceString(
+      getRegexFirstMatch(regexString.transferToKCBMpesa),
+      ",",
+      "",
+    ));
+    return {
+      "amount": amount,
+      "title": "KCB M-PESA Deposit",
+      "body": body + "{kcb_mpesa}",
+      "isDeposit": 0,
+    };
+  }
+
+  Map<String, dynamic> transferFromKCBMpesa() {
+    double amount = double.parse(replace.replaceString(
+      getRegexFirstMatch(regexString.transferFromKCBMpesa),
+      ",",
+      "",
+    ));
+    return {
+      "amount": amount,
+      "title": "KCB M-PESA Withdrawal",
+      "body": body + "{kcb_mpesa}",
+      "isDeposit": 1,
     };
   }
 }

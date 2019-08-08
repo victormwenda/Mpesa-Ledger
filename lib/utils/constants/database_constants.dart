@@ -73,13 +73,14 @@ final List<String> schema = [
   ''',
   '''
   INSERT INTO $categoriesTable (title, description, keywords, showKeywords, canDelete,  numberOfTransactions, createdOn) 
-    VALUES 
-    ("M-shwari", "Mshwari Description", "['M-shwari']", 0, 0, 0, strftime('%s', 'now')),
-    ("Reversals", "Reversals Description", "['reversal_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("Agent Transactions", "Agent Transactions Description", "['agent_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("Buy Goods", "Buy Goods Description", "['buy_goods_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("Paybill", "Paybill Description", "['paybill_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("People", "People Transactions Description", "['people_transaction']", 0, 0, 0, strftime('%s', 'now')),
-    ("Airtime", "Airtime Description", "['airtime_transaction']", 0, 0, 0, strftime('%s', 'now'));
+    VALUES
+    ("Reversals", "All reversal transactions", "['reversal_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("KCB-MPESA", "All KCB-MPESA transactions", "['kcb_mpesa']", 0, 0, 0, strftime('%s', 'now')),
+    ("M-shwari", "All M-Shwari transactions", "['M-shwari']", 0, 0, 0, strftime('%s', 'now')),
+    ("Agent Transactions", "All agent transactions", "['agent_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Buy Goods and Services", "All buy goods and services transactions", "['buy_goods_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Paybill", "All paybill transactions", "['paybill_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("People", "All people transactions", "['people_transaction']", 0, 0, 0, strftime('%s', 'now')),
+    ("Airtime", "All airtime transactions", "['airtime_transaction']", 0, 0, 0, strftime('%s', 'now'));
   '''
 ];

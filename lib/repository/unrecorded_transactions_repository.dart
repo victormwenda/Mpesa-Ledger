@@ -13,7 +13,11 @@ class UnrecordedTransactionsRepository {
   Future<List<UnrecordedTransactionsModel>> select() async {
     var db = await database;
     List<Map<String, dynamic>> result;
-    result = await db.query(tableName);
+    result = await db.rawQuery('''
+      SELECT * FROM $tableName
+      ORDER BY 
+      timestamp ASC
+    ''');
     List<UnrecordedTransactionsModel> unrecordedTransactions = result.isNotEmpty
         ? result.map((data) => UnrecordedTransactionsModel.fromMap(data)).toList()
         : [];
