@@ -20,14 +20,12 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   Timer _timer;
 
   @override
   void initState() {
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      widget._unrecordedTransactionsBloc.insertTransactionsEventSink
-          .add(null);
+      widget._unrecordedTransactionsBloc.insertTransactionsEventSink.add(null);
     });
     widget._firebaseAuthProvider.onAuthStateChanged.listen((data) {
       if (data == null) {

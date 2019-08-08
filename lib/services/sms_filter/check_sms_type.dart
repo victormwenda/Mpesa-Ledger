@@ -309,7 +309,7 @@ class CheckSMSType {
     ));
     return {
       "amount": amount,
-      "title": "M-Shwari Deposit",
+      "title": "M-Shwari",
       "body": body,
       "isDeposit": 0,
     };
@@ -323,7 +323,7 @@ class CheckSMSType {
     ));
     return {
       "amount": amount,
-      "title": "M-Shwari Withdrawal",
+      "title": "M-Shwari",
       "body": body,
       "isDeposit": 1,
     };
@@ -337,7 +337,7 @@ class CheckSMSType {
     ));
     return {
       "amount": amount,
-      "title": "KCB M-PESA Deposit",
+      "title": "KCB M-PESA",
       "body": body + "{kcb_mpesa}",
       "isDeposit": 0,
     };
@@ -351,7 +351,7 @@ class CheckSMSType {
     ));
     return {
       "amount": amount,
-      "title": "KCB M-PESA Withdrawal",
+      "title": "KCB M-PESA",
       "body": body + "{kcb_mpesa}",
       "isDeposit": 1,
     };

@@ -16,7 +16,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
   @override
   void dispose() {
     counter.dispose();
@@ -30,18 +29,14 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
-      stream: themeBloc.themeControllerStream,
-      initialData: {
-        "primaryColor": 0XFF000000,
-        "accentColor": 0XFFBDBDBD
-      },
-      builder: (context, snapshot) {
-        return MaterialApp(
-            title: 'MPESA Ledger',
-            theme: CustomTheme(snapshot.data).getTheme,
-            debugShowCheckedModeBanner: false,
-            home: Scaffold(body: SplashScreen()));
-      }
-    );
+        stream: themeBloc.themeControllerStream,
+        initialData: {"primaryColor": 0XFF000000, "accentColor": 0XFFBDBDBD},
+        builder: (context, snapshot) {
+          return MaterialApp(
+              title: 'MPESA Ledger',
+              theme: CustomTheme(snapshot.data).getTheme,
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(body: SplashScreen()));
+        });
   }
 }

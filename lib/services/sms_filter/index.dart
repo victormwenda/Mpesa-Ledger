@@ -28,13 +28,11 @@ class SMSFilter {
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
-      print("ALL THE LISTS OF TRANSACTIONS => " + reversedBodies.toString());
       var categoryObject = await categoryRepo.select(columns: ["id", "keywords"]);
       int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
         Map<String, dynamic> obj = await _getSMSObject(reversedBodies[i]);
         if (obj.isNotEmpty && !obj["data"].containsKey("unknown")) {
-          print("ONE OF THE TRANSACTIONS => " + obj["data"].toString());
           int id = await transactionRepo.insert(
             TransactionModel.fromMap(Map<String, dynamic>.from(obj["data"])),
           );
@@ -70,17 +68,15 @@ class SMSFilter {
         counter.counterSink
             .add(((i / bodyLength) * 100).round());
       }
-      print("FINISHED ADDIND ALL TO DATABASE");
       return {"success": "Data successfully added to database"};
     } catch (e) {
-      print("ERROR " + e.toString());
       return {"error": "There was an error", "msg": e.toString()};
     }
   }
 
-  Future<Map<String, dynamic>> _getSMSObject(Map<dynamic, dynamic> body) async {
+  Future<Map<String, dynamic>> _getSMSObject(Map<dynamic, dynamic> map) async {
     Map<String, dynamic> smsObject = {};
-    smsFilters = CheckSMSType(body["body"], body["timestamp"].toString());
+    smsFilters = CheckSMSType(map["body"], map["timestamp"].toString());
     var coreValuesObject = await smsFilters.getCoreValues();
     if (!coreValuesObject.containsKey("error")) {
       smsObject.addAll(coreValuesObject);

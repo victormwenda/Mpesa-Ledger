@@ -19,9 +19,7 @@ class FirebaseAuthProvider {
         idToken: googleAuth.idToken,
       );
       await _firebaseAuth.signInWithCredential(credential);
-    } catch (e) {
-      print("Error here " + e.toString());
-    }
+    } catch (e) {}
   }
 
   Future<void> signOut() async {

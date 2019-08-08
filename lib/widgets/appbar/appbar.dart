@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/generate_transactions.dart';
@@ -60,7 +61,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
           color: Colors.black,
         ),
         onSelected: (PopupMenuButtonItems item) {
-          print(item);
           if (item == PopupMenuButtonItems.settings) {
             Navigator.pushNamed(context, '/settings');
           } else if (item == PopupMenuButtonItems.about) {
@@ -118,7 +118,6 @@ class DataSearch extends SearchDelegate<String> {
     closeSearch() {
       close(context, query);
     }
-
     searchBloc.searchEventSink.add(query);
     return StreamBuilder<List<Map<String, dynamic>>>(
       stream: searchBloc.searchStream,
@@ -156,7 +155,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),

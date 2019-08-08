@@ -15,12 +15,20 @@ class BottombarNavigationBloc extends BaseBloc {
   StreamSink<Widget> get screensControllerSink => _screensController.sink;
 
   // EVENTS
+
   StreamController<Screens> _changeScreenEventController =
       StreamController<Screens>();
   Stream<Screens> get changeScreenEventStream =>
       _changeScreenEventController.stream;
   StreamSink<Screens> get changeScreenEventSink =>
       _changeScreenEventController.sink;
+
+  StreamController<int> _selectIndexEventController =
+      StreamController<int>();
+  Stream<int> get selectIndexEventStream =>
+      _selectIndexEventController.stream;
+  StreamSink<int> get selectIndexEventSink =>
+      _selectIndexEventController.sink;
 
   BottombarNavigationBloc() {
     changeScreenEventStream.listen((data) {
@@ -53,5 +61,6 @@ class BottombarNavigationBloc extends BaseBloc {
   void dispose() {
     _screensController.close();
     _changeScreenEventController.close();
+    _selectIndexEventController.close();
   }
 }
