@@ -20,7 +20,7 @@ class _CategoryTransactionState extends State<CategoryTransaction> {
 
   @override
   void initState() {
-    categoriesBloc.getTransactionsSink.add(widget.categoryModel.id.toString());
+    categoriesBloc.getTransactionsEventSink.add(widget.categoryModel.id.toString());
     super.initState();
   }
 

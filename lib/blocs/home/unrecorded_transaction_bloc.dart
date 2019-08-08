@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
-import 'package:mpesa_ledger_flutter/models/unrecorded_transactions_mode.dart';
 import 'package:mpesa_ledger_flutter/repository/unrecorded_transactions_repository.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/index.dart';
 
@@ -45,7 +43,7 @@ class UnrecordedTransactionsBloc extends BaseBloc {
         await _deleteFromDB(result[i]["id"].toString());
       }
       print("DONE DELETING");
-      homeBloc.getSMSDataSink.add(null);
+      homeBloc.getSMSDataEventSink.add(null);
       triggerInsert = true;
     } else {
       print("trigger ended");

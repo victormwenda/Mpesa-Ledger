@@ -2,7 +2,6 @@ import 'dart:async';
 import "package:collection/collection.dart";
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
-import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
@@ -27,14 +26,15 @@ class HomeBloc extends BaseBloc {
   Stream<Map<String, dynamic>> get homeStream => _homeController.stream;
   StreamSink<Map<String, dynamic>> get homeSink => _homeController.sink;
 
+  // EVENTS
 
-  StreamController<void> _getSMSDataController =
+  StreamController<void> _getSMSDataEventController =
       StreamController<void>();
-  Stream<void> get getSMSDataStream => _getSMSDataController.stream;
-  StreamSink<void> get getSMSDataSink => _getSMSDataController.sink;
+  Stream<void> get getSMSDataEventStream => _getSMSDataEventController.stream;
+  StreamSink<void> get getSMSDataEventSink => _getSMSDataEventController.sink;
 
   HomeBloc() {
-    getSMSDataStream.listen((void data) {
+    getSMSDataEventStream.listen((void data) {
       _getHomeData();
     });
   }
@@ -44,8 +44,8 @@ class HomeBloc extends BaseBloc {
     var transactions = await getTransactions();
     _homeTransactionMap["headerData"] = {
       "mpesaBalance": mpesaBalance,
+      "transactions": transactions
     };
-    _homeTransactionMap["transactions"] = transactions;
     homeSink.add(_homeTransactionMap);
   }
 
@@ -66,21 +66,13 @@ class HomeBloc extends BaseBloc {
     for (var i = 0; i < result.length; i++) {
       var datetime =
           await dateFormatUtil.getDateTime(result[i].timestamp.toString());
+      var categories = await _getCategory(result[i].id.toString());
       Map<String, dynamic> transactionMap = {};
-      transactionMap["title"] = result[i].title;
-      transactionMap["amount"] = result[i].amount;
-      transactionMap["mpesaBalance"] = result[i].mpesaBalance;
-      transactionMap["isDeposit"] = result[i].isDeposit;
-      transactionMap["body"] = result[i].body;
-      transactionMap["id"] = result[i].id;
-      transactionMap["transactionId"] = result[i].transactionId;
-      transactionMap["transactionCost"] = result[i].transactionCost;
-      transactionMap["timestamp"] = result[i].timestamp;
+      transactionMap.addAll(result[i].toMap());
       transactionMap["day"] = datetime["dayInt"];
       transactionMap["dateTime"] = datetime["dateTime"];
       transactionMap["time"] = datetime["time"];
-      transactionMap["categories"] =
-          await _getCategory(result[i].id.toString());
+      transactionMap["categories"] = categories;
       transactionList.add(transactionMap);
     }
     var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);
@@ -116,6 +108,7 @@ class HomeBloc extends BaseBloc {
   @override
   void dispose() {
     _homeController.close();
+    _getSMSDataEventController.close();
   }
 }
 

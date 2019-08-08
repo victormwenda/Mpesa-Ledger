@@ -16,7 +16,7 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   @override
   void initState() {
-    categoriesBloc.getCategoriesSink.add(null);
+    categoriesBloc.getCategoriesEventSink.add(null);
     super.initState();
   }
 
@@ -30,7 +30,7 @@ class _CategoryState extends State<Category> {
             Navigator.of(context, rootNavigator: true).pop(context);
           }),
           FlatButtonWidget("DELETE", () {
-            categoriesBloc.deleteCategorySink.add(category["id"].toString());
+            categoriesBloc.deleteCategoryEventSink.add(category["id"].toString());
             Navigator.of(context, rootNavigator: true).pop(context);
             Flushbar(
               message: category["title"] + " successfully deleted",

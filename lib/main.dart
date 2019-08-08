@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
 
@@ -15,7 +18,10 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
 
   @override
-  void dispose() { 
+  void dispose() {
+    counter.dispose();
+    categoriesBloc.dispose();
+    homeBloc.dispose();
     themeBloc.dispose();
     searchBloc.dispose();
     super.dispose();

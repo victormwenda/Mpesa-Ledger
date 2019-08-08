@@ -33,36 +33,35 @@ class CategoriesBloc extends BaseBloc {
 
   // EVENTS
 
-  StreamController<void> _getCategoriesController =
+  StreamController<void> _getCategoriesEventController =
       StreamController<void>();
-  Stream<void> get getCategoriesStream =>
-      _getCategoriesController.stream;
-  StreamSink<void> get getCategoriesSink =>
-      _getCategoriesController.sink;
+  Stream<void> get getCategoriesEventStream =>
+      _getCategoriesEventController.stream;
+  StreamSink<void> get getCategoriesEventSink =>
+      _getCategoriesEventController.sink;
 
-  StreamController<String> _getTransactionsController =
+  StreamController<String> _getTransactionsEventController =
       StreamController<String>.broadcast();
-  Stream<String> get getTransactionsStream =>
-      _getTransactionsController.stream;
-  StreamSink<String> get getTransactionsSink =>
-      _getTransactionsController.sink;
+  Stream<String> get getTransactionsEventStream =>
+      _getTransactionsEventController.stream;
+  StreamSink<String> get getTransactionsEventSink =>
+      _getTransactionsEventController.sink;
 
-  StreamController<String> _deleteCategoryController =
+  StreamController<String> _deleteCategoryEventController =
       StreamController<String>.broadcast();
-  Stream<String> get deleteCategoryStream =>
-      _deleteCategoryController.stream;
-  StreamSink<String> get deleteCategorySink =>
-      _deleteCategoryController.sink;
-
+  Stream<String> get deleteCategoryEventStream =>
+      _deleteCategoryEventController.stream;
+  StreamSink<String> get deleteCategoryEventSink =>
+      _deleteCategoryEventController.sink;
 
   CategoriesBloc() {
-    getCategoriesStream.listen((void data) {
+    getCategoriesEventStream.listen((void data) {
       _getCategories();
     });
-    getTransactionsStream.listen((data) {
+    getTransactionsEventStream.listen((data) {
       _getTransactions(data);
     });
-    deleteCategoryStream.listen((data) {
+    deleteCategoryEventStream.listen((data) {
       _deleteCategory(data);
     });
   }
@@ -79,7 +78,7 @@ class CategoriesBloc extends BaseBloc {
   _deleteCategory(String id) async {
     await _categoryRepository.delete(id);
     await _transactionCategoryRepository.delete(id);
-    getCategoriesSink.add(null);
+    getCategoriesEventSink.add(null);
   }
 
   _getTransactions(String id) async {
@@ -106,12 +105,21 @@ class CategoriesBloc extends BaseBloc {
       "transactionCosts": transactionCosts
     };
     transactionsSink.add(
-      {"transactions": _listTransactionsMap.reversed.toList(), "totals": _categoryTotalsMap},
+      {
+        "transactions": _listTransactionsMap.reversed.toList(),
+        "totals": _categoryTotalsMap
+      },
     );
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _categoriesController.close();
+    _transactionsController.close();
+    _getCategoriesEventController.close();
+    _getTransactionsEventController.close();
+    _deleteCategoryEventController.close();
+  }
 }
 
 CategoriesBloc categoriesBloc = CategoriesBloc();

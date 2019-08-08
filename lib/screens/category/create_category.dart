@@ -27,7 +27,7 @@ class _CreateCategoryState extends State<CreateCategory> {
         ChipWidget(
           listString[i],
           onDelete: () {
-            widget._newCategoryBloc.deleteKeywordSink.add(i);
+            widget._newCategoryBloc.deleteKeywordEventSink.add(i);
           },
         ),
       );
@@ -36,6 +36,12 @@ class _CreateCategoryState extends State<CreateCategory> {
       ));
     }
     return chipList;
+  }
+
+  @override
+  void dispose() {
+    widget._newCategoryBloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,7 +60,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                 duration: Duration(seconds: 3),
               )..show(context);
             } else {
-              widget._newCategoryBloc.addCategorySink.add({
+              widget._newCategoryBloc.addCategoryEventSink.add({
                 "context": context,
                 "title": widget.title.text,
                 "description": widget.description.text
@@ -112,7 +118,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                                 duration: Duration(seconds: 3),
                               )..show(context);
                             } else {
-                              widget._newCategoryBloc.addKeywordSink
+                              widget._newCategoryBloc.addKeywordEventSink
                                   .add(widget.keyword.text);
                               widget.keyword.clear();
                             }

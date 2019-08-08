@@ -12,7 +12,7 @@ class AppbarWidget extends StatefulWidget {
   bool showAddNewCategory;
   VoidCallback addNewCategory;
 
-  FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
+  FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
 
   AppbarWidget(this.title,
       {this.showSearch: true,
@@ -66,7 +66,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
           } else if (item == PopupMenuButtonItems.about) {
             Navigator.pushNamed(context, '/about');
           } else if (item == PopupMenuButtonItems.signOut) {
-            widget.firebaseAuthBloc.signOutSink.add(null);
+            widget._firebaseAuthBloc.signOutEventSink.add(null);
           }
         },
         itemBuilder: (context) {
@@ -104,6 +104,12 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       ),
       centerTitle: true,
     );
+  }
+
+  @override
+  void dispose() { 
+    widget._firebaseAuthBloc.dispose();
+    super.dispose();
   }
 }
 

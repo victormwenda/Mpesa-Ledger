@@ -132,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   if (snapshot.data == null) {
                     return GoogleSignInButton(
                       onPressed: () {
-                        widget.firebaseAuthBloc.signInSink.add(null);
+                        widget.firebaseAuthBloc.signInEventSink.add(null);
                       },
                     );
                   } else {

@@ -140,5 +140,6 @@ class CalculatorBloc extends BaseBloc {
   @override
   void dispose() {
     transactionFeesController.close();
+    transactionFeesEventController.close();
   }
 }

@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    homeBloc.getSMSDataSink.add(null);
+    homeBloc.getSMSDataEventSink.add(null);
     super.initState();
   }
 

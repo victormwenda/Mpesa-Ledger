@@ -1,28 +1,24 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 
 class FirebaseAuthBloc extends BaseBloc {
-  var _firebaseAuthProvider = FirebaseAuthProvider();
+  FirebaseAuthProvider _firebaseAuthProvider = FirebaseAuthProvider();
 
-  StreamController<String> _signInController = StreamController<String>();
-  Stream<String> get signInStream => _signInController.stream;
-  StreamSink<String> get signInSink => _signInController.sink;
+  // EVENTS
 
-  StreamController<void> _signOutController = StreamController<void>();
-  Stream<void> get signOutStream => _signOutController.stream;
-  StreamSink<void> get signOutSink => _signOutController.sink;
+  StreamController<String> _signInEventController = StreamController<String>();
+  Stream<String> get signInEventStream => _signInEventController.stream;
+  StreamSink<String> get signInEventSink => _signInEventController.sink;
 
-  StreamController<FirebaseUser> _firebaseUserController =
-      StreamController<FirebaseUser>.broadcast();
-  Stream<FirebaseUser> get firebaseUserStream => _firebaseUserController.stream;
-  StreamSink<void> get firebaseUserSink => _firebaseUserController.sink;
+  StreamController<void> _signOutEventController = StreamController<void>();
+  Stream<void> get signOutEventStream => _signOutEventController.stream;
+  StreamSink<void> get signOutEventSink => _signOutEventController.sink;
 
   FirebaseAuthBloc() {
-    signOutStream.listen((void data) => _signOut());
-    signInStream.listen((void data) => _signIn());
+    signInEventStream.listen((void data) => _signIn());
+    signOutEventStream.listen((void data) => _signOut());
   }
 
   void _signIn() {
@@ -35,8 +31,7 @@ class FirebaseAuthBloc extends BaseBloc {
 
   @override
   void dispose() {
-    _signInController.close();
-    _signOutController.close();
-    _firebaseUserController.close();
+    _signInEventController.close();
+    _signOutEventController.close();
   }
 }

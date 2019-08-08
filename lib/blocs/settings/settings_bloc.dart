@@ -22,7 +22,7 @@ class SettingsBloc extends BaseBloc {
       _sharedPreferencesBloc.changeSharedPreferencesEventSink.add(SharedPreferencesModel.fromMap({
         "isDBCreated": false
       }));
-      _firebaseAuthBloc.signOutSink.add(null);
+      _firebaseAuthBloc.signOutEventSink.add(null);
       SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
     });
   }
