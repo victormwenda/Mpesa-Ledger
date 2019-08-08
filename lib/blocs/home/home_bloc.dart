@@ -28,8 +28,7 @@ class HomeBloc extends BaseBloc {
 
   // EVENTS
 
-  StreamController<void> _getSMSDataEventController =
-      StreamController<void>();
+  StreamController<void> _getSMSDataEventController = StreamController<void>();
   Stream<void> get getSMSDataEventStream => _getSMSDataEventController.stream;
   StreamSink<void> get getSMSDataEventSink => _getSMSDataEventController.sink;
 
@@ -40,12 +39,12 @@ class HomeBloc extends BaseBloc {
   }
 
   Future<void> _getHomeData() async {
-    var mpesaBalance = await _getMpesaBalance();
     var transactions = await getTransactions();
+    var mpesaBalance = await _getMpesaBalance();
     _homeTransactionMap["headerData"] = {
       "mpesaBalance": mpesaBalance,
-      "transactions": transactions
     };
+    _homeTransactionMap["transactions"] = transactions;
     homeSink.add(_homeTransactionMap);
   }
 
@@ -56,6 +55,7 @@ class HomeBloc extends BaseBloc {
 
   Future<List<Map<String, dynamic>>> getTransactions(
       {List<TransactionModel> transactions}) async {
+    List<Map<String, dynamic>> transactionByDayList = [];
     List<TransactionModel> result = [];
     if (transactions != null && transactions.isNotEmpty) {
       result = transactions;
@@ -69,6 +69,7 @@ class HomeBloc extends BaseBloc {
       var categories = await _getCategory(result[i].id.toString());
       Map<String, dynamic> transactionMap = {};
       transactionMap.addAll(result[i].toMap());
+      transactionMap["isDeposit"] = result[i].isDeposit;
       transactionMap["day"] = datetime["dayInt"];
       transactionMap["dateTime"] = datetime["dateTime"];
       transactionMap["time"] = datetime["time"];
@@ -76,7 +77,6 @@ class HomeBloc extends BaseBloc {
       transactionList.add(transactionMap);
     }
     var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);
-    List<Map<String, dynamic>> transactionByDayList = [];
     transactionByDayMap.forEach((key, value) async {
       var dateTime =
           await dateFormatUtil.getDateTime(value[0]["timestamp"].toString());
@@ -98,7 +98,8 @@ class HomeBloc extends BaseBloc {
     List<TransactionCategoryModel> transactionCategory =
         await _transactionCategoryRepository.selectTransactions(query: id);
     for (var i = 0; i < transactionCategory.length; i++) {
-      List<CategoryModel> category = await _categoryRepository.select(columns: ["title"],
+      List<CategoryModel> category = await _categoryRepository.select(
+          columns: ["title"],
           query: transactionCategory[i].categoryId.toString());
       categoryList.add(category[0].title);
     }

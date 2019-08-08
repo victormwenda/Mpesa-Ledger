@@ -15,7 +15,7 @@ class SearchBloc extends BaseBloc {
 
   // EVENT
 
-  StreamController<String> _searchEventController = StreamController<String>.broadcast();
+  StreamController<String> _searchEventController = StreamController<String>();
   Stream<String> get searchEventStream => _searchEventController.stream;
   StreamSink<String> get searchEventSink => _searchEventController.sink;
 

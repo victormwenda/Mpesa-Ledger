@@ -5,7 +5,7 @@ import 'package:mpesa_ledger_flutter/screens/summary/widgets/summary_year_monthl
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Summary extends StatefulWidget {
-  SummaryBloc summaryBloc = SummaryBloc();
+  SummaryBloc _summaryBloc = SummaryBloc();
 
   @override
   _SummaryState createState() => _SummaryState();
@@ -14,12 +14,13 @@ class Summary extends StatefulWidget {
 class _SummaryState extends State<Summary> {
   @override
   void initState() {
+    widget._summaryBloc.getSummaryDataSink.add(null);
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.summaryBloc.dispose();
+    widget._summaryBloc.dispose();
     super.dispose();
   }
 
@@ -93,7 +94,7 @@ class _SummaryState extends State<Summary> {
         AppbarWidget("Summary"),
         Expanded(
           child: StreamBuilder<Map<String, dynamic>>(
-            stream: widget.summaryBloc.transactionTotalsStream,
+            stream: widget._summaryBloc.transactionTotalsStream,
             builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
               if (snapshot.hasData) {
                 List<Map<String, dynamic>> yearMonthlyTotalsList =

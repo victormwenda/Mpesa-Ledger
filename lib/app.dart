@@ -26,8 +26,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      print("COUNTER " + timer.tick.toString());
-      widget._unrecordedTransactionsBloc.insertUnrecordedTransactionsToDBSink
+      widget._unrecordedTransactionsBloc.insertTransactionsEventSink
           .add(null);
     });
     widget._firebaseAuthProvider.onAuthStateChanged.listen((data) {
@@ -44,6 +43,7 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _timer?.cancel();
+    widget._unrecordedTransactionsBloc.dispose();
     widget._bottombarNavigationBloc.dispose();
     super.dispose();
   }

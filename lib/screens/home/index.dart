@@ -33,8 +33,9 @@ class _HomeState extends State<Home> {
             stream: homeBloc.homeStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                print(snapshot.data["transactions"].length.toString());
                 return ListView.builder(
-                  itemCount: snapshot.data["transactions"].length + 1,
+                  itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
                       return HomeHeader(snapshot.data["headerData"]);

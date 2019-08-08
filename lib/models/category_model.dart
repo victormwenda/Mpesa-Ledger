@@ -24,7 +24,7 @@ class CategoryModel {
         ? true 
         : map["canDelete"] == 1 ? true : false;
     numberOfTransactions = map["numberOfTransactions"] ?? 0;
-    createdOn = map["createdOn"] ?? DateFormatUtil().getCurrentTimestamp;
+    createdOn = map["createdOn"] ?? (DateFormatUtil().getCurrentTimestamp/1000).round();
     id = map["id"] ?? null;
   }
 

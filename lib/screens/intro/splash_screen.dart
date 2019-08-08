@@ -13,10 +13,10 @@ import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  final FirebaseAuthBloc firebaseAuthBloc = FirebaseAuthBloc();
-  final FirebaseAuthProvider onAuthStateChanged = FirebaseAuthProvider();
-  final SharedPreferencesBloc sharedPrefBloc = SharedPreferencesBloc();
-  RuntimePermissionsBloc runtimePermissionBloc = RuntimePermissionsBloc();
+  final FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
+  final FirebaseAuthProvider _onAuthStateChanged = FirebaseAuthProvider();
+  final SharedPreferencesBloc _sharedPrefBloc = SharedPreferencesBloc();
+  RuntimePermissionsBloc _runtimePermissionBloc = RuntimePermissionsBloc();
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -30,13 +30,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    widget.firebaseAuthBloc.dispose();
+    widget._runtimePermissionBloc.dispose();
+    widget._sharedPrefBloc.dispose();
+    widget._firebaseAuthBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.runtimePermissionBloc.permissionDenialStream.listen((data) {
+    widget._runtimePermissionBloc.permissionDenialStream.listen((data) {
       if (data) {
         return AlertDialogWidget(
           context,
@@ -53,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
             FlatButtonWidget(
               "ALLOW PERMISSIONS",
               () {
-                widget.runtimePermissionBloc.checkAndRequestPermissionEventSink
+                widget._runtimePermissionBloc.checkAndRequestPermissionEventSink
                     .add(null);
                 Navigator.pop(context);
               },
@@ -63,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widget.runtimePermissionBloc.openAppSettingsStream.listen((data) {
+    widget._runtimePermissionBloc.openAppSettingsStream.listen((data) {
       if (data) {
         return AlertDialogWidget(
           context,
@@ -91,11 +93,11 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    widget.runtimePermissionBloc.continueToAppStream.listen((void v) {
-      widget.sharedPrefBloc.getSharedPreferencesEventSink.add(null);
+    widget._runtimePermissionBloc.continueToAppStream.listen((void v) {
+      widget._sharedPrefBloc.getSharedPreferencesEventSink.add(null);
     });
 
-    widget.sharedPrefBloc.sharedPreferencesStream.listen((data) {
+    widget._sharedPrefBloc.sharedPreferencesStream.listen((data) {
       if (data.isDBCreated) {
         Navigator.pushReplacement(
           context,
@@ -126,17 +128,17 @@ class _SplashScreenState extends State<SplashScreen> {
             flex: 1,
             child: Align(
               child: StreamBuilder(
-                stream: widget.onAuthStateChanged.onAuthStateChanged,
+                stream: widget._onAuthStateChanged.onAuthStateChanged,
                 builder: (BuildContext context,
                     AsyncSnapshot<FirebaseUser> snapshot) {
                   if (snapshot.data == null) {
                     return GoogleSignInButton(
                       onPressed: () {
-                        widget.firebaseAuthBloc.signInEventSink.add(null);
+                        widget._firebaseAuthBloc.signInEventSink.add(null);
                       },
                     );
                   } else {
-                    widget.runtimePermissionBloc
+                    widget._runtimePermissionBloc
                         .checkAndRequestPermissionEventSink
                         .add(null);
                     return CircularProgressIndicator(

@@ -12,7 +12,6 @@ import 'package:mpesa_ledger_flutter/screens/transaction/index.dart';
 
 class RouteGeneratorHome {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {
@@ -25,8 +24,7 @@ class RouteGeneratorHome {
       case '/about':
         return MaterialPageRoute(builder: (_) => About());
       default:
-        print("error here " + settings.toString());
-        return _errorRoute(settings.name);
+        return MaterialPageRoute(builder: (_) => Home());
     }
   }
 }
@@ -45,8 +43,7 @@ class RouteGeneratorCalculator {
       case '/about':
         return MaterialPageRoute(builder: (_) => About());
       default:
-        print("error here " + settings.toString());
-        return _errorRoute(settings.name);
+        return MaterialPageRoute(builder: (_) => Calculator());
     }
   }
 }
@@ -65,8 +62,7 @@ class RouteGeneratorSummary {
       case '/about':
         return MaterialPageRoute(builder: (_) => About());
       default:
-        print("error here " + settings.toString());
-        return _errorRoute(settings.name);
+        return MaterialPageRoute(builder: (_) => Summary());
     }
   }
 }
@@ -89,21 +85,7 @@ class RouteGeneratorCategory {
       case '/about':
         return MaterialPageRoute(builder: (_) => About());
       default:
-        print("error here " + settings.toString());
-        return _errorRoute(settings.name);
+        return MaterialPageRoute(builder: (_) => Category());
     }
   }
-}
-
-Route<dynamic> _errorRoute(String name) {
-  return MaterialPageRoute(builder: (_) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Error'),
-      ),
-      body: Center(
-        child: Text('ERROR UNKWOWN ROUTE ' + name),
-      ),
-    );
-  });
 }

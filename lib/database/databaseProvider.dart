@@ -26,7 +26,6 @@ class DatabaseProvider {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        // When creating the db, create the table
         for (var i = 0; i < schema.length; i++) {
           await db.execute(schema[i]);
         }
@@ -35,29 +34,10 @@ class DatabaseProvider {
     return database;
   }
 
-  void closeDatabase() async {
-    if (_database != null) {
-      _database.close();
-    }
-    _database = null;
-  }
-
   void deleteDB() async {
     String path = await databasePath();
     deleteDatabase(path);
     _database = null;
-  }
-
-  void select() async {
-    var db = await database;
-    var r = await db.query("transactions");
-    print("called");
-    if (r.isEmpty) {
-      print("no data in table");
-    }
-    for (var i = 0; i < r.length; i++) {
-      print(r[i]);
-    }
   }
 }
 

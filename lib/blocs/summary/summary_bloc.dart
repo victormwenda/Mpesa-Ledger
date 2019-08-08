@@ -14,8 +14,20 @@ class SummaryBloc extends BaseBloc {
   StreamSink<Map<String, dynamic>> get transactionTotalsSink =>
       _transactionTotalsController.sink;
 
+  // EVENTS
+
+  StreamController<void> _getSummaryDataController =
+      StreamController<void>();
+  Stream<void> get getSummaryDataStream =>
+      _getSummaryDataController.stream;
+  StreamSink<void> get getSummaryDataSink =>
+      _getSummaryDataController.sink;
+
+
   SummaryBloc() {
-    _getSummaryData();
+    getSummaryDataStream.listen((void data) {
+      _getSummaryData();
+    });
   }
 
   Future<void> _getSummaryData() async {
@@ -53,11 +65,7 @@ class SummaryBloc extends BaseBloc {
         for (var i = 0; i < list.length; i++) {
           Map<String, dynamic> monthlyTotalsMap = {};
           if (year == list[i].toMap()["year"]) {
-            monthlyTotalsMap["deposits"] = list[i].toMap()["deposits"];
-            monthlyTotalsMap["withdrawals"] = list[i].toMap()["withdrawals"];
-            monthlyTotalsMap["transactionCost"] =
-                list[i].toMap()["transactionCost"];
-            monthlyTotalsMap["month"] = list[i].toMap()["month"];
+            monthlyTotalsMap.addAll(list[i].toMap());
           }
           if (monthlyTotalsMap.isNotEmpty) {
             monthlyTotalsList.add(monthlyTotalsMap);
@@ -81,5 +89,6 @@ class SummaryBloc extends BaseBloc {
   @override
   void dispose() {
     _transactionTotalsController.close();
+    _getSummaryDataController.close();
   }
 }

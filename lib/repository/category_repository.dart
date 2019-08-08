@@ -1,14 +1,14 @@
 import 'package:mpesa_ledger_flutter/database/databaseProvider.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
+import 'package:mpesa_ledger_flutter/repository/base_repository.dart';
 import 'package:mpesa_ledger_flutter/utils/constants/database_constants.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CategoryRepository {
+class CategoryRepository extends BaseRepository {
   String tableName = categoriesTable;
 
-  Future<Database> get database async {
-    return await databaseProvider.database;
-  }
+  @override
+  Future<Database> get database async => await databaseProvider.database;
 
   Future<int> insert(CategoryModel category) async {
     var db = await database;

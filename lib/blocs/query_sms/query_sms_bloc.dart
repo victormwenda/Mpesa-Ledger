@@ -16,16 +16,11 @@ class QuerySMSBloc extends BaseBloc {
   StreamSink<void> get retrieveSMSSink => _retrieveSMSController.sink;
 
   StreamController<bool> _retrieveSMSCompleteController =
-      StreamController<bool>.broadcast();
+      StreamController<bool>();
   Stream<bool> get retrieveSMSCompleteStream =>
       _retrieveSMSCompleteController.stream;
   StreamSink<bool> get retrieveSMSCompleteSink =>
       _retrieveSMSCompleteController.sink;
-
-  Future<List<dynamic>> _retrieveSMSMessages() async {
-    var result = await methodChannel.invokeMethod("retrieveSMSMessages");
-    return result;
-  }
 
   QuerySMSBloc() {
     retrieveSMSStream.listen((void data) async {
@@ -40,6 +35,10 @@ class QuerySMSBloc extends BaseBloc {
         retrieveSMSCompleteSink.add(false);
       }
     });
+  }
+
+  Future<List<dynamic>> _retrieveSMSMessages() async {
+    return await methodChannel.invokeMethod("retrieveSMSMessages");
   }
 
   @override
