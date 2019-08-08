@@ -40,11 +40,9 @@ class TransactionRepository extends BaseRepository {
   Future<List<TransactionModel>> selectByKeyword(String schema) async {
     var db = await database;
     List<Map<String, dynamic>> result;
-    result = await db.query(
-      tableName,
-      where: "?",
-      whereArgs: [schema],
-    );
+    result = await db.rawQuery('''
+      SELECT * FROM $tableName WHERE $schema
+    ''');
     List<TransactionModel> transactions = result.isNotEmpty
         ? result.map((data) => TransactionModel.fromMap(data)).toList()
         : [];

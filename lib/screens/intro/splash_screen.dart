@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
@@ -23,10 +24,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -71,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           title: "SMS Permission",
           content: Text(
-              "To use MPESA LEDGER, allow SMS permissions are needed, please go to settings > Permissions and turn or SMS"),
+              "To use MPESA LEDGER, SMS permissions are needed, please go to settings > Permissions and turn on SMS"),
           actions: <Widget>[
             FlatButtonWidget(
               "CANCEL",

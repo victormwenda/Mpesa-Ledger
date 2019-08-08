@@ -1,6 +1,5 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/screens/category/widgets/category_chart.dart';
@@ -23,14 +22,16 @@ class _CategoryState extends State<Category> {
   _deleteCategory(Map<String, dynamic> category) {
     AlertDialogWidget(context,
         title: "Delete Category",
-        content: prefix0.Text(
-            "Are you sure you want to delete " + category["title"]),
+        content: Text(
+          "Are you sure you want to delete " + category["title"],
+        ),
         actions: [
           FlatButtonWidget("CANCEL", () {
             Navigator.of(context, rootNavigator: true).pop(context);
           }),
           FlatButtonWidget("DELETE", () {
-            categoriesBloc.deleteCategoryEventSink.add(category["id"].toString());
+            categoriesBloc.deleteCategoryEventSink
+                .add(category["id"].toString());
             Navigator.of(context, rootNavigator: true).pop(context);
             Flushbar(
               message: category["title"] + " successfully deleted",
@@ -64,7 +65,6 @@ class _CategoryState extends State<Category> {
                         child: CategoryChart(snapshot.data),
                       );
                     }
-
                     return InkWell(
                       onLongPress: () {
                         if (snapshot.data[index - 1]["canDelete"] == 1) {

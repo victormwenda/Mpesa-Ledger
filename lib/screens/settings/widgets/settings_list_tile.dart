@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SettingsItems extends StatelessWidget {
+class SettingsListTile extends StatelessWidget {
   String title;
   VoidCallback onTap;
 
-  SettingsItems(this.title, this.onTap);
+  SettingsListTile(this.title, this.onTap);
 
   @override
   Widget build(BuildContext context) {

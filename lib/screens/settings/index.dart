@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
+
 import 'package:mpesa_ledger_flutter/blocs/settings/settings_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
-import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_header.dart';
-import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_items.dart';
+import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_list_tile.dart';
+import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_profile_info.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
@@ -17,7 +17,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   _openChooseTheme(context) {
-    prefix0.Navigator.push(context,
+    Navigator.push(context,
         MaterialPageRoute(builder: (route) => ChooseThemeWidget(false)));
   }
 
@@ -25,8 +25,8 @@ class _SettingsState extends State<Settings> {
     AlertDialogWidget(
       context,
       title: "Delete All Data?",
-      content: prefix0.Text(
-          "Are you sure you would like to delete all data ?, doing so will delete all data and close the app"),
+      content: Text(
+          "Are you sure you would like to delete all data?, doing so will delete all data and close the app"),
       actions: [
         FlatButtonWidget(
           "CANCEL",
@@ -45,6 +45,12 @@ class _SettingsState extends State<Settings> {
   }
 
   @override
+  void dispose() { 
+    widget._settingsBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -54,21 +60,21 @@ class _SettingsState extends State<Settings> {
           showPopupMenuButton: false,
         ),
         Expanded(
-          child: prefix0.ListView(
+          child: ListView(
             children: <Widget>[
-              SettingsHeader(),
-              prefix0.SizedBox(
+              SettingsProfileInfo(),
+              SizedBox(
                 height: 10,
               ),
-              prefix0.Divider(
-                color: prefix0.Colors.black45,
+              Divider(
+                color: Colors.black45,
                 indent: 20,
                 endIndent: 20,
               ),
-              SettingsItems("Change Theme", () {
+              SettingsListTile("Change Theme", () {
                 _openChooseTheme(context);
               }),
-              SettingsItems("Delete All Data", () {
+              SettingsListTile("Delete All Data", () {
                 _deleteAllData(context);
               })
             ],

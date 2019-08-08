@@ -1,6 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
+
 import 'package:mpesa_ledger_flutter/blocs/categories/new_category_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
@@ -31,7 +31,7 @@ class _CreateCategoryState extends State<CreateCategory> {
           },
         ),
       );
-      chipList.add(prefix0.SizedBox(
+      chipList.add(SizedBox(
         width: 10,
       ));
     }
@@ -74,7 +74,7 @@ class _CreateCategoryState extends State<CreateCategory> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
-                  crossAxisAlignment: prefix0.CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TextFieldWidget("Title", widget.title),
                     TextFieldWidget(
@@ -83,12 +83,12 @@ class _CreateCategoryState extends State<CreateCategory> {
                       keyboardType: TextInputType.multiline,
                       maxlines: 3,
                     ),
-                    prefix0.SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     Text(
                       "Keywords",
-                      style: prefix0.Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.caption,
                     ),
                     StreamBuilder<List<String>>(
                         stream: widget._newCategoryBloc.keyWordChipStream,
@@ -99,14 +99,14 @@ class _CreateCategoryState extends State<CreateCategory> {
                             children: _generateChips(snapshot.data),
                           );
                         }),
-                    prefix0.SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: <Widget>[
-                        prefix0.Expanded(
+                        Expanded(
                             child: TextFieldWidget("Keyword", widget.keyword)),
-                        prefix0.SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
                         RaisedButtonWidget(
@@ -126,32 +126,34 @@ class _CreateCategoryState extends State<CreateCategory> {
                         )
                       ],
                     ),
-                    prefix0.SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
-                    prefix0.Center(
-                      child: prefix0.Column(
+                    Center(
+                      child: Column(
                         children: <Widget>[
                           StreamBuilder(
                             stream: counter.counterStream,
                             initialData: 0,
                             builder: (context, snapshot) {
-                              return prefix0.Text(
+                              return Text(
                                 snapshot.data.toString(),
-                                style: prefix0.Theme.of(context)
+                                style: Theme.of(context)
                                     .textTheme
                                     .display3
-                                    .merge(prefix0.TextStyle(
-                                        color: prefix0.Theme.of(context)
-                                            .primaryColor)),
+                                    .merge(
+                                      TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
                               );
-                            }
+                            },
                           ),
-                          prefix0.Text("messages found")
+                          Text("messages found")
                         ],
                       ),
                     ),
-                    prefix0.SizedBox(
+                    SizedBox(
                       height: 30,
                     )
                   ],

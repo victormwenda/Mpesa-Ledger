@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
@@ -39,7 +40,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
           message:
               "An error occured while fetching SMS messages, app will be closed in 5 seconds, please reopen again",
         )..show(context);
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(Duration(seconds: 7));
         SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
       }
     });

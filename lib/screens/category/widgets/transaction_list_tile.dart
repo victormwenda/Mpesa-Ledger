@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
-class TransactionListItem extends StatefulWidget {
+class TransactionListTile extends StatefulWidget {
   Map<String, dynamic> transaction;
 
-  TransactionListItem(this.transaction);
+  TransactionListTile(this.transaction);
 
   @override
-  _TransactionListItemState createState() => _TransactionListItemState();
+  _TransactionListTileState createState() => _TransactionListTileState();
 }
 
-class _TransactionListItemState extends State<TransactionListItem> {
-  DateFormatUtil _dateFormatUtil = DateFormatUtil();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _TransactionListTileState extends State<TransactionListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(

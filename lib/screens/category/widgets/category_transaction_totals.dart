@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 
-class CategoryTransactionHeader extends StatelessWidget {
+class CategoryTransactionTotals extends StatelessWidget {
   Map<String, dynamic> totals;
   CategoryModel categoryModel;
 
-  CategoryTransactionHeader(this.totals, this.categoryModel);
+  CategoryTransactionTotals(this.totals, this.categoryModel);
 
   List<Widget> _generateChips(List<String> listString) {
     List<Widget> chipList = [];

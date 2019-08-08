@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
-import 'package:mpesa_ledger_flutter/screens/home/widgets/daily_transactions.dart';
-import 'package:mpesa_ledger_flutter/screens/home/widgets/home_header.dart';
+import 'package:mpesa_ledger_flutter/screens/home/widgets/daily_transactions_cards.dart';
+import 'package:mpesa_ledger_flutter/screens/home/widgets/mpesa_bal.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  @override
-  void dispose() {
-    // widget._homeBloc.dispose();
-    super.dispose();
-  }
-
   @override
   void initState() {
     homeBloc.getSMSDataEventSink.add(null);
@@ -33,15 +27,15 @@ class _HomeState extends State<Home> {
             stream: homeBloc.homeStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                print(snapshot.data["transactions"].length.toString());
                 return ListView.builder(
-                  itemCount: 10,
+                  itemCount: snapshot.data["transactions"].length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
-                      return HomeHeader(snapshot.data["headerData"]);
+                      return MpesaBalanceWidget(snapshot.data["headerData"]["mpesaBalance"]);
                     }
                     return DailyTransactions(
-                        snapshot.data["transactions"][index - 1]);
+                      snapshot.data["transactions"][index - 1],
+                    );
                   },
                 );
               } else {

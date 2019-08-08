@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 
-class SettingsHeader extends StatelessWidget {
+class SettingsProfileInfo extends StatelessWidget {
   FirebaseAuthProvider _firebaseAuth = FirebaseAuthProvider();
 
   @override

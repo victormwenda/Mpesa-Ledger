@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 
 import 'package:mpesa_ledger_flutter/blocs/calculator/calculator_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/widgets/calculator_textfield.dart';
-import 'package:mpesa_ledger_flutter/screens/calculator/widgets/transaction_charges_list.dart';
+import 'package:mpesa_ledger_flutter/screens/calculator/widgets/transaction_charges_listview.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Calculator extends StatefulWidget {
-  CalculatorBloc calculatorBloc = CalculatorBloc();
+  CalculatorBloc _calculatorBloc = CalculatorBloc();
 
   @override
   _CalculatorState createState() => _CalculatorState();
 }
 
 class _CalculatorState extends State<Calculator> {
-  TextEditingController amount = TextEditingController();
+  TextEditingController _amount = TextEditingController();
 
   @override
   void dispose() {
-    amount.dispose();
-    widget.calculatorBloc.dispose();
+    _amount.dispose();
+    widget._calculatorBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    amount.addListener(() {
-      widget.calculatorBloc.transactionFeesEventSink.add(amount.text);
+    _amount.addListener(() {
+      widget._calculatorBloc.transactionFeesEventSink.add(_amount.text);
     });
 
     return Column(
@@ -37,12 +37,12 @@ class _CalculatorState extends State<Calculator> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: CalculatorTextFieldWidget(
-                  amount,
+                  _amount,
                 ),
               ),
               Expanded(
                 child: StreamBuilder<Map<String, String>>(
-                  stream: widget.calculatorBloc.transactionFeesStream,
+                  stream: widget._calculatorBloc.transactionFeesStream,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return TransactionChargesList(snapshot.data);
