@@ -23,12 +23,9 @@ class BottombarNavigationBloc extends BaseBloc {
   StreamSink<Screens> get changeScreenEventSink =>
       _changeScreenEventController.sink;
 
-  StreamController<int> _selectIndexEventController =
-      StreamController<int>();
-  Stream<int> get selectIndexEventStream =>
-      _selectIndexEventController.stream;
-  StreamSink<int> get selectIndexEventSink =>
-      _selectIndexEventController.sink;
+  StreamController<int> _selectIndexEventController = StreamController<int>();
+  Stream<int> get selectIndexEventStream => _selectIndexEventController.stream;
+  StreamSink<int> get selectIndexEventSink => _selectIndexEventController.sink;
 
   BottombarNavigationBloc() {
     changeScreenEventStream.listen((data) {
