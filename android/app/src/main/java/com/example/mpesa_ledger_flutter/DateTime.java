@@ -1,5 +1,6 @@
 package com.example.mpesa_ledger_flutter;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,11 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import io.flutter.Log;
 import io.flutter.plugin.common.MethodCall;
 
 public class DateTime {
-  MethodCall methodCall;
+  private MethodCall methodCall;
 
   public DateTime(MethodCall methodCall) {
     this.methodCall = methodCall;
@@ -27,26 +27,28 @@ public class DateTime {
       return timestamp + "";
     } catch (ParseException e) {
       e.printStackTrace();
-      Log.e("TIMESTAMP", e.getMessage());
       return "0";
     }
   }
 
-  Map<String, Object> getDateTime() {
+  private Object getDateFormat(String s) {
     Calendar c = Calendar.getInstance();
     c.setTimeInMillis(Long.parseLong(methodCall.argument("timestamp")));
-
     Date date = c.getTime();
+    DateFormat dateFormat = new SimpleDateFormat(s);
+    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+    return dateFormat.format(date);
+  }
 
+  Map<String, Object> getDateTime() {
     Map<String, Object> map = new HashMap<>();
-    map.put("time", new SimpleDateFormat("h:mm a").format(date));
-    map.put("dayString", new SimpleDateFormat("EEEE").format(date));
-    map.put("dayInt", new SimpleDateFormat("d").format(date));
-    map.put("month", new SimpleDateFormat("MMM").format(date));
-    map.put("monthInt", new SimpleDateFormat("MM").format(date));
-    map.put("year", new SimpleDateFormat("yyyy").format(date));
-    map.put("dateTime", new SimpleDateFormat("d MMM yyyy, h:mm a").format(date));
-
+    map.put("time", getDateFormat("h:mm a"));
+    map.put("dayString", getDateFormat("EEEE"));
+    map.put("dayInt", getDateFormat("d"));
+    map.put("month", getDateFormat("MMM"));
+    map.put("monthInt", getDateFormat("MM"));
+    map.put("year", getDateFormat("yyyy"));
+    map.put("dateTime", getDateFormat("d MMM yyyy, h:mm a"));
     return  map;
   }
 }

@@ -17,13 +17,13 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     widget._scrollController.addListener(_scrollController);
-    homeBloc.getSMSDataEventSink.add(5);
+    homeBloc.getSMSDataEventSink.add(10);
     super.initState();
   }
 
   void _scrollController() {
     if (widget._scrollController.position.extentAfter == 0.0) {
-      widget.limit += 5;
+      widget.limit += 10;
       homeBloc.getSMSDataEventSink.add(widget.limit);
     }
   }
@@ -38,7 +38,6 @@ class _HomeState extends State<Home> {
             stream: homeBloc.homeStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                print(snapshot.data["transactions"].length.toString());
                 return ListView.builder(
                   controller: widget._scrollController,
                   itemCount: snapshot.data["transactions"].length + 2,

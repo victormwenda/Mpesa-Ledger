@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -123,7 +122,6 @@ public class MainActivity extends FlutterActivity {
             result =- 1;
           }
         }
-
         if (result == 0) {
           showDialogForDenial();
         }else {

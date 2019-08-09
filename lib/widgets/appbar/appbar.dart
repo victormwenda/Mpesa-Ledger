@@ -63,8 +63,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         onSelected: (PopupMenuButtonItems item) {
           if (item == PopupMenuButtonItems.settings) {
             Navigator.pushNamed(context, '/settings');
-          } else if (item == PopupMenuButtonItems.about) {
-            Navigator.pushNamed(context, '/about');
           } else if (item == PopupMenuButtonItems.signOut) {
             widget._firebaseAuthBloc.signOutEventSink.add(null);
           }
@@ -74,10 +72,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
             PopupMenuItem(
               value: PopupMenuButtonItems.settings,
               child: Text("Settings"),
-            ),
-            PopupMenuItem(
-              value: PopupMenuButtonItems.about,
-              child: Text("About"),
             ),
             PopupMenuItem(
               value: PopupMenuButtonItems.signOut,

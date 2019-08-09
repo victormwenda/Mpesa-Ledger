@@ -1,7 +1,6 @@
 package com.example.mpesa_ledger_flutter;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ public class SMSRetriever {
 
   List<Map<String, Object>> getAllSMSMessages() {
     List<Map<String, Object>> mapList = new ArrayList<>();
-
     while (cursor.moveToNext()) {
       if (cursor.getString(cursor.getColumnIndexOrThrow("address")).equals("MPESA")){
         Map<String, Object> map = new HashMap<>();
@@ -26,7 +24,6 @@ public class SMSRetriever {
         mapList.add(map);
       }
     }
-
     return mapList;
   }
 }

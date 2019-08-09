@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:mpesa_ledger_flutter/screens/about/about.dart';
 import 'package:mpesa_ledger_flutter/screens/calculator/index.dart';
 import 'package:mpesa_ledger_flutter/screens/category/category_transaction.dart';
 import 'package:mpesa_ledger_flutter/screens/category/create_category.dart';
@@ -21,8 +20,6 @@ class RouteGeneratorHome {
         return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
-      case '/about':
-        return MaterialPageRoute(builder: (_) => About());
       default:
         return MaterialPageRoute(builder: (_) => Home());
     }
@@ -40,8 +37,6 @@ class RouteGeneratorCalculator {
         return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
-      case '/about':
-        return MaterialPageRoute(builder: (_) => About());
       default:
         return MaterialPageRoute(builder: (_) => Calculator());
     }
@@ -59,8 +54,6 @@ class RouteGeneratorSummary {
         return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
-      case '/about':
-        return MaterialPageRoute(builder: (_) => About());
       default:
         return MaterialPageRoute(builder: (_) => Summary());
     }
@@ -82,8 +75,6 @@ class RouteGeneratorCategory {
         return MaterialPageRoute(builder: (_) => Transaction(args));
       case '/settings':
         return MaterialPageRoute(builder: (_) => Settings());
-      case '/about':
-        return MaterialPageRoute(builder: (_) => About());
       default:
         return MaterialPageRoute(builder: (_) => Category());
     }

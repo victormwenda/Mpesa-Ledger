@@ -2,10 +2,8 @@ package com.example.mpesa_ledger_flutter;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +14,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   public DatabaseHelper(Context context) {
     super(context, "MpesaLedger.db", null, 1);
-//    this.context = context;
   }
 
   DatabaseHelper insertUnrecordedTransactions(List<Map<String, String>> mapList) {
@@ -28,7 +25,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       contentValues.put("body", map.get("body"));
       sqLiteDatabase.insert(tableName, null, contentValues);
     }
-    Log.d("MPESA db", "ADDED TO DB");
     sqLiteDatabase.setTransactionSuccessful();
     sqLiteDatabase.endTransaction();
     sqLiteDatabase.close();
@@ -38,16 +34,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   @Override
   public void onOpen(SQLiteDatabase db) {
     super.onOpen(db);
-    Log.d("MPESA db", "ON OPEN");
   }
 
   @Override
-  public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    Log.d("MPESA db", "ON CREATE");
-  }
+  public void onCreate(SQLiteDatabase sqLiteDatabase) {}
 
   @Override
-  public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-    Log.d("MPESA db", "ON UPGRADE");
-  }
+  public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 }
