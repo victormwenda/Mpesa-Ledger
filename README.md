@@ -1,5 +1,7 @@
 # MPESA LEDGER FLUTTER PROJECT
 
+<a href="https://www.buymeacoffee.com/gdoAh2TCr" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 This is an MPESA ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrwals. Other feature include categorizing your transaction, calculating mpesa transactions fees and a year monthy summary
 
 ## The app uses the BLOC Pattern
