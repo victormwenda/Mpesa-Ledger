@@ -37,6 +37,21 @@ class TransactionRepository extends BaseRepository {
     return transactions;
   }
 
+  Future<List<TransactionModel>> selectPagination(int limit) async {
+    var db = await database;
+    List<Map<String, dynamic>> result;
+    result = await db.rawQuery('''
+        SELECT * FROM $tableName
+        ORDER BY
+        timestamp DESC
+        LIMIT $limit;
+      ''');
+    List<TransactionModel> transactions = result.isNotEmpty
+        ? result.map((data) => TransactionModel.fromMap(data)).toList()
+        : [];
+    return transactions;
+  }
+
   Future<List<TransactionModel>> selectByKeyword(String schema) async {
     var db = await database;
     List<Map<String, dynamic>> result;

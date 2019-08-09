@@ -20,6 +20,7 @@ class HomeBloc extends BaseBloc {
 
   DateFormatUtil dateFormatUtil = DateFormatUtil();
   Map<String, dynamic> _homeTransactionMap = {};
+  int limit = 10;
 
   StreamController<Map<String, dynamic>> _homeController =
       StreamController<Map<String, dynamic>>.broadcast();
@@ -28,12 +29,13 @@ class HomeBloc extends BaseBloc {
 
   // EVENTS
 
-  StreamController<void> _getSMSDataEventController = StreamController<void>();
-  Stream<void> get getSMSDataEventStream => _getSMSDataEventController.stream;
-  StreamSink<void> get getSMSDataEventSink => _getSMSDataEventController.sink;
+  StreamController<int> _getSMSDataEventController = StreamController<int>();
+  Stream<int> get getSMSDataEventStream => _getSMSDataEventController.stream;
+  StreamSink<int> get getSMSDataEventSink => _getSMSDataEventController.sink;
 
   HomeBloc() {
-    getSMSDataEventStream.listen((void data) {
+    getSMSDataEventStream.listen((data) {
+      limit = data;
       _getHomeData();
     });
   }
@@ -60,7 +62,8 @@ class HomeBloc extends BaseBloc {
     if (transactions != null && transactions.isNotEmpty) {
       result = transactions;
     } else {
-      result = await _transactionRepository.select();
+      // result = await _transactionRepository.select();
+      result = await _transactionRepository.selectPagination(limit);
     }
     List<Map<String, dynamic>> transactionList = [];
     for (var i = 0; i < result.length; i++) {

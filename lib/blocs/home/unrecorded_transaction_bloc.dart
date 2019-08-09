@@ -34,7 +34,7 @@ class UnrecordedTransactionsBloc extends BaseBloc {
         for (var i = 0; i < result.length; i++) {
           await _deleteTransaction(result[i]["id"].toString());
         }
-        homeBloc.getSMSDataEventSink.add(null);
+        homeBloc.getSMSDataEventSink.add(0);
       }
       insertTransactions = true;
     }

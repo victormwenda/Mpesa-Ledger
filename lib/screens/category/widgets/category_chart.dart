@@ -9,7 +9,7 @@ class CategoryChart extends StatelessWidget {
 
   charts.Color _getChartColor(int colorValue) {
     if (colorValue == 0XFF000000) {
-      return charts.Color.fromHex(code: "#BDBDBD");
+      return charts.Color.fromHex(code: "#9E9E9E");
     } else if (colorValue == 0XFFE91E63) {
       return charts.Color.fromHex(code: "#F06292");
     } else if (colorValue == 0XFF9C27B0) {
@@ -17,7 +17,7 @@ class CategoryChart extends StatelessWidget {
     } else if (colorValue == 0XFF2196F3) {
       return charts.Color.fromHex(code: "#64B5F6");
     } else {
-      return charts.Color.fromHex(code: "#BDBDBD");
+      return charts.Color.fromHex(code: "#9E9E9E");
     }
   }
 
