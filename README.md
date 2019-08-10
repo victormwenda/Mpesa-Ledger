@@ -6,7 +6,7 @@ This is an MPESA ledger project that receives and listens to SMS from MPESA to c
 As of now the Project only supports Android phones and can not be used with two SIM cards
 
 ## The app uses the BLOC Pattern
-> The latest apk can be downloaded here: put link here => [APK](https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/apk/app-release.apk)
+> The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/apk/app-release.apk)
 
 ## Sign In and Set Up
 
