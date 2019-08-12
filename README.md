@@ -1,6 +1,6 @@
 # MPESA LEDGER FLUTTER PROJECT
 
-This is an MPESA ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrwals. Other feature include categorizing your transaction, calculating mpesa transactions fees and a year monthy summary
+This is an MPESA ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals. Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
 
 # Limitations
 As of now the Project only supports Android phones
