@@ -3,10 +3,14 @@
 This is an MPESA ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals. Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
 
 # Limitations
-As of now the Project only supports Android phones
+As of now the project only supports Android phones
 
 ## The app uses the BLOC Pattern
 > The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-ledger-flutter-project/tree/develop/apk)
+
+## Original designs can be found here
+
+[Original Figma Design](https://www.figma.com/file/gL3hOFNn78HGRHiGFFvoc88P/MPESA-Ledger-Flutter-Project?node-id=0%3A1)
 
 ## Sign In and Set Up
 
