@@ -16,7 +16,7 @@ As of now the project only supports Android phones
 
 ## Built-With
 
-- [BLOc Pattern]
+- BLOc Pattern
 - [SQFlite](https://github.com/tekartik/sqflite)
 - [Firebase Auth](https://pub.dev/packages/firebase_auth)
 - [Charts Flutter](https://google.github.io/charts/flutter/gallery)
