@@ -11,6 +11,7 @@ As of now the project only supports Android phones
 - [Built With](#built-with)
 - [Designs](#designs)
 - [Demos](#demos)
+- [Contributing](#contributing)
 - [Support](#support)
 - [License](#license)
 
@@ -72,6 +73,26 @@ The setting page allows you to change your theme and also delete all of your Mpe
 Change Theme | Delete All Data
 ------------ | -------------
 <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/change-theme.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/delete-data.gif" alt="alt text" height="500px">
+
+## Contributing
+
+To contribute, follow the following easy steps
+
+### Step 1
+
+- **Option 1**
+    - Fork this repo!
+
+- **Option 2**
+    - 👯 Clone this repo to your local machine using `https://github.com/jama5262/Mpesa-ledger-flutter-project.git`
+
+### Step 2
+
+- **HACK AWAY!** 🔨🔨🔨
+
+### Step 3
+
+- 🔃 Create a new pull request
 
 ### Support
 
