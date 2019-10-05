@@ -60,7 +60,7 @@ Summary Page|
 <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/summary.gif" alt="alt text" height="500px"> | 
 ### Calculator
 
-Use can use the calculator page to calculate the transaction charges
+You can use the calculator page to calculate the transaction charges
 
 Calculator Page|
 ------------ |
