@@ -4,6 +4,10 @@ This is an MPESA ledger project that receives and listens to SMS from MPESA to c
 
 > The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-ledger-flutter-project/tree/develop/apk)
 
+Set Up|
+------------ |
+<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/set-up.gif" alt="alt text" height="500px"> | 
+
 ## Limitations
 As of now the project only supports Android phones
 
@@ -27,13 +31,6 @@ As of now the project only supports Android phones
 [Original Figma designs can be found here](https://www.figma.com/file/gL3hOFNn78HGRHiGFFvoc88P/MPESA-Ledger-Flutter-Project?node-id=0%3A1) 🎨
 
 ## Demos
-### Sign In and Set Up
-
-This is the initial set up of the Mpesa Ledger Mobile App
-
-Set Up|
------------- |
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/set-up.gif" alt="alt text" height="500px"> | 
 
 ### Home Page
 
