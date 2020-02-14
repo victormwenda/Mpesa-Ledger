@@ -76,20 +76,15 @@ Change Theme | Delete All Data
 To contribute, follow the following easy steps
 
 ### Step 1
-
-- **Option 1**
-    - Fork this repo!
-
-- **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/jama5262/Mpesa-ledger-flutter-project.git`
+ - Fork this repo!
 
 ### Step 2
 
-- **HACK AWAY!** 🔨🔨🔨
+- Add new features or fix bugs
 
 ### Step 3
 
-- 🔃 Create a new pull request
+- Create a new pull request
 
 ### Support
 
