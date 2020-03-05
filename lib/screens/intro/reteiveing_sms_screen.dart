@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/splash_screen.dart';
 
 class RetreiveSMS extends StatefulWidget {
   QuerySMSBloc querySMSBloc = QuerySMSBloc();
@@ -32,7 +33,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
       if (data) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (route) => App()),
+            MaterialPageRoute(builder: (route) => SplashScreen()),
             (Route<dynamic> route) => false);
       } else {
         Flushbar(

@@ -6,6 +6,7 @@ import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (data.isDBCreated) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (route) => App()),
+          MaterialPageRoute(builder: (route) => RetreiveSMS()),
         );
       } else {
         // Where the intro will be placed
