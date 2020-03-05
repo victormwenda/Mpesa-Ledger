@@ -10,16 +10,7 @@ class FirebaseAuthProvider {
   }
 
   Future<void> signIn() async {
-    try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      await _firebaseAuth.signInWithCredential(credential);
-    } catch (e) {}
+    print("no sign in");
   }
 
   Future<void> signOut() async {
