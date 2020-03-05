@@ -76,6 +76,11 @@ class CheckSMSType {
         checkRegexHasMatch(regexString.transactionId))) {
       return {"error": "Not an important SMS message"};
     }
+
+    if(checkRegexHasMatch("Failed")) {
+      return {"error": "A failed MPESA message"};
+    }
+
     double mpesaBalance = checkRegexHasMatch(regexString.mpesaBalance)
         ? double.parse(
             replace.replaceString(

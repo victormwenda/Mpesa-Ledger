@@ -25,6 +25,13 @@ class SMSFilter {
   DateFormatUtil dateFormatUtil = DateFormatUtil();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
+  var bosiesTest = [
+    {
+      "body": "",
+      "timestamp": 1583254687544
+    }
+  ];
+
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
       List<dynamic> reversedBodies = bodies.reversed.toList();
