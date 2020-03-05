@@ -1,22 +1,16 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 import 'package:mpesa_ledger_flutter/app.dart';
-import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
-import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  final FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
-  final FirebaseAuthProvider _onAuthStateChanged = FirebaseAuthProvider();
   final SharedPreferencesBloc _sharedPrefBloc = SharedPreferencesBloc();
   RuntimePermissionsBloc _runtimePermissionBloc = RuntimePermissionsBloc();
 
@@ -30,7 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void dispose() {
     widget._runtimePermissionBloc.dispose();
     widget._sharedPrefBloc.dispose();
-    widget._firebaseAuthBloc.dispose();
     super.dispose();
   }
 
