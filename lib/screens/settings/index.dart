@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/settings/settings_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
 import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_list_tile.dart';
-import 'package:mpesa_ledger_flutter/screens/settings/widgets/settings_profile_info.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
@@ -45,7 +44,7 @@ class _SettingsState extends State<Settings> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     widget._settingsBloc.dispose();
     super.dispose();
   }
@@ -62,15 +61,6 @@ class _SettingsState extends State<Settings> {
         Expanded(
           child: ListView(
             children: <Widget>[
-              SettingsProfileInfo(),
-              SizedBox(
-                height: 10,
-              ),
-              Divider(
-                color: Colors.black45,
-                indent: 20,
-                endIndent: 20,
-              ),
               SettingsListTile("Change Theme", () {
                 _openChooseTheme(context);
               }),

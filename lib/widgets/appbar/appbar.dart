@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/generate_transactions.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
@@ -12,8 +11,6 @@ class AppbarWidget extends StatefulWidget {
   bool showPopupMenuButton;
   bool showAddNewCategory;
   VoidCallback addNewCategory;
-
-  FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
 
   AppbarWidget(this.title,
       {this.showSearch: true,
@@ -63,8 +60,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         onSelected: (PopupMenuButtonItems item) {
           if (item == PopupMenuButtonItems.settings) {
             Navigator.pushNamed(context, '/settings');
-          } else if (item == PopupMenuButtonItems.signOut) {
-            widget._firebaseAuthBloc.signOutEventSink.add(null);
           }
         },
         itemBuilder: (context) {
@@ -73,10 +68,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
               value: PopupMenuButtonItems.settings,
               child: Text("Settings"),
             ),
-            PopupMenuItem(
-              value: PopupMenuButtonItems.signOut,
-              child: Text("Sign Out"),
-            )
           ];
         },
       ));
@@ -98,12 +89,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       ),
       centerTitle: true,
     );
-  }
-
-  @override
-  void dispose() { 
-    widget._firebaseAuthBloc.dispose();
-    super.dispose();
   }
 }
 
