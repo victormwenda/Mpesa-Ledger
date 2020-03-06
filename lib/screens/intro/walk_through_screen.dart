@@ -24,7 +24,7 @@ class IntroPage1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: IntroWidget("Oraganized MPESA messages", "View your MPESA messages in clean and organized way", "assets/images/holding_phone_colour.svg"),
+        child: IntroWidget("Oraganized MPESA messages", "View your MPESA messages in clean and organized way", "assets/images/drawkit-list-app-colour.svg"),
       ),
     );
   }
@@ -35,7 +35,7 @@ class IntroPage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: IntroWidget("Categorize your MPESA messages", "You can categorize your MPESA messages into groups", "assets/images/holding_phone_colour.svg"),
+        child: IntroWidget("Categorize your MPESA messages", "You can categorize your MPESA messages into groups", "assets/images/drawkit-folder-woman-colour.svg"),
       ),
     );
   }
@@ -46,7 +46,7 @@ class IntroPage3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: IntroWidget("Summary of your MPESA transactions", "Get analytical view of all your MPESA transactions monthly and yearly", "assets/images/holding_phone_colour.svg"),
+        child: IntroWidget("Summary of your MPESA transactions", "Get analytical view of all your MPESA transactions monthly and yearly", "assets/images/drawkit-charts-and-graphs.svg"),
       ),
     );
   }
@@ -57,7 +57,7 @@ class IntroPage4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: IntroWidget("All of your MPESA messages secured", "Your MPESA messages are secured in your phone", "assets/images/holding_phone_colour.svg"),
+        child: IntroWidget("All of your MPESA messages secured", "Your MPESA messages are secured in your phone", "assets/images/unlock.svg"),
       ),
     );
   }
