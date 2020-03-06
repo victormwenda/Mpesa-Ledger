@@ -1,64 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:mpesa_ledger_flutter/widgets/walk_through/walk_through.dart';
+import 'package:mpesa_ledger_flutter/blocs/walk_through/walk_through.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
+import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() => runApp(WalkThrough());
 
-class WalkThrough extends StatelessWidget {
+class WalkThrough extends StatefulWidget {
+  @override
+  _WalkThroughState createState() => _WalkThroughState();
+}
+
+class _WalkThroughState extends State<WalkThrough> {
+  final WalkThroughBloc walkThroughBloc = WalkThroughBloc();
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
-  Widget build(BuildContext context) {
-    return PageView(
-      children: <Widget>[
-        IntroPage1(),
-        IntroPage2(),
-        IntroPage3(),
-        IntroPage4(),
-      ],
-    );
+  void initState() {
+    walkThroughBloc.initializeWalkThrough();
+    super.initState();
   }
-}
- 
-class IntroPage1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: IntroWidget("Oraganized MPESA messages", "View your MPESA messages in clean and organized way", "assets/images/drawkit-list-app-colour.svg"),
-      ),
-    );
-  }
-}
 
-class IntroPage2 extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: IntroWidget("Categorize your MPESA messages", "You can categorize your MPESA messages into groups", "assets/images/drawkit-folder-woman-colour.svg"),
-      ),
-    );
+  void dispose() {
+    walkThroughBloc.dispose();
+    super.dispose();
   }
-}
 
-class IntroPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: IntroWidget("Summary of your MPESA transactions", "Get analytical view of all your MPESA transactions monthly and yearly", "assets/images/drawkit-charts-and-graphs.svg"),
-      ),
-    );
-  }
-}
-
-class IntroPage4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: IntroWidget("All of your MPESA messages secured", "Your MPESA messages are secured in your phone", "assets/images/unlock.svg"),
-      ),
-    );
+    return StreamBuilder<List<Widget>>(
+        stream: walkThroughBloc.walkThroughControllerStream,
+        builder: (context, snapshot) {
+          return Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: <Widget>[
+              PageView.builder(
+                itemCount: snapshot.data.length,
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  return snapshot.data[index];
+                },
+                onPageChanged: (int index) {
+                  walkThroughBloc.changePageEventSink.add(index);
+                },
+              ),
+              Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 30.0, bottom: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SmoothPageIndicator(
+                          controller: _pageController, // PageController
+                          count: snapshot.data.length,
+                          effect: WormEffect(
+                            activeDotColor: Theme.of(context).primaryColor,
+                            dotHeight: 10.0,
+                            dotColor: Colors.black12,
+                          ),
+                        ),
+                        StreamBuilder<int>(
+                            stream: walkThroughBloc.changePageEventStream,
+                            initialData: 0,
+                            builder: (context, snapshot2) {
+                              if (snapshot2.data !=
+                                  (snapshot.data.length - 1)) {
+                                return RaisedButtonWidget("NEXT", () {
+                                  var nextPage = snapshot2.data + 1;
+                                  _pageController.animateToPage(nextPage,
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.ease);
+                                  walkThroughBloc.changePageEventSink
+                                      .add(nextPage);
+                                });
+                              }
+                              return RaisedButtonWidget("FINISH", () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (route) => RetreiveSMS()));
+                              });
+                            })
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        });
   }
 }
