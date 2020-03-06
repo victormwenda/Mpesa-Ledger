@@ -1,6 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
@@ -20,7 +21,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void dispose() {
     widget._runtimePermissionBloc.dispose();
@@ -105,25 +105,53 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("MPESA", style: Theme.of(context).textTheme.display3),
-                Text("Ledger", style: Theme.of(context).textTheme.headline),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: SvgPicture.asset(
+                "assets/images/holding_phone_colour.svg",
+                height: 300.0,
+              ),
             ),
-          ),
-          Expanded(
-            child: RaisedButtonWidget("GET STARTED", () => {
-              widget._runtimePermissionBloc
-                  .checkAndRequestPermissionEventSink
-                  .add(null)
-            }),
-          ),
-        ],
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 45.0),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("MPESA",
+                              style: Theme.of(context).textTheme.display3)),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Ledger",
+                            style: Theme.of(context).textTheme.headline,
+                          )),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: RaisedButtonWidget("GET STARTED", () => {
+                            widget._runtimePermissionBloc
+                                .checkAndRequestPermissionEventSink
+                                .add(null)
+                          })),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

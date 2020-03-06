@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/walk_through_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/theme_card/theme_card.dart';
 
@@ -59,7 +60,7 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
                 if (widget.route) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (route) => RetreiveSMS()),
+                    MaterialPageRoute(builder: (route) => WalkThrough()),
                   );
                 } else {
                   Navigator.pop(context);

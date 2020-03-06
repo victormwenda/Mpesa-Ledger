@@ -33,7 +33,7 @@ class _RetreiveSMSState extends State<RetreiveSMS> {
       if (data) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (route) => SplashScreen()),
+            MaterialPageRoute(builder: (route) => App()),
             (Route<dynamic> route) => false);
       } else {
         Flushbar(
