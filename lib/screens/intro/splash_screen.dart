@@ -120,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
               child: SvgPicture.asset(
                 "assets/images/holding_phone_colour.svg",
-                height: 300.0,
+                height: 250.0,
               ),
             ),
             Container(
@@ -144,7 +144,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             style: Theme.of(context).textTheme.headline,
                           )),
                       SizedBox(
-                        height: 20.0,
+                        height: 30.0,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,

@@ -16,12 +16,11 @@ class RegexUtil {
 
   String get getFirstMatch {
     RegExpMatch match = RegExp(expression).firstMatch(input);
-    return match.group(0) != null ? match.group(0) : null;
+    return match?.group(0) != null ? match.group(0) : null;
   }
 
   bool get hasMatch {
     bool match = RegExp(expression).hasMatch(input);
-    if(match) return true;
-    return false;
+    return match ? true : false;
   }
 }

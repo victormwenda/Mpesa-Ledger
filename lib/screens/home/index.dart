@@ -48,10 +48,7 @@ class _HomeState extends State<Home> {
                     }
                     if (index > snapshot.data["transactions"].length) {
                       return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: CircularProgressIndicator(),
-                        ),
+                        child: Container(),
                       );
                     }
                     return DailyTransactions(
@@ -59,9 +56,14 @@ class _HomeState extends State<Home> {
                     );
                   },
                 );
-              } else {
+              }
+              else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
+                );
+              } else {
+                return Center(
+                  child: Text("No MPESA transactions"),
                 );
               }
             },
