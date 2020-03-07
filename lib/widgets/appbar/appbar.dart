@@ -82,12 +82,13 @@ class _AppbarWidgetState extends State<AppbarWidget> {
         color: Colors.black, //change your color here
       ),
       actions: _showAppIcons(context),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white10,
       title: Text(
         widget.title,
         style: Theme.of(context).textTheme.title,
       ),
       centerTitle: true,
+      elevation: 0.0,
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:mpesa_ledger_flutter/screens/home/widgets/generate_transactions.
 import 'package:mpesa_ledger_flutter/widgets/cards/card.dart';
 
 class DailyTransactions extends StatelessWidget {
-  Map<String, dynamic> transactions;
+  final Map<String, dynamic> transactions;
 
   DailyTransactions(this.transactions);
 
@@ -22,7 +22,7 @@ class DailyTransactions extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
-                      transactions["dateTime"]["dayInt"],
+                      transactions["transactions"][0]["jiffy"].date.toString(),
                       style: Theme.of(context).textTheme.headline,
                     ),
                   ),
@@ -31,16 +31,16 @@ class DailyTransactions extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          transactions["dateTime"]["dayString"],
+                          transactions["transactions"][0]["jiffy"].EEEE,
                           style: Theme.of(context).textTheme.caption.merge(
                               TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                         ),
                         Text(
-                          transactions["dateTime"]["month"] +
+                          transactions["transactions"][0]["jiffy"].MMM +
                               " " +
-                              transactions["dateTime"]["year"],
+                              transactions["transactions"][0]["jiffy"].year.toString(),
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ],

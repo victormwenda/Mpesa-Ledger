@@ -1,13 +1,12 @@
+import 'package:jiffy/jiffy.dart';
 import 'package:mpesa_ledger_flutter/utils/constants/regex_constants.dart'
     as regexString;
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/recase.dart';
 import 'package:mpesa_ledger_flutter/utils/string_utils/replace.dart';
 
 class CheckSMSType {
   var replace = ReplaceUtil();
-  var dateFormatUtil = DateFormatUtil();
   String body;
   String timestamp;
 
@@ -77,8 +76,16 @@ class CheckSMSType {
       return {"error": "Not an important SMS message"};
     }
 
-    if(checkRegexHasMatch("Failed")) {
+    if (checkRegexHasMatch("Failed")) {
       return {"error": "A failed MPESA message"};
+    }
+
+    String stringTime(String time) {
+      return time
+          .toUpperCase()
+          .replaceAll(" ", "")
+          .replaceAll("AM", " AM")
+          .replaceAll("PM", " PM");
     }
 
     double mpesaBalance = checkRegexHasMatch(regexString.mpesaBalance)
@@ -99,20 +106,25 @@ class CheckSMSType {
             ),
           )
         : 0.00;
-    int dateTime = checkRegexHasMatch(regexString.date) &&
-            checkRegexHasMatch(regexString.time)
-        ? await dateFormatUtil.getTimestamp(
-            getRegexFirstMatch(regexString.date) +
-                " " +
-                getRegexFirstMatch(regexString.time))
-        : int.parse(timestamp);
+
+    Jiffy jiffy;
+
+    if (checkRegexHasMatch(regexString.date) &&
+        checkRegexHasMatch(regexString.time)) {
+      String d = getRegexFirstMatch(regexString.date);
+      String t = stringTime(getRegexFirstMatch(regexString.time));
+      jiffy = Jiffy("$t $d", "hh:mm a dd/MM/yy")..add(years: 2000);
+    } else {
+      jiffy = Jiffy.unix(int.parse(timestamp));
+    }
+
     String transactionId = checkRegexHasMatch(regexString.transactionId)
         ? getRegexFirstMatch(regexString.transactionId)
         : null;
     return {
       "data": {
         "mpesaBalance": mpesaBalance,
-        "timestamp": dateTime,
+        "jiffy": jiffy,
         "transactionCost": transactionCost,
         "transactionId": transactionId
       },

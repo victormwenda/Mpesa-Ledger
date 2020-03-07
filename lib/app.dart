@@ -9,8 +9,6 @@ import 'package:mpesa_ledger_flutter/widgets/bottom_navigation_bar/bottom_naviga
 
 class App extends StatefulWidget {
   BottombarNavigationBloc _bottombarNavigationBloc = BottombarNavigationBloc();
-  UnrecordedTransactionsBloc _unrecordedTransactionsBloc =
-      UnrecordedTransactionsBloc();
 
   @override
   _AppState createState() => _AppState();
@@ -22,7 +20,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      widget._unrecordedTransactionsBloc.insertTransactionsEventSink.add(null);
+      unrecordedTransactionsBloc.insertTransactionsEventSink.add(null);
     });
     super.initState();
   }
@@ -30,7 +28,7 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _timer?.cancel();
-    widget._unrecordedTransactionsBloc.dispose();
+    unrecordedTransactionsBloc.dispose();
     widget._bottombarNavigationBloc.dispose();
     super.dispose();
   }

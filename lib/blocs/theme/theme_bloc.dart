@@ -49,17 +49,17 @@ class ThemeBloc extends BaseBloc {
       case 1:
         map["name"] = "Pink";
         map["primaryColor"] = 0XFFE91E63;
-        map["accentColor"] = 0XFFF8BBD0;
+        map["accentColor"] = 0XFFFCE4EC;
         break;
       case 2:
         map["name"] = "Purple";
         map["primaryColor"] = 0XFF9C27B0;
-        map["accentColor"] = 0XFFE1BEE7;
+        map["accentColor"] = 0XFFF3E5F5;
         break;
       case 3:
         map["name"] = "Blue";
         map["primaryColor"] = 0XFF2196F3;
-        map["accentColor"] = 0XFFBBDEFB;
+        map["accentColor"] = 0XFFE3F2FD;
         break;
       default:
         map["name"] = "Black";

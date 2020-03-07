@@ -7,7 +7,6 @@ import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
-import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
@@ -15,12 +14,19 @@ import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 class SplashScreen extends StatefulWidget {
   final SharedPreferencesBloc _sharedPrefBloc = SharedPreferencesBloc();
   RuntimePermissionsBloc _runtimePermissionBloc = RuntimePermissionsBloc();
+  bool moveToApp = true;
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    widget._sharedPrefBloc.getSharedPreferencesEventSink.add(null);
+    super.initState();
+  }
+
   @override
   void dispose() {
     widget._runtimePermissionBloc.dispose();
@@ -86,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     widget._runtimePermissionBloc.continueToAppStream.listen((void v) {
+      widget.moveToApp = false;
       widget._sharedPrefBloc.getSharedPreferencesEventSink.add(null);
     });
 
@@ -93,14 +100,15 @@ class _SplashScreenState extends State<SplashScreen> {
       if (data.isDBCreated) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (route) => RetreiveSMS()),
+          MaterialPageRoute(builder: (route) => App()),
         );
       } else {
-        // Where the intro will be placed
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (route) => ChooseThemeWidget(true)),
-        );
+        if (!widget.moveToApp) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (route) => ChooseThemeWidget(true)),
+          );
+        }
       }
     });
 
@@ -112,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
               child: SvgPicture.asset(
                 "assets/images/holding_phone_colour.svg",
-                height: 300.0,
+                height: 250.0,
               ),
             ),
             Container(
@@ -136,15 +144,17 @@ class _SplashScreenState extends State<SplashScreen> {
                             style: Theme.of(context).textTheme.headline,
                           )),
                       SizedBox(
-                        height: 20.0,
+                        height: 30.0,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: RaisedButtonWidget("GET STARTED", () => {
-                            widget._runtimePermissionBloc
-                                .checkAndRequestPermissionEventSink
-                                .add(null)
-                          })),
+                          child: RaisedButtonWidget(
+                              "GET STARTED",
+                              () => {
+                                    widget._runtimePermissionBloc
+                                        .checkAndRequestPermissionEventSink
+                                        .add(null)
+                                  })),
                     ],
                   ),
                 ),
