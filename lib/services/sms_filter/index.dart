@@ -28,7 +28,7 @@ class SMSFilter {
   var bosiesTest = [
     {
       "body":
-          "OC36I5RICG Confirmed. Ksh10.00 sent to Naivas for account acc_12345 on 5/1/20 at 9:30 pm New M-PESA balance is 980. Transaction cost, Ksh10.00",
+          "OC36I5RICG Confirmed. Ksh10.00 sent to Naivas for account acc_12345 on 5/1/20 at 9:30 pm New M-PESA balance is Ksh980. Transaction cost, Ksh10.00",
       "timestamp": 1578205800000
     },
     {
@@ -43,7 +43,7 @@ class SMSFilter {
     },
     {
       "body":
-          "OX36I5RICG confirmed. You bought Ksh3.00 of airtime on 15/1/10 at 4:15pm. New M-PESA balance is Ksh915.00. Transaction cost, Ksh0.00.",
+          "OX36I5RICG confirmed. You bought Ksh3.00 of airtime on 15/1/20 at 4:15pm. New M-PESA balance is Ksh915.00. Transaction cost, Ksh0.00.",
       "timestamp": 1579094100000
     },
     {

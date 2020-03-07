@@ -114,10 +114,8 @@ class CheckSMSType {
       String d = getRegexFirstMatch(regexString.date);
       String t = stringTime(getRegexFirstMatch(regexString.time));
       jiffy = Jiffy("$t $d", "hh:mm a dd/MM/yy")..add(years: 2000);
-      print(true);
     } else {
       jiffy = Jiffy.unix(int.parse(timestamp));
-      print(false);
     }
 
     checkRegexHasMatch(regexString.date) && checkRegexHasMatch(regexString.time)
