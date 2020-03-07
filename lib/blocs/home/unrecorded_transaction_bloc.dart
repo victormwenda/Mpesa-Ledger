@@ -18,10 +18,17 @@ class UnrecordedTransactionsBloc extends BaseBloc {
   StreamController _insertTransactionsEvent = StreamController();
   Stream get insertTransactionsEventStream => _insertTransactionsEvent.stream;
   StreamSink get insertTransactionsEventSink => _insertTransactionsEvent.sink;
+  
+  StreamController<bool> _showFetchEvent = StreamController<bool>.broadcast();
+  Stream<bool> get showFetchEventStream => _showFetchEvent.stream;
+  StreamSink<bool> get showFetchEventSink => _showFetchEvent.sink;
 
   UnrecordedTransactionsBloc() {
     insertTransactionsEventStream.listen((void data) {
       _insertTrasanctions();
+    });
+    showFetchEventStream.listen((bool data) {
+      print("showing from bloc $data");
     });
   }
 
@@ -30,7 +37,9 @@ class UnrecordedTransactionsBloc extends BaseBloc {
       insertTransactions = false;
       var result = await _getTransactions();
       if (result.isNotEmpty) {
+        showFetchEventSink.add(true);
         await _smsFilter.addSMSTodatabase(result.reversed.toList());
+        showFetchEventSink.add(false);
         for (var i = 0; i < result.length; i++) {
           await _deleteTransaction(result[i]["id"].toString());
         }
@@ -56,5 +65,8 @@ class UnrecordedTransactionsBloc extends BaseBloc {
   @override
   void dispose() {
     _insertTransactionsEvent.close();
+    _showFetchEvent.close();
   }
 }
+
+UnrecordedTransactionsBloc unrecordedTransactionsBloc = UnrecordedTransactionsBloc();

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 
 import 'package:mpesa_ledger_flutter/blocs/home/home_bloc.dart';
+import 'package:mpesa_ledger_flutter/blocs/home/unrecorded_transaction_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/daily_transactions_cards.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/mpesa_bal.dart';
 import 'package:mpesa_ledger_flutter/widgets/appbar/appbar.dart';
 
 class Home extends StatefulWidget {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   int limit = 5;
 
   @override
@@ -21,6 +23,12 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    widget._scrollController.dispose();
+    super.dispose();
+  }
+
   void _scrollController() {
     if (widget._scrollController.position.extentAfter == 0.0) {
       widget.limit += 10;
@@ -32,7 +40,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppbarWidget("Home"),
+        StreamBuilder<bool>(
+            stream: unrecordedTransactionsBloc.showFetchEventStream,
+            initialData: false,
+            builder: (context, snapshot) {
+              return StreamBuilder<int>(
+                  stream: counter.counterStream,
+                  initialData: 0,
+                  builder: (context, snapshot2) {
+                    var percentageComplete =
+                        snapshot2.data >= 96 ? 100 : snapshot2.data;
+                    return AppbarWidget(snapshot.data
+                        ? "Fetching... $percentageComplete%"
+                        : "Home");
+                  });
+            }),
         Expanded(
           child: StreamBuilder(
             stream: homeBloc.homeStream,
@@ -56,8 +78,7 @@ class _HomeState extends State<Home> {
                     );
                   },
                 );
-              }
-              else if (snapshot.connectionState == ConnectionState.waiting) {
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );

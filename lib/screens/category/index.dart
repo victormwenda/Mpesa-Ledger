@@ -1,6 +1,5 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/screens/category/widgets/category_chart.dart';
@@ -71,16 +70,16 @@ class _CategoryState extends State<Category> {
                       );
                     }
                     return Dismissible(
-                      key: prefix0.UniqueKey(),
+                      key: UniqueKey(),
                       background: Container(
                         color: Color(0XFFF44336),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Row(
-                            mainAxisAlignment: prefix0.MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Icon(prefix0.Icons.delete, color: prefix0.Colors.white,),
-                              Icon(prefix0.Icons.delete, color: prefix0.Colors.white,),
+                              Icon(Icons.delete, color: Colors.white,),
+                              Icon(Icons.delete, color: Colors.white,),
                             ],
                           ),
                         ),
@@ -97,6 +96,8 @@ class _CategoryState extends State<Category> {
                         }
                       },
                       child: InkWell(
+                        splashColor: Theme.of(context).accentColor,
+                        highlightColor: Theme.of(context).accentColor,
                         onTap: () {
                           Navigator.pushNamed(context, "/categoryTransaction",
                               arguments: CategoryModel.fromMap(

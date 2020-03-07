@@ -118,10 +118,6 @@ class CheckSMSType {
       jiffy = Jiffy.unix(int.parse(timestamp));
     }
 
-    checkRegexHasMatch(regexString.date) && checkRegexHasMatch(regexString.time)
-        ? print(true)
-        : print(false);
-
     String transactionId = checkRegexHasMatch(regexString.transactionId)
         ? getRegexFirstMatch(regexString.transactionId)
         : null;

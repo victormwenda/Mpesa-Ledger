@@ -5,10 +5,10 @@ import 'package:mpesa_ledger_flutter/widgets/cards/card.dart';
 import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 
 class Transaction extends StatelessWidget {
-  Map<String, dynamic> transaction;
+  final Map<String, dynamic> transaction;
 
   Transaction(this.transaction);
-  ReplaceUtil replaceUtil = ReplaceUtil();
+  final ReplaceUtil replaceUtil = ReplaceUtil();
 
   _generateCatogories(List<String> listString) {
     List<Widget> chipLists = [];
@@ -85,7 +85,7 @@ class Transaction extends StatelessWidget {
                       style: Theme.of(context).textTheme.body1,
                       children: [
                         TextSpan(
-                          text: transaction["dateTime"].toString(),
+                          text: transaction["jiffy"].yMMMEdjm,
                           style: Theme.of(context)
                               .textTheme
                               .body1
