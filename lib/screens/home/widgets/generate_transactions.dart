@@ -19,6 +19,7 @@ class GenerateTransactions {
       var jiffy = Jiffy.unix(listMap[i]["timestamp"]);
       var container = Container(
         child: InkWell(
+          highlightColor: Theme.of(context).accentColor,
           onTap: () {
             closeSearch();
             Navigator.pushNamed(context, "/transaction", arguments: listMap[i]);

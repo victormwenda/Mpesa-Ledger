@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  bubble_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: bubble_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -104,13 +111,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_auth_buttons:
-    dependency: "direct main"
-    description:
-      name: flutter_auth_buttons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -123,13 +123,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  google_sign_in:
+  font_awesome_flutter:
     dependency: "direct main"
     description:
-      name: google_sign_in
+      name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "8.7.0"
   grouped_buttons:
     dependency: "direct main"
     description:

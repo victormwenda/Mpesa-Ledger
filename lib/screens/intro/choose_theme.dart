@@ -23,7 +23,7 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Align(
