@@ -14,7 +14,8 @@ class _TransactionListTileState extends State<TransactionListTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "/transaction", arguments: widget.transaction);
+        Navigator.pushNamed(context, "/transaction",
+            arguments: widget.transaction);
       },
       highlightColor: Theme.of(context).accentColor,
       child: Padding(
@@ -62,7 +63,27 @@ class _TransactionListTileState extends State<TransactionListTile> {
             ],
           ),
           subtitle: widget.transaction["transactionId"] != null
-              ? Text(widget.transaction["transactionId"])
+              ? Column(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.transaction["transactionId"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.transaction["jiffy"].yMMMEdjm,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ),
+                  ],
+                )
               : Container(),
         ),
       ),
