@@ -47,12 +47,6 @@ public class MainActivity extends FlutterActivity {
         SMSRetriever smsRetriever = new SMSRetriever(cursor);
         List<Map<String, Object>> smsResult = smsRetriever.getAllSMSMessages();
         result.success(smsResult);
-      } else if (methodCall.method.equals("changeStringToTimestamp")) {
-        DateTime dateTime = new DateTime(methodCall);
-        result.success(dateTime.getTimestamp());
-      } else if (methodCall.method.equals("getDateTime")) {
-        DateTime dateTime = new DateTime(methodCall);
-        result.success(dateTime.getDateTime());
       }
     });
   }
