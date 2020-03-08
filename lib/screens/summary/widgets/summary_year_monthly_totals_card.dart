@@ -3,11 +3,11 @@ import 'package:mpesa_ledger_flutter/screens/summary/widgets/summary_chart.dart'
 import 'package:mpesa_ledger_flutter/widgets/cards/card.dart';
 
 class SummaryYearMonthlyTotals extends StatelessWidget {
-  int year;
-  List<Map<String, dynamic>> monthlyTotals;
-  String totalDeposits;
-  String totalWithdrawals;
-  List<Widget> monthlyDepositsAnsWithdrawals;
+  final int year;
+  final List<Map<String, dynamic>> monthlyTotals;
+  final String totalDeposits;
+  final String totalWithdrawals;
+  final List<Widget> monthlyDepositsAnsWithdrawals;
 
   SummaryYearMonthlyTotals(this.year, this.monthlyTotals, this.totalDeposits,
       this.totalWithdrawals, this.monthlyDepositsAnsWithdrawals);
