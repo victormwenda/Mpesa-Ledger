@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpesa_ledger_flutter/blocs/walk_through/walk_through.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -77,11 +78,11 @@ class _WalkThroughState extends State<WalkThrough> {
                                       .add(nextPage);
                                 });
                               }
-                              return RaisedButtonWidget("FINISH", () {
+                              return RaisedButtonWidget("CONTINUE", () {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (route) => RetreiveSMS()));
+                                        builder: (route) => ChooseThemeWidget(true)));
                               });
                             })
                       ],

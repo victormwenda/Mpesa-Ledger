@@ -56,11 +56,11 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
           Expanded(
             flex: 1,
             child: Align(
-              child: RaisedButtonWidget(widget.route ? "CONTINUE" : "DONE", () {
+              child: RaisedButtonWidget(widget.route ? "FINISH" : "DONE", () {
                 if (widget.route) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (route) => WalkThrough()),
+                    MaterialPageRoute(builder: (route) => RetreiveSMS()),
                   );
                 } else {
                   Navigator.pop(context);
