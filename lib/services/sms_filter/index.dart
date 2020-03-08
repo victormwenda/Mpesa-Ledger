@@ -13,7 +13,6 @@ import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_category.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_type.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class SMSFilter {
   CheckSMSType smsFilters;
@@ -22,7 +21,6 @@ class SMSFilter {
   TransactionCategoryRepository transactionCategoryRepo =
       TransactionCategoryRepository();
   SummaryRepository summaryRepo = SummaryRepository();
-  DateFormatUtil dateFormatUtil = DateFormatUtil();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
   var bosiesTest = [

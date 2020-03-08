@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TransactionListTile extends StatefulWidget {
-  Map<String, dynamic> transaction;
+  final Map<String, dynamic> transaction;
 
   TransactionListTile(this.transaction);
 
@@ -13,7 +13,11 @@ class _TransactionListTileState extends State<TransactionListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, "/transaction",
+            arguments: widget.transaction);
+      },
+      highlightColor: Theme.of(context).accentColor,
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20),
         child: ListTile(
@@ -59,7 +63,27 @@ class _TransactionListTileState extends State<TransactionListTile> {
             ],
           ),
           subtitle: widget.transaction["transactionId"] != null
-              ? Text(widget.transaction["transactionId"])
+              ? Column(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.transaction["transactionId"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.transaction["jiffy"].yMMMEdjm,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ),
+                  ],
+                )
               : Container(),
         ),
       ),

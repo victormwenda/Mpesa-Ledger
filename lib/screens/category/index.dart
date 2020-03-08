@@ -1,5 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/fa_icon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mpesa_ledger_flutter/blocs/categories/categories_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/screens/category/widgets/category_chart.dart';
@@ -78,15 +80,22 @@ class _CategoryState extends State<Category> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Icon(Icons.delete, color: Colors.white,),
-                              Icon(Icons.delete, color: Colors.white,),
+                              FaIcon(
+                                FontAwesomeIcons.trash,
+                                color: Colors.white,
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.trash,
+                                color: Colors.white,
+                              ),
                             ],
                           ),
                         ),
                       ),
                       confirmDismiss: (dire) {
                         if (snapshot.data[index - 1]["canDelete"] == 1) {
-                          return Future.value(_deleteCategory(snapshot.data[index - 1]));
+                          return Future.value(
+                              _deleteCategory(snapshot.data[index - 1]));
                         } else {
                           Flushbar(
                             message: "You cannot delete default categories",
@@ -116,6 +125,10 @@ class _CategoryState extends State<Category> {
                       ),
                     );
                   },
+                );
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
               }
               return Center(
