@@ -53,6 +53,7 @@ class _CreateCategoryState extends State<CreateCategory> {
           showSearch: false,
           showPopupMenuButton: false,
           showAddNewCategory: true,
+          showBackButton: true,
           addNewCategory: () {
             if (widget.title.text.isEmpty && widget.description.text.isEmpty) {
               Flushbar(

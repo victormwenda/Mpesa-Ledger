@@ -40,12 +40,12 @@ class _AppState extends State<App> {
       onWillPop: () {
         return showDialog(context: context, builder: (context) {
           return AlertDialog(
-            title: Text("Do you want to exit"),
+            title: Text("Are you sure you want to exit"),
             actions: <Widget>[
-              FlatButtonWidget("No", () {
+              FlatButtonWidget("NO", () {
                 Navigator.pop(context, false);
               }),
-              FlatButtonWidget("Yes", () {
+              FlatButtonWidget("YES", () {
                 Navigator.pop(context, true);
               }),
             ],

@@ -5,8 +5,8 @@ class MainCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      onGenerateRoute: RouteGeneratorCategory.generateRoute,
-      initialRoute: "/",
+      onGenerateRoute: RouteGenerator.generateRoute,
+      initialRoute: "/category",
     );
   }
 }

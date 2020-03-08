@@ -12,6 +12,7 @@ class AppbarWidget extends StatefulWidget {
   bool showAddCategory;
   bool showPopupMenuButton;
   bool showAddNewCategory;
+  bool showBackButton;
   VoidCallback addNewCategory;
 
   AppbarWidget(this.title,
@@ -19,7 +20,7 @@ class AppbarWidget extends StatefulWidget {
       this.showPopupMenuButton: true,
       this.showAddCategory: false,
       this.showAddNewCategory: false,
-      this.addNewCategory});
+      this.addNewCategory, this.showBackButton: false});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -85,7 +86,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(
-        color: Colors.black, //change your color here
+        color: widget.showBackButton ? Colors.black : Colors.white,
       ),
       actions: _showAppIcons(context),
       backgroundColor: Colors.white10,

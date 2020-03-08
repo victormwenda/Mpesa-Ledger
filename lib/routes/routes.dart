@@ -9,63 +9,18 @@ import 'package:mpesa_ledger_flutter/screens/settings/index.dart';
 import 'package:mpesa_ledger_flutter/screens/summary/index.dart';
 import 'package:mpesa_ledger_flutter/screens/transaction/index.dart';
 
-class RouteGeneratorHome {
+class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Home());
-      case '/transaction':
-        return MaterialPageRoute(builder: (_) => Transaction(args));
-      case '/settings':
-        return MaterialPageRoute(builder: (_) => Settings());
-      default:
-        return MaterialPageRoute(builder: (_) => Home());
-    }
-  }
-}
-
-class RouteGeneratorCalculator {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
-    switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => Calculator());
-      case '/transaction':
-        return MaterialPageRoute(builder: (_) => Transaction(args));
-      case '/settings':
-        return MaterialPageRoute(builder: (_) => Settings());
-      default:
-        return MaterialPageRoute(builder: (_) => Calculator());
-    }
-  }
-}
-
-class RouteGeneratorSummary {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
-    switch (settings.name) {
-      case '/':
+      case '/summary':
         return MaterialPageRoute(builder: (_) => Summary());
-      case '/transaction':
-        return MaterialPageRoute(builder: (_) => Transaction(args));
-      case '/settings':
-        return MaterialPageRoute(builder: (_) => Settings());
-      default:
-        return MaterialPageRoute(builder: (_) => Summary());
-    }
-  }
-}
-
-class RouteGeneratorCategory {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
-    switch (settings.name) {
-      case '/':
+      case '/calculator':
+        return MaterialPageRoute(builder: (_) => Calculator());
+      case '/category':
         return MaterialPageRoute(builder: (_) => Category());
         case '/createCategory':
         return MaterialPageRoute(builder: (_) => CreateCategory());

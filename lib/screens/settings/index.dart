@@ -8,7 +8,7 @@ import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class Settings extends StatefulWidget {
-  SettingsBloc _settingsBloc = SettingsBloc();
+  final SettingsBloc _settingsBloc = SettingsBloc();
 
   @override
   _SettingsState createState() => _SettingsState();
@@ -57,6 +57,7 @@ class _SettingsState extends State<Settings> {
           "Settings",
           showSearch: false,
           showPopupMenuButton: false,
+          showBackButton: true,
         ),
         Expanded(
           child: ListView(

@@ -28,6 +28,7 @@ class Transaction extends StatelessWidget {
           "Transaction",
           showSearch: false,
           showPopupMenuButton: false,
+          showBackButton: true,
         ),
         Expanded(
           child: SingleChildScrollView(
