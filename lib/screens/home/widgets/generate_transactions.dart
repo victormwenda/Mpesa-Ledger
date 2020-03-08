@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 
 class GenerateTransactions {
@@ -16,7 +15,6 @@ class GenerateTransactions {
       context, List<Map<String, dynamic>> listMap, Function closeSearch) {
     List<Widget> listWidget = [];
     for (var i = 0; i < listMap.length; i++) {
-      var jiffy = Jiffy.unix(listMap[i]["timestamp"]);
       var container = Container(
         child: InkWell(
           highlightColor: Theme.of(context).accentColor,
@@ -68,7 +66,7 @@ class GenerateTransactions {
                   height: 2,
                 ),
                 Text(
-                  jiffy.jm,
+                  listMap[i]["jiffy"].jm,
                   style: Theme.of(context).textTheme.caption,
                 ),
                 SingleChildScrollView(

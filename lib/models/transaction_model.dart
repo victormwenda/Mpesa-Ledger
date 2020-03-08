@@ -1,3 +1,5 @@
+import 'package:jiffy/jiffy.dart';
+
 class TransactionModel {
   int id;
   String title;
@@ -30,7 +32,7 @@ class TransactionModel {
       "amount": amount,
       "isDeposit": isDeposit == true ? 1 : 0,
       "transactionCost": transactionCost,
-      "transactionId": transactionId
+      "transactionId": transactionId,
     };
     if (id != null) {
       map["id"] = id;

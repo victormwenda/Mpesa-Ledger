@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:jiffy/jiffy.dart';
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
+import 'package:mpesa_ledger_flutter/models/category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_category_model.dart';
 import 'package:mpesa_ledger_flutter/models/transaction_model.dart';
 import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
@@ -97,7 +99,11 @@ class CategoriesBloc extends BaseBloc {
         withdrawals += transaction[0].amount;
       }
       transactionCosts += transaction[0].transactionCost;
-      _listTransactionsMap.add(transaction[0].toMap());
+      var transactionMap = transaction[0].toMap();
+      transactionMap["jiffy"] = Jiffy.unix(transaction[0].timestamp);
+      transactionMap["isDeposit"] = transaction[0].isDeposit ? true : false;
+      transactionMap["categories"] = await _getCategory(transaction[0].id.toString());
+      _listTransactionsMap.add(transactionMap);
     }
     _categoryTotalsMap = {
       "deposits": deposits,
@@ -110,6 +116,19 @@ class CategoriesBloc extends BaseBloc {
         "totals": _categoryTotalsMap
       },
     );
+  }
+
+  Future<List<String>> _getCategory(String id) async {
+    List<String> categoryList = [];
+    List<TransactionCategoryModel> transactionCategory =
+        await _transactionCategoryRepository.selectTransactions(query: id);
+    for (var i = 0; i < transactionCategory.length; i++) {
+      List<CategoryModel> category = await _categoryRepository.select(
+          columns: ["title"],
+          query: transactionCategory[i].categoryId.toString());
+      categoryList.add(category[0].title);
+    }
+    return categoryList;
   }
 
   @override
