@@ -5,7 +5,7 @@ class MainHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      onGenerateRoute: RouteGeneratorHome.generateRoute,
+      onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: "/",
     );
   }

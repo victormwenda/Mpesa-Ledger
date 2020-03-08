@@ -5,8 +5,8 @@ class MainCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      onGenerateRoute: RouteGeneratorCalculator.generateRoute,
-      initialRoute: "/",
+      onGenerateRoute: RouteGenerator.generateRoute,
+      initialRoute: "/calculator",
     );
   }
 }

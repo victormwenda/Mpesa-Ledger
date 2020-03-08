@@ -6,6 +6,7 @@ import 'package:mpesa_ledger_flutter/blocs/bottombar_navigation/bottombar_nav_bl
 import 'package:mpesa_ledger_flutter/blocs/home/unrecorded_transaction_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/main_home.dart';
 import 'package:mpesa_ledger_flutter/widgets/bottom_navigation_bar/bottom_navigation.dart';
+import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 
 class App extends StatefulWidget {
   BottombarNavigationBloc _bottombarNavigationBloc = BottombarNavigationBloc();
@@ -35,18 +36,35 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
-        initialData: MainHome(),
-        stream: widget._bottombarNavigationBloc.screensControllerStream,
-        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-          return snapshot.data;
-        },
-      ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context)
-            .copyWith(canvasColor: Theme.of(context).primaryColor),
-        child: BottomNavigationBarWidget(widget._bottombarNavigationBloc),
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: Text("Are you sure you want to exit"),
+            actions: <Widget>[
+              FlatButtonWidget("NO", () {
+                Navigator.pop(context, false);
+              }),
+              FlatButtonWidget("YES", () {
+                Navigator.pop(context, true);
+              }),
+            ],
+          );
+        });
+      },
+      child: Scaffold(
+        body: StreamBuilder(
+          initialData: MainHome(),
+          stream: widget._bottombarNavigationBloc.screensControllerStream,
+          builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+            return snapshot.data;
+          },
+        ),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context)
+              .copyWith(canvasColor: Theme.of(context).primaryColor),
+          child: BottomNavigationBarWidget(widget._bottombarNavigationBloc),
+        ),
       ),
     );
   }

@@ -30,6 +30,7 @@ class _CategoryTransactionState extends State<CategoryTransaction> {
           widget.categoryModel.title,
           showSearch: false,
           showPopupMenuButton: false,
+          showBackButton: true,
         ),
         Expanded(
           child: StreamBuilder(
