@@ -43,13 +43,13 @@ class _TransactionListTileState extends State<TransactionListTile> {
                     width: 20,
                   ),
                   Text(
-                    widget.transaction["isDeposit"] == 1
+                    widget.transaction["isDeposit"]
                         ? "+KES " + widget.transaction["amount"].toString()
                         : "-KES " + widget.transaction["amount"].toString(),
                     style: Theme.of(context).textTheme.title.merge(
                           TextStyle(
                             fontSize: 16.5,
-                            color: widget.transaction["isDeposit"] == 1
+                            color: widget.transaction["isDeposit"]
                                 ? Color(0XFF4CAF50)
                                 : Color(0XFFF44336),
                           ),
