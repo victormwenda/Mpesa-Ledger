@@ -23,7 +23,7 @@ class SMSFilter {
   SummaryRepository summaryRepo = SummaryRepository();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
 
-  var bosiesTest = [
+  var dummyData = [
     {
       "body":
           "OC36I5RICG Confirmed. Ksh10.00 sent to Naivas for account acc_12345 on 5/11/19 at 9:30 pm New M-PESA balance is Ksh980. Transaction cost, Ksh10.00",
@@ -158,8 +158,9 @@ class SMSFilter {
 
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
-      bosiesTest = bosiesTest.reversed.toList();
-      List<dynamic> reversedBodies = bosiesTest.reversed.toList();
+      // dummyData = dummyData.reversed.toList();
+      // List<dynamic> reversedBodies = dummyData.reversed.toList();
+      List<dynamic> reversedBodies = bodies.reversed.toList();
       var categoryObject =
           await categoryRepo.select(columns: ["id", "keywords"]);
       int bodyLength = reversedBodies.length;
