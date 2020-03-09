@@ -42,8 +42,8 @@ The following is the category page where you can see the default categories and 
 
 Example below shows creating a category by the keywords (Jama and Diana) which later returns all transactions that have the keywords(Jama and Diana) within their text messages. Deleting a category is fairly easy by swipping left or right and confirming the deletion
 
-Category Page | Transaction Page | Create Category
------------- | ------------- | -------------
+Category Page | Create Category
+------------ | -------------
 <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image5.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image6.gif" alt="alt text" height="500px">
 
 ### Summary Page
