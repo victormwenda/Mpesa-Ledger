@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  app_settings: 1.0.6
+  app_settings: ^3.0.1
   sqflite: ^1.1.6+1
   recase: ^2.0.1
   shared_preferences: ^0.5.3+4
