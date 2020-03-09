@@ -1,4 +1,4 @@
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mpesa_ledger_flutter/utils/regex/regex.dart';
 
 class CategoryModel {
@@ -24,7 +24,7 @@ class CategoryModel {
         ? true 
         : map["canDelete"] == 1 ? true : false;
     numberOfTransactions = map["numberOfTransactions"] ?? 0;
-    createdOn = map["createdOn"] ?? (DateFormatUtil().getCurrentTimestamp/1000).round();
+    createdOn = map["createdOn"] ?? (Jiffy().valueOf()/1000).round();
     id = map["id"] ?? null;
   }
 

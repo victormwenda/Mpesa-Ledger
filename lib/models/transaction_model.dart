@@ -1,3 +1,5 @@
+import 'package:jiffy/jiffy.dart';
+
 class TransactionModel {
   int id;
   String title;
@@ -12,7 +14,7 @@ class TransactionModel {
   TransactionModel.fromMap(Map<String, dynamic> map) {
     title = map["title"];
     body = map["body"];
-    timestamp = map["timestamp"];
+    timestamp = map["timestamp"] ?? map["jiffy"].valueOf();
     mpesaBalance = map["mpesaBalance"];
     amount = map["amount"];
     isDeposit = map["isDeposit"] == 1 ? true : false;
@@ -30,7 +32,7 @@ class TransactionModel {
       "amount": amount,
       "isDeposit": isDeposit == true ? 1 : 0,
       "transactionCost": transactionCost,
-      "transactionId": transactionId
+      "transactionId": transactionId,
     };
     if (id != null) {
       map["id"] = id;

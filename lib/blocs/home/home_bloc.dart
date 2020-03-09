@@ -1,5 +1,6 @@
 import 'dart:async';
 import "package:collection/collection.dart";
+import 'package:jiffy/jiffy.dart';
 
 import 'package:mpesa_ledger_flutter/blocs/base_bloc.dart';
 import 'package:mpesa_ledger_flutter/models/category_model.dart';
@@ -9,7 +10,6 @@ import 'package:mpesa_ledger_flutter/repository/category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/mpesa_balance_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.dart';
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class HomeBloc extends BaseBloc {
   MpesaBalanceRepository _mpesaBalanceRepository = MpesaBalanceRepository();
@@ -18,7 +18,6 @@ class HomeBloc extends BaseBloc {
       TransactionCategoryRepository();
   CategoryRepository _categoryRepository = CategoryRepository();
 
-  DateFormatUtil dateFormatUtil = DateFormatUtil();
   Map<String, dynamic> _homeTransactionMap = {};
   int limit = 10;
 
@@ -62,34 +61,24 @@ class HomeBloc extends BaseBloc {
     if (transactions != null && transactions.isNotEmpty) {
       result = transactions;
     } else {
-      // result = await _transactionRepository.select();
       result = await _transactionRepository.selectPagination(limit);
     }
     List<Map<String, dynamic>> transactionList = [];
     for (var i = 0; i < result.length; i++) {
-      var datetime =
-          await dateFormatUtil.getDateTime(result[i].timestamp.toString());
+      var jiffy = Jiffy.unix(result[i].timestamp);
+
       var categories = await _getCategory(result[i].id.toString());
       Map<String, dynamic> transactionMap = {};
       transactionMap.addAll(result[i].toMap());
       transactionMap["isDeposit"] = result[i].isDeposit;
-      transactionMap["day"] = datetime["dayInt"];
-      transactionMap["dateTime"] = datetime["dateTime"];
-      transactionMap["time"] = datetime["time"];
+      transactionMap["jiffy"] = jiffy;
       transactionMap["categories"] = categories;
       transactionList.add(transactionMap);
     }
-    var transactionByDayMap = groupBy(transactionList, (key) => key["day"]);
+    var transactionByDayMap = groupBy(transactionList,
+        (key) => key["jiffy"].date.toString() + key["jiffy"].month.toString());
     transactionByDayMap.forEach((key, value) async {
-      var dateTime =
-          await dateFormatUtil.getDateTime(value[0]["timestamp"].toString());
       Map<String, dynamic> map = {};
-      map["dateTime"] = {
-        "dayInt": key,
-        "dayString": dateTime["dayString"],
-        "month": dateTime["month"],
-        "year": dateTime["year"],
-      };
       map["transactions"] = value;
       transactionByDayList.add(map);
     });

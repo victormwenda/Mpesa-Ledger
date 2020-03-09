@@ -1,35 +1,37 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mpesa_ledger_flutter/app.dart';
-import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
-import 'package:mpesa_ledger_flutter/services/firebase/firebase_auth.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/walk_through_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
+import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
 
 class SplashScreen extends StatefulWidget {
-  final FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
-  final FirebaseAuthProvider _onAuthStateChanged = FirebaseAuthProvider();
   final SharedPreferencesBloc _sharedPrefBloc = SharedPreferencesBloc();
   RuntimePermissionsBloc _runtimePermissionBloc = RuntimePermissionsBloc();
+  bool moveToApp = true;
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    widget._sharedPrefBloc.getSharedPreferencesEventSink.add(null);
+    super.initState();
+  }
 
   @override
   void dispose() {
     widget._runtimePermissionBloc.dispose();
     widget._sharedPrefBloc.dispose();
-    widget._firebaseAuthBloc.dispose();
     super.dispose();
   }
 
@@ -91,6 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     widget._runtimePermissionBloc.continueToAppStream.listen((void v) {
+      widget.moveToApp = false;
       widget._sharedPrefBloc.getSharedPreferencesEventSink.add(null);
     });
 
@@ -101,52 +104,64 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(builder: (route) => App()),
         );
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (route) => ChooseThemeWidget(true)),
-        );
+        if (!widget.moveToApp) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (route) => WalkThrough()),
+          );
+        }
       }
     });
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("MPESA", style: Theme.of(context).textTheme.display3),
-                Text("Ledger", style: Theme.of(context).textTheme.headline),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Align(
-              child: StreamBuilder(
-                stream: widget._onAuthStateChanged.onAuthStateChanged,
-                builder: (BuildContext context,
-                    AsyncSnapshot<FirebaseUser> snapshot) {
-                  if (snapshot.data == null) {
-                    return GoogleSignInButton(
-                      onPressed: () {
-                        widget._firebaseAuthBloc.signInEventSink.add(null);
-                      },
-                    );
-                  } else {
-                    widget._runtimePermissionBloc
-                        .checkAndRequestPermissionEventSink
-                        .add(null);
-                    return CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                    );
-                  }
-                },
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 45.0),
+                  child: Column(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          text: TextSpan(
+                            text: "MPESA\n",
+                            style: Theme.of(context).textTheme.display3,
+                            children: [
+                              TextSpan(
+                                text: "Ledger",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .merge(TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        height: .5)),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: RaisedButtonWidget("GET STARTED", () {
+                            widget._runtimePermissionBloc
+                                .checkAndRequestPermissionEventSink
+                                .add(null);
+                          })),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:mpesa_ledger_flutter/blocs/counter/counter_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/query_sms/query_sms_bloc.dart';
 
 class RetreiveSMS extends StatefulWidget {
-  QuerySMSBloc querySMSBloc = QuerySMSBloc();
+  final QuerySMSBloc querySMSBloc = QuerySMSBloc();
 
   @override
   _RetreiveSMSState createState() => _RetreiveSMSState();

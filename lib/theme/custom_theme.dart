@@ -13,10 +13,12 @@ class CustomTheme {
       accentColor: Color(accentColor),
       cursorColor: Color(primaryColor),
       focusColor: Color(primaryColor),
-      fontFamily: "Montserrat",
+      fontFamily: "Poppins",
       textTheme: TextTheme(
+        display4: TextStyle(fontSize: 45.0, color: Colors.black, fontWeight: FontWeight.bold),
         display3: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         display2: TextStyle(fontSize: 55.0, color: Colors.white, fontWeight: FontWeight.bold),
+        display1: TextStyle(fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
         headline: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800),
         subhead: TextStyle(
           fontSize: 15.0,

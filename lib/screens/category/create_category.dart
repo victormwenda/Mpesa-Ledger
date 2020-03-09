@@ -9,11 +9,11 @@ import 'package:mpesa_ledger_flutter/widgets/chips/chip.dart';
 import 'package:mpesa_ledger_flutter/widgets/textfields/textfield.dart';
 
 class CreateCategory extends StatefulWidget {
-  NewCategoryBloc _newCategoryBloc = NewCategoryBloc();
+  final NewCategoryBloc _newCategoryBloc = NewCategoryBloc();
 
-  TextEditingController title = TextEditingController();
-  TextEditingController description = TextEditingController();
-  TextEditingController keyword = TextEditingController();
+  final TextEditingController title = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController keyword = TextEditingController();
 
   @override
   _CreateCategoryState createState() => _CreateCategoryState();
@@ -53,6 +53,7 @@ class _CreateCategoryState extends State<CreateCategory> {
           showSearch: false,
           showPopupMenuButton: false,
           showAddNewCategory: true,
+          showBackButton: true,
           addNewCategory: () {
             if (widget.title.text.isEmpty && widget.description.text.isEmpty) {
               Flushbar(
@@ -86,49 +87,6 @@ class _CreateCategoryState extends State<CreateCategory> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Keywords",
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                    StreamBuilder<List<String>>(
-                        stream: widget._newCategoryBloc.keyWordChipStream,
-                        initialData: [],
-                        builder:
-                            (context, AsyncSnapshot<List<String>> snapshot) {
-                          return Wrap(
-                            children: _generateChips(snapshot.data),
-                          );
-                        }),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: TextFieldWidget("Keyword", widget.keyword)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        RaisedButtonWidget(
-                          "ADD",
-                          () {
-                            if (widget.keyword.text.isEmpty) {
-                              Flushbar(
-                                message: "Please add a keyword",
-                                duration: Duration(seconds: 3),
-                              )..show(context);
-                            } else {
-                              widget._newCategoryBloc.addKeywordEventSink
-                                  .add(widget.keyword.text);
-                              widget.keyword.clear();
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     Center(
                       child: Column(
                         children: <Widget>[
@@ -154,7 +112,41 @@ class _CreateCategoryState extends State<CreateCategory> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 20,
+                    ),
+                    Text(
+                      "Keywords",
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    StreamBuilder<List<String>>(
+                        stream: widget._newCategoryBloc.keyWordChipStream,
+                        initialData: [],
+                        builder:
+                            (context, AsyncSnapshot<List<String>> snapshot) {
+                          return Wrap(
+                            children: _generateChips(snapshot.data),
+                          );
+                        }),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFieldWidget("Keyword", widget.keyword),
+                    Center(
+                      child: RaisedButtonWidget(
+                        "ADD KEYWORD",
+                        () {
+                          if (widget.keyword.text.isEmpty) {
+                            Flushbar(
+                              message: "Please add a keyword",
+                              duration: Duration(seconds: 3),
+                            )..show(context);
+                          } else {
+                            widget._newCategoryBloc.addKeywordEventSink
+                                .add(widget.keyword.text);
+                            widget.keyword.clear();
+                          }
+                        },
+                      ),
                     )
                   ],
                 ),

@@ -5,8 +5,8 @@ class MainSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      onGenerateRoute: RouteGeneratorSummary.generateRoute,
-      initialRoute: "/",
+      onGenerateRoute: RouteGenerator.generateRoute,
+      initialRoute: "/summary",
     );
   }
 }

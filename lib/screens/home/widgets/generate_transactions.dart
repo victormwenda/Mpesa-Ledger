@@ -17,6 +17,7 @@ class GenerateTransactions {
     for (var i = 0; i < listMap.length; i++) {
       var container = Container(
         child: InkWell(
+          highlightColor: Theme.of(context).accentColor,
           onTap: () {
             closeSearch();
             Navigator.pushNamed(context, "/transaction", arguments: listMap[i]);
@@ -65,7 +66,7 @@ class GenerateTransactions {
                   height: 2,
                 ),
                 Text(
-                  listMap[i]["time"],
+                  listMap[i]["jiffy"].jm,
                   style: Theme.of(context).textTheme.caption,
                 ),
                 SingleChildScrollView(

@@ -43,7 +43,7 @@ class QuerySMSBloc extends BaseBloc {
 
   @override
   void dispose() {
-    _retrieveSMSController.close();
-    _retrieveSMSCompleteController.close();
+    // _retrieveSMSController.close();
+    // _retrieveSMSCompleteController.close();
   }
 }

@@ -13,7 +13,7 @@ class CardWidget extends StatelessWidget {
         padding: EdgeInsets.all(padding),
         child: child,
       ),
-      elevation: 5,
+      elevation: 2,
       color: color,
       margin: EdgeInsets.all(margin),
       shape: new RoundedRectangleBorder(

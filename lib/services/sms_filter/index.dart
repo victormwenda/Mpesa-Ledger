@@ -13,7 +13,6 @@ import 'package:mpesa_ledger_flutter/repository/transaction_category_repository.
 import 'package:mpesa_ledger_flutter/repository/transaction_repository.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_category.dart';
 import 'package:mpesa_ledger_flutter/services/sms_filter/check_sms_type.dart';
-import 'package:mpesa_ledger_flutter/utils/date_format/date_format.dart';
 
 class SMSFilter {
   CheckSMSType smsFilters;
@@ -22,13 +21,148 @@ class SMSFilter {
   TransactionCategoryRepository transactionCategoryRepo =
       TransactionCategoryRepository();
   SummaryRepository summaryRepo = SummaryRepository();
-  DateFormatUtil dateFormatUtil = DateFormatUtil();
   MpesaBalanceRepository mpesaBalanceRepository = MpesaBalanceRepository();
+
+  var dummyData = [
+    {
+      "body":
+          "OC36I5RICG Confirmed. Ksh10.00 sent to Naivas for account acc_12345 on 5/11/19 at 9:30 pm New M-PESA balance is Ksh980. Transaction cost, Ksh10.00",
+      "timestamp": 1578205800000
+    },
+    {
+      "body":
+          "NC36I5RICG Confirmed. Ksh50.00 sent to Jama Mohamed 0790749401 on 14/11/19 at 12:02 PM. New M-PESA balance is Ksh923.00. Transaction cost, Ksh7.00.",
+      "timestamp": 1579059180000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. Ksh5.00 paid to uCHUMI. on 15/11/19 at 12:02 PM. New M-PESA balance is Ksh918.00. Transaction cost, Ksh0.00.",
+      "timestamp": 1579078920000
+    },
+    {
+      "body":
+          "OX36I5RICG confirmed. You bought Ksh3.00 of airtime on 15/11/19 at 4:15pm. New M-PESA balance is Ksh915.00. Transaction cost, Ksh0.00.",
+      "timestamp": 1579094100000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. On 22/11/19 at 1:12pm Give Ksh100.00 cash to Fontana Strathmore New M-PESA balance is Ksh1015.00",
+      "timestamp": 1579687920000
+    },
+    {
+      "body":
+          "NC36I5RICG Confirmed. on 3/12/19 at 3:33 pmWithdraw Ksh200.00 from 321321 - Fontana New M-PESA balance is Ksh800.00. Transaction cost, Ksh15.00.",
+      "timestamp": 1580733180000
+    },
+    {
+      "body":
+          "OX36I5RICG Confirmed. Ksh220.00 sent to Jon Doe 0712345678 on 4/12/19 at 10:24 am. New M-PESA balance is Ksh560.00. Transaction cost, Ksh20.00.",
+      "timestamp": 1580801040000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. You have received Ksh550.00 from DIANA DOE 0712345876 on 12/12/19 at 7:23AM  New M-PESA balance is Ksh1,110.00.",
+      "timestamp": 1581481380000
+    },
+    {
+      "body":
+          "NC36I5RICG confirmed. Reversal of transaction OC3695RICG has been successfully reversed on 12/12/19 at 12:33am and Ksh220.00 is credited to your M-PESA account. New M-PESA account balance is Ksh1,330.00",
+      "timestamp": 1581456780000
+    },
+    {
+      "body":
+          "OX36I5RICG Confirmed.Ksh220.00 transferred to M-Shwari account on 13/12/19 at 3:33pm. M-PESA balance is Ksh1,110.00 .New M-Shwari saving account balance is Ksh330.00. Transaction cost Ksh0.00",
+      "timestamp": 1581597180000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed.Ksh220.00 transferred from M-Shwari account on 14/12/19 at 5:23PM. M-Shwari balance is Ksh110.00 .M-PESA balance is Ksh1,330.00 .Transaction cost Ksh0.00",
+      "timestamp": 1581690180000
+    },
+    {
+      "body":
+          "NC36I5RICGConfirmed.  Ksh10.00 transfered to KCB M-PESA account on 22/12/19 at 3:30AM. New M-PESA balance is Ksh1,320.00, new KCB M-PESA Saving account balance is Ksh20.00.",
+      "timestamp": 1582331400000
+    },
+    {
+      "body":
+          "OX36I5RICGConfirmed. Ksh10.00 transfered from KCB M-PESA account on 22/12/19 at 3:32AM. New M-PESA balance is Ksh1,330.00, new KCB M-PESA Saving account balance is Ksh10.00.",
+      "timestamp": 1582331520000
+    },
+    {
+      "body":
+          "OC36I5RICG Confirmed. Ksh100.00 sent to Carrefour Galleria for account acc_12345 on 2/1/20 at 9:30 pm New M-PESA balance is Ksh1,220. Transaction cost, Ksh10.00",
+      "timestamp": 1578205800000
+    },
+    {
+      "body":
+          "NC36I5RICG Confirmed. Ksh50.00 sent to James Okech 0790749401 on. New M-PESA balance is Ksh1,163.00. Transaction cost, Ksh7.00.",
+      "timestamp": 1579059180000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. Ksh500.00 paid to Olo Metal Suppliers. on 12/1/20 at 12:02 PM. New M-PESA balance is Ksh636.00. Transaction cost, Ksh27.00.",
+      "timestamp": 1579078920000
+    },
+    {
+      "body":
+          "OX36I5RICG confirmed. You bought Ksh20.00 of airtime on 17/1/20 at 4:15pm. New M-PESA balance is Ksh616.00. Transaction cost, Ksh0.00.",
+      "timestamp": 1579094100000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. On 22/1/20 at 1:12pm Give Ksh650.00 cash to Fontana Strathmore New M-PESA balance is Ksh1,266.00",
+      "timestamp": 1579687920000
+    },
+    {
+      "body":
+          "NC36I5RICG Confirmed. on 5/2/20 at 3:33 pmWithdraw Ksh200.00 from 321321 - Fontana Strathmore New M-PESA balance is Ksh1,051.00. Transaction cost, Ksh15.00.",
+      "timestamp": 1580733180000
+    },
+    {
+      "body":
+          "OX36I5RICG Confirmed. Ksh220.00 sent to Alan Okello 0712345678 on 5/2/20 at 10:24 am. New M-PESA balance is Ksh811.00. Transaction cost, Ksh20.00.",
+      "timestamp": 1580801040000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed. You have received Ksh550.00 from DIANA DOE 0712345876 on 13/2/20 at 7:23AM  New M-PESA balance is Ksh1,361.00.",
+      "timestamp": 1581481380000
+    },
+    {
+      "body":
+          "NC36I5RICG confirmed. Reversal of transaction OC3695RICG has been successfully reversed on 13/2/20 at 12:33am and Ksh220.00 is debited from your M-PESA account. New M-PESA account balance is Ksh1,141.00",
+      "timestamp": 1581456780000
+    },
+    {
+      "body":
+          "OX36I5RICG Confirmed.Ksh220.00 transferred to M-Shwari account on 14/2/20 at 3:33pm. M-PESA balance is Ksh1,110.00 .New M-Shwari saving account balance is Ksh330.00. Transaction cost Ksh0.00",
+      "timestamp": 1581597180000
+    },
+    {
+      "body":
+          "OC3695RICG Confirmed.Ksh220.00 transferred from M-Shwari account on 14/2/20 at 5:23PM. M-Shwari balance is Ksh110.00 .M-PESA balance is Ksh1,361.00 .Transaction cost Ksh0.00",
+      "timestamp": 1581690180000
+    },
+    {
+      "body":
+          "NC36I5RICGConfirmed.  Ksh10.00 transfered to KCB M-PESA account on 23/2/20 at 3:30AM. New M-PESA balance is Ksh1,351.00, new KCB M-PESA Saving account balance is Ksh20.00.",
+      "timestamp": 1582331400000
+    },
+    {
+      "body":
+          "OX36I5RICGConfirmed. Ksh10.00 transfered from KCB M-PESA account on 23/2/20 at 3:32AM. New M-PESA balance is Ksh1,361.00, new KCB M-PESA Saving account balance is Ksh10.00.",
+      "timestamp": 1582331520000
+    }
+  ];
 
   Future<Map<String, String>> addSMSTodatabase(List<dynamic> bodies) async {
     try {
+      // dummyData = dummyData.reversed.toList();
+      // List<dynamic> reversedBodies = dummyData.reversed.toList();
       List<dynamic> reversedBodies = bodies.reversed.toList();
-      var categoryObject = await categoryRepo.select(columns: ["id", "keywords"]);
+      var categoryObject =
+          await categoryRepo.select(columns: ["id", "keywords"]);
       int bodyLength = reversedBodies.length;
       for (var i = 0; i < bodyLength; i++) {
         Map<String, dynamic> obj = await _getSMSObject(reversedBodies[i]);
@@ -47,13 +181,11 @@ class SMSFilter {
             await categoryRepo.incrementNumOfTransactions(CategoryModel.fromMap(
                 {"id": transactionCategoryObjectList[j]["categoryId"]}));
           }
-          Map<dynamic, dynamic> dateTime = await dateFormatUtil.getDateTime(
-              reversedBodies[i]["timestamp"].toString() ??
-                  obj["data"]["timestamp"].toString());
+
           await summaryRepo.insert(SummaryModel.fromMap({
-            "month": dateTime["month"],
-            "monthInt": dateTime["monthInt"],
-            "year": int.parse(dateTime["year"]),
+            "month": obj["data"]["jiffy"].MMM,
+            "monthInt": obj["data"]["jiffy"].month.toString(),
+            "year": obj["data"]["jiffy"].year,
             "deposits":
                 obj["data"]["isDeposit"] == 1 ? obj["data"]["amount"] : 0.0,
             "withdrawals":
@@ -62,11 +194,10 @@ class SMSFilter {
           }));
         }
         if (obj.isNotEmpty && obj["data"]["mpesaBalance"] != null) {
-            await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
-                {"mpesaBalance": obj["data"]["mpesaBalance"]}));
-          }
-        counter.counterSink
-            .add(((i / bodyLength) * 100).round());
+          await mpesaBalanceRepository.update(MpesaBalanceModel.fromMap(
+              {"mpesaBalance": obj["data"]["mpesaBalance"]}));
+        }
+        counter.counterSink.add(((i / bodyLength) * 100).round());
       }
       return {"success": "Data successfully added to database"};
     } catch (e) {

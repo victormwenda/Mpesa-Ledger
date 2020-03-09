@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/fa_icon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mpesa_ledger_flutter/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/search/search_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/home/widgets/generate_transactions.dart';
 import 'package:mpesa_ledger_flutter/utils/enums/enums.dart';
@@ -11,16 +12,15 @@ class AppbarWidget extends StatefulWidget {
   bool showAddCategory;
   bool showPopupMenuButton;
   bool showAddNewCategory;
+  bool showBackButton;
   VoidCallback addNewCategory;
-
-  FirebaseAuthBloc _firebaseAuthBloc = FirebaseAuthBloc();
 
   AppbarWidget(this.title,
       {this.showSearch: true,
       this.showPopupMenuButton: true,
       this.showAddCategory: false,
       this.showAddNewCategory: false,
-      this.addNewCategory});
+      this.addNewCategory, this.showBackButton: false});
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
@@ -31,8 +31,9 @@ class _AppbarWidgetState extends State<AppbarWidget> {
     List<Widget> appbarIcons = [];
     if (widget.showSearch) {
       appbarIcons.add(IconButton(
-        icon: Icon(Icons.search),
+        icon: FaIcon(FontAwesomeIcons.search),
         color: Colors.black,
+        iconSize: 20,
         onPressed: () {
           showSearch(context: context, delegate: DataSearch());
         },
@@ -40,7 +41,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
     }
     if (widget.showAddCategory) {
       appbarIcons.add(IconButton(
-        icon: Icon(Icons.add),
+        icon: FaIcon(FontAwesomeIcons.plus),
+        iconSize: 20,
         color: Colors.black,
         onPressed: () {
           Navigator.pushNamed(context, '/createCategory');
@@ -49,22 +51,22 @@ class _AppbarWidgetState extends State<AppbarWidget> {
     }
     if (widget.showAddNewCategory) {
       appbarIcons.add(IconButton(
-        icon: Icon(Icons.done),
+        icon: FaIcon(FontAwesomeIcons.check),
         color: Colors.black,
+        iconSize: 20,
         onPressed: widget.addNewCategory,
       ));
     }
     if (widget.showPopupMenuButton) {
       appbarIcons.add(PopupMenuButton(
-        icon: Icon(
-          Icons.more_vert,
+        icon: FaIcon(
+          FontAwesomeIcons.ellipsisV,
           color: Colors.black,
+          size: 20,
         ),
         onSelected: (PopupMenuButtonItems item) {
           if (item == PopupMenuButtonItems.settings) {
             Navigator.pushNamed(context, '/settings');
-          } else if (item == PopupMenuButtonItems.signOut) {
-            widget._firebaseAuthBloc.signOutEventSink.add(null);
           }
         },
         itemBuilder: (context) {
@@ -73,10 +75,6 @@ class _AppbarWidgetState extends State<AppbarWidget> {
               value: PopupMenuButtonItems.settings,
               child: Text("Settings"),
             ),
-            PopupMenuItem(
-              value: PopupMenuButtonItems.signOut,
-              child: Text("Sign Out"),
-            )
           ];
         },
       ));
@@ -88,22 +86,17 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(
-        color: Colors.black, //change your color here
+        color: widget.showBackButton ? Colors.black : Colors.white,
       ),
       actions: _showAppIcons(context),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white10,
       title: Text(
         widget.title,
         style: Theme.of(context).textTheme.title,
       ),
       centerTitle: true,
+      elevation: 0.0,
     );
-  }
-
-  @override
-  void dispose() { 
-    widget._firebaseAuthBloc.dispose();
-    super.dispose();
   }
 }
 
@@ -112,6 +105,7 @@ class DataSearch extends SearchDelegate<String> {
     closeSearch() {
       close(context, query);
     }
+
     searchBloc.searchEventSink.add(query);
     return StreamBuilder<List<Map<String, dynamic>>>(
       stream: searchBloc.searchStream,
@@ -151,8 +145,9 @@ class DataSearch extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: FaIcon(FontAwesomeIcons.times),
         color: Colors.black,
+        iconSize: 20,
         onPressed: () {
           query = "";
           searchBloc.searchSink.add([]);
@@ -163,7 +158,14 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return null;
+    return IconButton(
+      icon: FaIcon(FontAwesomeIcons.arrowLeft),
+      color: Colors.black,
+      iconSize: 20,
+      onPressed: () {
+        close(context, query);
+      },
+    );
   }
 
   @override

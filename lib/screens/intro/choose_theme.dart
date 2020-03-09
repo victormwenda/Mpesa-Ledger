@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mpesa_ledger_flutter/blocs/theme/theme_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/reteiveing_sms_screen.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/walk_through_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/theme_card/theme_card.dart';
 
@@ -22,7 +23,7 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Align(
@@ -55,7 +56,7 @@ class _ChooseThemeWidgetState extends State<ChooseThemeWidget> {
           Expanded(
             flex: 1,
             child: Align(
-              child: RaisedButtonWidget(widget.route ? "CONTINUE" : "DONE", () {
+              child: RaisedButtonWidget(widget.route ? "FINISH" : "DONE", () {
                 if (widget.route) {
                   Navigator.push(
                     context,
