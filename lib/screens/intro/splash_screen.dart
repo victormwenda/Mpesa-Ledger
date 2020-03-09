@@ -7,6 +7,7 @@ import 'package:mpesa_ledger_flutter/app.dart';
 import 'package:mpesa_ledger_flutter/blocs/runtime_permissions/runtime_permission_bloc.dart';
 import 'package:mpesa_ledger_flutter/blocs/shared_preferences/shared_preferences_bloc.dart';
 import 'package:mpesa_ledger_flutter/screens/intro/choose_theme.dart';
+import 'package:mpesa_ledger_flutter/screens/intro/walk_through_screen.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/flat_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/buttons/raised_button.dart';
 import 'package:mpesa_ledger_flutter/widgets/dialogs/alertDialog.dart';
@@ -106,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (!widget.moveToApp) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (route) => ChooseThemeWidget(true)),
+            MaterialPageRoute(builder: (route) => WalkThrough()),
           );
         }
       }
@@ -118,43 +119,42 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: SvgPicture.asset(
-                "assets/images/holding_phone_colour.svg",
-                height: 250.0,
-              ),
-            ),
-            Container(
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 45.0),
                   child: Column(
                     children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          text: TextSpan(
+                            text: "MPESA\n",
+                            style: Theme.of(context).textTheme.display3,
+                            children: [
+                              TextSpan(
+                                text: "Ledger",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .merge(TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        height: .5)),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 50.0,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("MPESA",
-                              style: Theme.of(context).textTheme.display3)),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Ledger",
-                            style: Theme.of(context).textTheme.headline,
-                          )),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: RaisedButtonWidget(
-                              "GET STARTED",
-                              () => {
-                                    widget._runtimePermissionBloc
-                                        .checkAndRequestPermissionEventSink
-                                        .add(null)
-                                  })),
+                          child: RaisedButtonWidget("GET STARTED", () {
+                            widget._runtimePermissionBloc
+                                .checkAndRequestPermissionEventSink
+                                .add(null);
+                          })),
                     ],
                   ),
                 ),

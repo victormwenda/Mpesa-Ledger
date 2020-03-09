@@ -65,7 +65,6 @@ class HomeBloc extends BaseBloc {
     }
     List<Map<String, dynamic>> transactionList = [];
     for (var i = 0; i < result.length; i++) {
-
       var jiffy = Jiffy.unix(result[i].timestamp);
 
       var categories = await _getCategory(result[i].id.toString());
@@ -76,7 +75,8 @@ class HomeBloc extends BaseBloc {
       transactionMap["categories"] = categories;
       transactionList.add(transactionMap);
     }
-    var transactionByDayMap = groupBy(transactionList, (key) => key["jiffy"].date.toString());
+    var transactionByDayMap = groupBy(transactionList,
+        (key) => key["jiffy"].date.toString() + key["jiffy"].month.toString());
     transactionByDayMap.forEach((key, value) async {
       Map<String, dynamic> map = {};
       map["transactions"] = value;

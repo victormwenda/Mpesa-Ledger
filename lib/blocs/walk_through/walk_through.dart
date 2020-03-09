@@ -46,7 +46,7 @@ class WalkThroughPage1 extends StatelessWidget {
       body: Container(
         child: WalkThroughWidget(
             "Oraganized MPESA messages",
-            "View your MPESA messages in clean and organized way",
+            "View your MPESA messages in a clean and organized way",
             "assets/images/drawkit-list-app-colour.svg"),
       ),
     );
