@@ -1,6 +1,6 @@
-# MPESA LEDGER
+# MPESA Ledger
 
-This is an MPESA ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals all **stored in an SQLite Database in your phone, not anywhere else.** Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
+This is an MPESA Ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals all **stored in an SQLite Database in your phone, not anywhere else.** Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
 
 > The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-ledger-flutter-project/tree/master/apk)
 
@@ -13,7 +13,6 @@ As of now the project only supports Android phones
 
 # Table of Contents
 - [Built With](#built-with)
-- [Designs](#designs)
 - [Demos](#demos)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -22,13 +21,10 @@ As of now the project only supports Android phones
 ## Built-With
 
 - BLoC Pattern
+- [Jiffy](https://github.com/jama5262/jiffy)
 - [SQFlite](https://github.com/tekartik/sqflite)
 - [Firebase Auth](https://pub.dev/packages/firebase_auth)
 - [Charts Flutter](https://google.github.io/charts/flutter/gallery)
-
-## Designs
-
-[Original Figma designs can be found here](https://www.figma.com/file/gL3hOFNn78HGRHiGFFvoc88P/MPESA-Ledger-Flutter-Project?node-id=0%3A1) 🎨
 
 ## Demos
 
@@ -42,11 +38,13 @@ Home Page | Transaction Page | Search Page
 
 ### Category Page
 
-The following is the category page where you can see the default categories and a pie chart showing number of transactions for each category. You can also create our own category by simply adding a keyword Example below shows creating a category by the keywords (Airtime and Paybill) which later returns all transactions that have the keywords(Airtime and Paybill). Deleting a category is fairly easy by swipping left or right and confirming the deletion
+The following is the category page where you can see the default categories and a pie chart showing number of transactions for each category. You can also create our own category by simply adding a keyword
+
+Example below shows creating a category by the keywords (Jama and Diana) which later returns all transactions that have the keywords(Jama and Diana) within their text messages. Deleting a category is fairly easy by swipping left or right and confirming the deletion
 
 Category Page | Transaction Page | Create Category
 ------------ | ------------- | -------------
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/category.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/transaction-category.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/create-category.gif" height="500px"> 
+<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/category.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/transaction-category.gif" alt="alt text" height="500px">
 
 ### Summary Page
 
@@ -93,12 +91,15 @@ Reach out to me at one of the following places!
 - Email at jama3137@gmail.com
 - Twitter [timedjama5262](https://twitter.com/timedjama5262)
 
+<a href="https://www.buymeacoffee.com/jama" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+
 ### License
 
 ```
 MIT License
 
-Copyright (c) 2019 Jama Mohamed
+Copyright (c) 2020 Jama Mohamed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
