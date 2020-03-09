@@ -2,11 +2,11 @@
 
 This is an MPESA Ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals all **stored in an SQLite Database in your phone, not anywhere else.** Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
 
-> The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-ledger-flutter-project/tree/master/apk)
+> The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-Ledger/tree/update-readme/apk)
 
 Set Up|
 ------------ |
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/set-up.gif" alt="alt text" height="500px"> | 
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image1.gif" alt="alt text" height="500px"> | 
 
 ## Limitations
 As of now the project only supports Android phones
@@ -34,7 +34,7 @@ Below is the home screen, a selected transaction for further viewing and a searc
 
 Home Page | Transaction Page | Search Page
 ------------ | ------------- | -------------
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/home.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/home-transaction.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/search.gif" height="500px">
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image2.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image3.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image4.gif" height="500px">
 
 ### Category Page
 
@@ -44,7 +44,7 @@ Example below shows creating a category by the keywords (Jama and Diana) which l
 
 Category Page | Transaction Page | Create Category
 ------------ | ------------- | -------------
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/category.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/transaction-category.gif" alt="alt text" height="500px">
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image5.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image6.gif" alt="alt text" height="500px">
 
 ### Summary Page
 
@@ -52,14 +52,14 @@ The summary page shows the overall total of your transactions and a year monthly
 
 Summary Page|
 ------------ |
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/summary.gif" alt="alt text" height="500px"> | 
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image7.gif" alt="alt text" height="500px"> | 
 ### Calculator
 
 You can use the calculator page to calculate the transaction charges
 
 Calculator Page|
 ------------ |
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/calculator.gif" alt="alt text" height="500px"> | 
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image8.gif" alt="alt text" height="500px"> | 
 
 ### Setting Page
 
@@ -67,7 +67,7 @@ The setting page allows you to change your theme and also delete all of your Mpe
 
 Change Theme | Delete All Data
 ------------ | -------------
-<img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/change-theme.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-ledger-flutter-project/blob/develop/gif/delete-data.gif" alt="alt text" height="500px">
+<img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image9.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/Mpesa-Ledger/blob/master/gif/image10.gif" alt="alt text" height="500px">
 
 ## Contributing
 
