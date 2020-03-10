@@ -2,7 +2,7 @@
 
 This is an MPESA Ledger project that receives and listens to SMS from MPESA to create an analytical view of your MPESA transactions, that is, deposits and withdrawals all **stored in an SQLite Database in your phone, not anywhere else.** Other features include categorizing your transaction, calculating MPESA transactions fees and a year monthly summary
 
-> The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-Ledger/tree/update-readme/apk)
+> The latest apk can be downloaded here: => [APK File](https://github.com/jama5262/Mpesa-Ledger/tree/master/apk)
 
 Set Up|
 ------------ |
